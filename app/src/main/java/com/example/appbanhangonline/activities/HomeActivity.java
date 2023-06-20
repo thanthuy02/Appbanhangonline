@@ -20,7 +20,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
     }
 
-    //Đăng xuất
+    //Logout
     public void logoutClicked(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn đăng xuất không?")

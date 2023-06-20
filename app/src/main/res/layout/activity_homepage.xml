@@ -26,7 +26,6 @@
                 app:srcCompat="@drawable/logo"
                 android:layout_centerVertical="true"/>
 
-            <!-- Tên app -->
             <TextView
                 android:id="@+id/txtTuT"
                 android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"/>
 
-            <!-- Giỏ hàng -->
+            <!-- Cart -->
             <ImageButton
                 android:id="@+id/imgBtnCart"
                 android:layout_width="30dp"
@@ -48,7 +47,7 @@
                 android:layout_toStartOf="@+id/imgBtnLogout"
                 android:layout_centerVertical="true"/>
 
-            <!-- Đăng xuất -->
+            <!-- Logout -->
             <ImageButton
                 android:id="@+id/imgBtnLogout"
                 android:layout_width="30dp"
@@ -61,7 +60,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Thanh tìm kiếm -->
+    <!-- Search -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
