@@ -85,13 +85,13 @@ public class DBHelper extends SQLiteOpenHelper {
                                             + USER_ROLE + " TEXT" + ")";
 
 //    create table categoroies
-    private static final String CREATE_CATEGORIES = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_CATEGORIES = "CREATE TABLE IF NOT EXISTS "
             + CATEGORIES + "("
             + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + CATEGORY_NAME + " TEXT" + ")";
 
 //   create table products
-    private static final String CREATE_PRODUCTS = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_PRODUCTS = "CREATE TABLE IF NOT EXISTS "
             + PRODUCTS + "("
             + PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + PRODUCT_NAME + " TEXT,"
@@ -104,7 +104,7 @@ public class DBHelper extends SQLiteOpenHelper {
         + ")";
 
 //   create table bills
-    private static final String CREATE_BILLS = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_BILLS = "CREATE TABLE IF NOT EXISTS "
             + BILLS + "("
             + BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + BILL_CUSTOMER_ID + " TEXT,"
@@ -114,7 +114,7 @@ public class DBHelper extends SQLiteOpenHelper {
         + ")";
 
 //    create table detailed bills
-    private static final String CREATE_DETAILED_BILLS = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_DETAILED_BILLS = "CREATE TABLE IF NOT EXISTS "
             + DETAILED_BILLS + "("
             + DETAILED_BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DETAILED_BILL_BILL_ID + " INTEGER,"
