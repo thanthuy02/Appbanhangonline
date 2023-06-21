@@ -4,12 +4,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.appbanhangonline.dbhandler.LoginHandler;
+
 public class DBHelper extends SQLiteOpenHelper{
 //  define database name
-    private static final String DATABASE_NAME = "SMS";
+    public static final String DATABASE_NAME = "SMS";
 
 //  define database version
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
 
 // Constructor
     public DBHelper(Context context) {
@@ -61,58 +63,57 @@ public class DBHelper extends SQLiteOpenHelper{
 //    create table users
     private static final String CREATE_USERS = "CREATE TABLE "
                                             + USERS + "("
-                                            + USER_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                            + USER_NAME + "TEXT,"
-                                            + USER_PHONE + "TEXT UNIQUE,"
-                                            + USER_ADDRESS + "TEXT,"
-                                            + USER_EMAIL + "TEXT UNIQUE,"
-                                            + USER_PASSWORD + "TEXT,"
-                                            + USER_ROLE + "TEXT" + ")";
+                                            + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                            + USER_NAME + " TEXT, "
+                                            + USER_PHONE + " TEXT UNIQUE,"
+                                            + USER_ADDRESS + " TEXT,"
+                                            + USER_EMAIL + " TEXT UNIQUE,"
+                                            + USER_PASSWORD + " TEXT,"
+                                            + USER_ROLE + " TEXT" + ")";
 
 //    create table categoroies
     private static final String CREATE_CATEGORIES = "CREATE TABLE "
             + CATEGORIES + "("
-            + CATEGORY_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + CATEGORY_NAME + "TEXT" + ")";
+            + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + CATEGORY_NAME + " TEXT" + ")";
 
 //   create table products
     private static final String CREATE_PRODUCTS = "CREATE TABLE "
             + PRODUCTS + "("
-            + PRODUCT_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + PRODUCT_NAME + "TEXT,"
-            + PRODUCT_CATEGORY_ID + "INTEGER,"
-            + PRODUCT_QUANTITY + "INTEGER,"
-            + PRODUCT_PRICE + "REAL,"
-            + PRODUCT_IMAGE + "BLOB,"
-            + PRODUCT_DESCRIPTION + "TEXT,"
+            + PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + PRODUCT_NAME + " TEXT,"
+            + PRODUCT_CATEGORY_ID + " INTEGER,"
+            + PRODUCT_QUANTITY + " INTEGER,"
+            + PRODUCT_PRICE + " REAL,"
+            + PRODUCT_IMAGE + " BLOB,"
+            + PRODUCT_DESCRIPTION + " TEXT,"
         + "FOREIGN KEY(" + PRODUCT_CATEGORY_ID + ") REFERENCES " + CATEGORIES + "(" + CATEGORY_ID + ")"
         + ")";
 
 //   create table bills
     private static final String CREATE_BILLS = "CREATE TABLE "
             + BILLS + "("
-            + BILL_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + BILL_CUSTOMER_ID + "TEXT,"
-            + BILL_CREATED_AT + "TEXT DEFAULT CURRENT_TIMESTAMP,"
-            + BILL_TOTAL_PRICE + "REAL,"
+            + BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + BILL_CUSTOMER_ID + " TEXT,"
+            + BILL_CREATED_AT + " TEXT DEFAULT CURRENT_TIMESTAMP,"
+            + BILL_TOTAL_PRICE + " REAL,"
         + "FOREIGN KEY(" + BILL_CUSTOMER_ID + ") REFERENCES " + USERS + "(" + USER_ID + ")"
         + ")";
 
 //    create table detailed bills
     private static final String CREATE_DETAILED_BILLS = "CREATE TABLE "
             + DETAILED_BILLS + "("
-            + DETAILED_BILL_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + DETAILED_BILL_BILL_ID + "TEXT,"
-            + DETAILED_BILL_PRODUCT_ID + "TEXT DEFAULT CURRENT_TIMESTAMP,"
-            + DETAILED_BILL_QUANTITY + "INTEGER"
-            + DETAILED_BILL_PRICE + "REAL,"
+            + DETAILED_BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + DETAILED_BILL_BILL_ID + " INTEGER,"
+            + DETAILED_BILL_PRODUCT_ID + " TEXT DEFAULT CURRENT_TIMESTAMP,"
+            + DETAILED_BILL_QUANTITY + " INTEGER,"
+            + DETAILED_BILL_PRICE + " REAL,"
         + "FOREIGN KEY(" + DETAILED_BILL_BILL_ID + ") REFERENCES " + BILLS + "(" + BILL_ID + "),"
         + "FOREIGN KEY(" + DETAILED_BILL_PRODUCT_ID + ") REFERENCES " + PRODUCTS + "(" + PRODUCT_ID + ")"
         + ")";
 
 //    insert admin info into table users
-    private static final String INSERT_USER = "INSERT INTO" + USERS + "("
-            + USER_ID + ", "
+    private static final String INSERT_USER = "INSERT INTO " + USERS + " ("
             + USER_NAME + ", "
             + USER_PHONE + ", "
             + USER_ADDRESS + ", "
@@ -131,10 +132,12 @@ public class DBHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_PRODUCTS);
         db.execSQL(CREATE_BILLS);
         db.execSQL(CREATE_DETAILED_BILLS);
+        db.execSQL(INSERT_USER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 //     refresh table (drop, then create tables again)
     }
+
 }
