@@ -2,12 +2,14 @@ package com.example.appbanhangonline.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.database.CategoryHelper;
+import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.Category;
 
@@ -29,10 +31,11 @@ public class MainActivity extends AppCompatActivity {
         for (Category category_ : categories) {
             Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
         }
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
     }
 
     public static DBHelper getDB() {
         return dbHelper;
     }
-
 }
