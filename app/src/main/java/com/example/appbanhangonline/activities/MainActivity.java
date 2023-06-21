@@ -23,16 +23,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-
-        Category category = new Category();
-        category.setCategoryName("Dien Thoai");
-        CategoryHelper.gI().add(category);
-
         // read
 
         List<Category> categories = CategoryHelper.gI().getAll();
         for (Category category_ : categories) {
-            Toast.makeText(this, category_.getCategoryName(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
         }
     }
 
