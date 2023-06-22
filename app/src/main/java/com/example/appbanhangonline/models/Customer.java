@@ -1,4 +1,4 @@
 package com.example.appbanhangonline.models;
 
-public class Customer {
+public class Customer extends User {
 }
