@@ -8,7 +8,13 @@ import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    public Cursor getData(String sql) {
+        return getReadableDatabase().rawQuery(sql, null);
+    }
 
+    public void queryData(String sql) {
+        getWritableDatabase().execSQL(sql);
+    }
 
 //  define database name
     public static final String DATABASE_NAME = "SMS";
