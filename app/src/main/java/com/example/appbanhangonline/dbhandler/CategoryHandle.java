@@ -52,6 +52,7 @@ public class CategoryHandle implements IManager<Category, Integer> {
         try {
             String sql = String.format("DELETE * FROM %s where %s=%d", DBHelper.CATEGORIES, DBHelper.CATEGORY_ID, integer);
             mDbHelper.queryData(sql);
+            // query to remove product by category
             return true;
         } catch (Exception e) {
             Logger.error(e.getMessage());
