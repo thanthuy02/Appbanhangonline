@@ -7,17 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public interface TransactionCallBack {
-        public void onCallBack();
-    }
 
-    public Cursor getData(String sql) {
-        return getReadableDatabase().rawQuery(sql, null);
-    }
-
-    public void queryData(String sql) {
-        getWritableDatabase().execSQL(sql);
-    }
 
 
 //  define database name
