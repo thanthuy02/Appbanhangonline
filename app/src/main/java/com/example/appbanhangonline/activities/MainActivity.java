@@ -25,12 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-        // read
 
-        List<Category> categories = CategoryHelper.gI().getAll();
-        for (Category category_ : categories) {
-            Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
-        }
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(i);
     }
