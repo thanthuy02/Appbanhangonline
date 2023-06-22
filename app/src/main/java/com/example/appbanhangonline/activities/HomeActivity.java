@@ -4,7 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,10 +21,21 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.activity_home);
     }
 
-    //Logout
+    // Hiển thị thông tin người dùng
+    public void toggleUserInfo(View view) {
+        LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
+        if (userInfoLayout.getVisibility() == View.VISIBLE) {
+            //Nếu đang hiển thị thì ẩn đi
+            userInfoLayout.setVisibility(View.GONE);
+        } else {
+            // đang ẩn thì hiện lên
+            userInfoLayout.setVisibility(View.VISIBLE);
+        }
+    }
+    //Đăng xuất
     public void logoutClicked(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn đăng xuất không?")
