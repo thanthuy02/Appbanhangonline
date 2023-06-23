@@ -8,7 +8,7 @@ import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 public class DBHelper extends SQLiteOpenHelper {
     public interface TransactionCallBack {
-        public void onCallBack();
+        void onCallBack();
     }
 
     public Cursor getData(String sql) {
@@ -57,7 +57,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PRODUCT_QUANTITY = "quantity";
     public static final String PRODUCT_PRICE = "price";
     public static final String PRODUCT_IMAGE = "image";
-    public static final String PRODUCT_DESCRIPTION = "description";
 
     //    columns for bills
     public static final String BILL_ID = "id";
@@ -84,14 +83,14 @@ public class DBHelper extends SQLiteOpenHelper {
                                             + USER_PASSWORD + " TEXT,"
                                             + USER_ROLE + " TEXT" + ")";
 
-//    create table categoroies
-    private static final String CREATE_CATEGORIES = "CREATE TABLE IF NOT EXISTS"
+//    create table categories
+    private static final String CREATE_CATEGORIES = "CREATE TABLE IF NOT EXISTS "
             + CATEGORIES + "("
             + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + CATEGORY_NAME + " TEXT" + ")";
 
 //   create table products
-    private static final String CREATE_PRODUCTS = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_PRODUCTS = "CREATE TABLE IF NOT EXISTS "
             + PRODUCTS + "("
             + PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + PRODUCT_NAME + " TEXT,"
@@ -99,12 +98,11 @@ public class DBHelper extends SQLiteOpenHelper {
             + PRODUCT_QUANTITY + " INTEGER,"
             + PRODUCT_PRICE + " REAL,"
             + PRODUCT_IMAGE + " BLOB,"
-            + PRODUCT_DESCRIPTION + " TEXT,"
         + "FOREIGN KEY(" + PRODUCT_CATEGORY_ID + ") REFERENCES " + CATEGORIES + "(" + CATEGORY_ID + ")"
         + ")";
 
 //   create table bills
-    private static final String CREATE_BILLS = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_BILLS = "CREATE TABLE IF NOT EXISTS "
             + BILLS + "("
             + BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + BILL_CUSTOMER_ID + " TEXT,"
@@ -114,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
         + ")";
 
 //    create table detailed bills
-    private static final String CREATE_DETAILED_BILLS = "CREATE TABLE IF NOT EXISTS"
+    private static final String CREATE_DETAILED_BILLS = "CREATE TABLE IF NOT EXISTS "
             + DETAILED_BILLS + "("
             + DETAILED_BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + DETAILED_BILL_BILL_ID + " INTEGER,"
@@ -137,6 +135,15 @@ public class DBHelper extends SQLiteOpenHelper {
             + "('Dao Thi Kieu Trang' , '023456789', 'Dong Da', 'kieutrang021002@gmail.com', 'admin', 'admin'),"
             + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'buiuyen1207@gmail.com', 'admin', 'admin')";
 
+    private static final String TRIGGER_QUANTITY = "CREATE TRIGGER update_quantity " +
+            "AFTER INSERT ON detailed_bills " +
+            "for each ROW " +
+            "BEGIN " +
+                "UPDATE products " +
+                "SET quantity = quantity - NEW.quantity " +
+                "WHERE products.id = NEW.product_id; " +
+            "END; ";
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 //    execute SQLite commands to create table
@@ -146,6 +153,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_BILLS);
         db.execSQL(CREATE_DETAILED_BILLS);
         db.execSQL(INSERT_USER);
+        db.execSQL(TRIGGER_QUANTITY);
     }
 
     @Override

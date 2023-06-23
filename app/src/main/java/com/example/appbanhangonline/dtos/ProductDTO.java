@@ -8,7 +8,7 @@ public class ProductDTO extends Product {
     private Category category;
 
     public ProductDTO(int productID, String productName, int categoryID, int quantity, double price, String image, String productDesc, Category category) {
-        super(productID, productName, categoryID, quantity, price, image, productDesc);
+        super(productID, productName, categoryID, quantity, price, image.getBytes(), productDesc);
         this.category = category;
     }
 

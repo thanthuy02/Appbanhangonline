@@ -6,20 +6,20 @@ public class Product {
     private int categoryID;
     private int quantity;
     private double price;
-    private String image;
+    private byte[] img_byte;
     private String productDesc;
 
 
     public Product() {
     }
 
-    public Product(int productID, String productName, int categoryID, int quantity, double price, String image, String productDesc) {
+    public Product(int productID, String productName, int categoryID, int quantity, double price, byte[] img_byte, String productDesc) {
         this.productID = productID;
         this.productName = productName;
         this.categoryID = categoryID;
         this.quantity = quantity;
         this.price = price;
-        this.image = image;
+        this.img_byte = img_byte;
         this.productDesc = productDesc;
     }
 
@@ -63,12 +63,10 @@ public class Product {
         this.price = price;
     }
 
-    public String getImage() {
-        return image;
-    }
+    public byte[] getImage() {return img_byte; }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(byte[] img_byte) {
+        this.img_byte = img_byte;
     }
 
     public String getProductDesc() {
