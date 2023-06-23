@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:padding="20dp"
+            android:padding="10dp"
             android:src="@drawable/ic_back"
             android:contentDescription="Go back" />
 
@@ -25,38 +25,42 @@
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:padding="10dp"
             android:layout_weight="1"
             android:text="Quản lý sản phẩm"
+            android:layout_marginLeft="16dp"
             android:textColor="#2AA2BF"
             android:textSize="32sp"
             android:textStyle="bold" />
-
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/search_bar"
-        android:orientation="horizontal"
-        android:padding="8dp">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="18dp">
 
-
-
-        <EditText
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/btnCreateProduct"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Search"
-            android:background="@android:color/transparent"/>
+            android:layout_marginTop="16dp"
+            android:width="300dp"
+            android:background="@drawable/round_btn"
+            android:gravity="center"
+            android:text=" + Thêm mới"
+            android:textColorLink="#000011"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-
-
+        <ListView
+            android:id="@+id/listViewProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"></ListView>
     </LinearLayout>
-
-
-
 
 </LinearLayout>
 
