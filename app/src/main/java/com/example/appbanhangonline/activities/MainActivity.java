@@ -3,6 +3,7 @@ package com.example.appbanhangonline.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbHelper = new DBHelper(this);
+        dbHelper = new DBHelper(MainActivity.this);
 
 //        trang login, đang ví dụ minh hoạ để làm logout
         Button button = (Button) findViewById(R.id.button);
@@ -40,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         // read
 
-        List<Category> categories = CategoryHelper.gI().getAll();
-        for (Category category_ : categories) {
-            Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
-        }
-        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(i);
+//        List<Category> categories = CategoryHelper.gI().getAll();
+//        for (Category category_ : categories) {
+//            Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
+//        }
+//        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+//        startActivity(i);
     }
 
     public static DBHelper getDB() {
