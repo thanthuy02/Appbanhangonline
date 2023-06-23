@@ -1,4 +1,4 @@
-package com.example.appbanhangonline.database.interfaces;
+package com.example.appbanhangonline.dbhandler.interfaces;
 
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.Category;
@@ -10,11 +10,9 @@ public interface ICrud<E, TypeId> {
 
     void update(E e);
 
-    void transactionWithCallBack(DBHelper.TransactionCallBack callBack);
-
     boolean delete(TypeId id);
 
-    Category getById(TypeId id);
+    E getById(TypeId id);
 
     List<E> getListByPage(int page, int limit);
 
