@@ -32,7 +32,8 @@ public class LoginHandler extends SQLiteOpenHelper {
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
-            @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndex("role"));
+            @SuppressLint("Range")
+            String role = cursor.getString(cursor.getColumnIndex("role"));
             cursor.close();
             return role;
         } else {

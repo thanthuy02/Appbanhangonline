@@ -64,7 +64,6 @@ public class LoginActivity extends Activity {
                 // TODO Auto-generated method stub
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
-                System.out.println(loginHandler.checkLogin(email, password));
 
                 if (Objects.equals(loginHandler.checkLogin(email, password), "admin")) {
                     Intent i = new Intent(getApplicationContext(), MenuAdminActivity.class);
