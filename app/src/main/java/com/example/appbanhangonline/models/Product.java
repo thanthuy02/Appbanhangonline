@@ -6,7 +6,7 @@ public class Product {
     private int categoryID;
     private int quantity;
     private double price;
-    private byte[] image;
+    private byte[] img_byte;
     private String productDesc;
 
 
@@ -19,7 +19,7 @@ public class Product {
         this.categoryID = categoryID;
         this.quantity = quantity;
         this.price = price;
-        this.image = image;
+        this.img_byte = img_byte;
     }
 
     public int getProductID() {
@@ -62,12 +62,11 @@ public class Product {
         this.price = price;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
+    public byte[] getImage() {return img_byte; }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+
+    public void setImage(byte[] img_byte) {
+        this.img_byte = img_byte;
     }
 
     public String getProductDesc() {

@@ -1,7 +1,6 @@
 package com.example.appbanhangonline.database;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.example.appbanhangonline.activities.MainActivity;
