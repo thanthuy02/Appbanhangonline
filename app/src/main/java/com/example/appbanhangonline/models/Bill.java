@@ -6,6 +6,9 @@ public class Bill {
     private String createdAt;
     private double billTotalPrice;
 
+    private DetailBill detailBill;
+
+
 
     public Bill() {
     }
@@ -15,6 +18,14 @@ public class Bill {
         this.billCustomerID = billCustomerID;
         this.createdAt = createdAt;
         this.billTotalPrice = billTotalPrice;
+    }
+
+    public DetailBill getDetailBill() {
+        return detailBill;
+    }
+
+    public void setDetailBill(DetailBill detailBill) {
+        this.detailBill = detailBill;
     }
 
     public int getBillID() {

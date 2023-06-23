@@ -21,7 +21,7 @@ public class ProductHandler extends SQLiteOpenHelper {
     DBHelper dbHelper;
     private Context context;
 
-//    ham tao
+    //    ham tao
     public ProductHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;

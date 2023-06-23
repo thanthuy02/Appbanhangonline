@@ -1,4 +1,4 @@
-package com.example.appbanhangonline.database.interfaces;
+package com.example.appbanhangonline.dbhandler.interfaces;
 
 import java.util.List;
 

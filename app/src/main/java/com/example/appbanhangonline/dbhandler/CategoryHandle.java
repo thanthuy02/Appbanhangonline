@@ -1,52 +1,63 @@
-package com.example.appbanhangonline.database;
+package com.example.appbanhangonline.dbhandler;
 
 import android.database.Cursor;
 import android.util.Log;
 
 import com.example.appbanhangonline.activities.MainActivity;
-import com.example.appbanhangonline.database.interfaces.IManager;
+import com.example.appbanhangonline.database.DBHelper;
+import com.example.appbanhangonline.dbhandler.interfaces.IManager;
 import com.example.appbanhangonline.models.Category;
+import com.example.appbanhangonline.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryHelper implements IManager<Category, Integer> {
-    private static CategoryHelper I;
+public class CategoryHandle implements IManager<Category, Integer> {
+    private static CategoryHandle I;
+    private final DBHelper mDbHelper;
 
-    public static CategoryHelper gI() {
+    public static CategoryHandle gI() {
         if (I == null) {
-            I = new CategoryHelper();
+            I = new CategoryHandle();
         }
         return I;
     }
 
+    public CategoryHandle() {
+        mDbHelper = MainActivity.getDB();
+    }
+
     @Override
     public void add(Category category) {
-        DBHelper dbHelper = MainActivity.getDB();
-        String sql = String.format("INSERT INTO %s(%s) VALUES('%s')", DBHelper.CATEGORIES, DBHelper.CATEGORY_NAME, category.getCategoryName());
-        dbHelper.queryData(sql);
+        try {
+            String sql = String.format("INSERT INTO %s(%s) VALUES('%s')", DBHelper.CATEGORIES, DBHelper.CATEGORY_NAME, category.getCategoryName());
+            mDbHelper.queryData(sql);
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        }
     }
 
     @Override
     public void update(Category category) {
-
-    }
-
-    @Override
-    public void transactionWithCallBack(DBHelper.TransactionCallBack callBack) {
         try {
-            MainActivity.getDB().getWritableDatabase().beginTransaction();
-            callBack.onCallBack();
+            String sql = String.format("UPDATE %s SET %s='%s'", DBHelper.CATEGORIES, DBHelper.CATEGORY_NAME, category.getCategoryName());
+            mDbHelper.queryData(sql);
         } catch (Exception e) {
-            Log.d("error : ", e.getMessage());
-        } finally {
-            MainActivity.getDB().getWritableDatabase().endTransaction();
+            Logger.error(e.getMessage());
         }
     }
 
     @Override
     public boolean delete(Integer integer) {
-        return false;
+        try {
+            String sql = String.format("DELETE * FROM %s where %s=%d", DBHelper.CATEGORIES, DBHelper.CATEGORY_ID, integer);
+            mDbHelper.queryData(sql);
+            // query to remove product by category
+            return true;
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+            return false;
+        }
     }
 
     @Override

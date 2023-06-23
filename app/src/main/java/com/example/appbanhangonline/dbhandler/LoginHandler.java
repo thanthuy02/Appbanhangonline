@@ -25,6 +25,7 @@ public class LoginHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
+
     public String checkLogin(String email, String password) {
         // Thực hiện truy vấn và kiểm tra email và mật khẩu
         Cursor cursor = db.rawQuery("SELECT role FROM users WHERE email = ? AND password = ?", new String[]{email, password});
