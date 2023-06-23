@@ -1,6 +1,7 @@
 package com.example.appbanhangonline.dbhandler.interfaces;
 
 import com.example.appbanhangonline.database.DBHelper;
+import com.example.appbanhangonline.models.Category;
 
 import java.util.List;
 
