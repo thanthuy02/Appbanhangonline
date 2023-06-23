@@ -20,19 +20,39 @@ public class MainActivity extends AppCompatActivity {
 
     private static DBHelper dbHelper;
 
+    //    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        dbHelper = new DBHelper(this);
+//        // read
+//
+//        List<Category> categories = CategoryHelper.gI().getAll();
+//        for (Category category_ : categories) {
+//            Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
+//        }
+//        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+//        startActivity(i);
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbHelper = new DBHelper(this);
-        // read
+        Thread thread = new Thread() {
+            public void run() {
+                try {
+                    sleep(2000);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                } finally {
+                    Intent i = new Intent(getApplicationContext(),
+                            LoginActivity.class);
+                    startActivity(i);
+                }
+            }
+        };
+        thread.start();
 
-        List<Category> categories = CategoryHelper.gI().getAll();
-        for (Category category_ : categories) {
-            Toast.makeText(this, String.valueOf(category_.getCategoryID()), Toast.LENGTH_SHORT).show();
-        }
-        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(i);
     }
 
     public static DBHelper getDB() {

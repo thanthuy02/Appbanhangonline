@@ -3,7 +3,9 @@ package com.example.appbanhangonline.dbhandler;
 import static com.example.appbanhangonline.database.DBHelper.DATABASE_NAME;
 import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -21,6 +23,21 @@ public class LoginHandler extends SQLiteOpenHelper {
         this.context = context;
         dbHelper = new DBHelper(context);
         db = dbHelper.getWritableDatabase();
+    }
+
+    public String checkLogin(String email, String password) {
+        // Thực hiện truy vấn và kiểm tra email và mật khẩu
+        Cursor cursor = db.rawQuery("SELECT role FROM users WHERE email = ? AND password = ?", new String[]{email, password});
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndex("role"));
+            cursor.close();
+            return role;
+        } else {
+            cursor.close();
+            return null;
+        }
     }
 
     @Override

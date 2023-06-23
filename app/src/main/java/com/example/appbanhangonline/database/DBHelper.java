@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -20,16 +21,17 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-//  define database name
+    //  define database name
     public static final String DATABASE_NAME = "SMS";
 
-//  define database version
+    //  define database version
     public static final int DATABASE_VERSION = 1;
 
     // Constructor
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     //    define tables
     public static final String USERS = "users";
     public static final String CATEGORIES = "categories";
@@ -72,24 +74,24 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DETAILED_BILL_PRICE = "price";
 
 
-  //    create table users
+    //    create table users
     private static final String CREATE_USERS = "CREATE TABLE IF NOT EXISTS "
-                                            + USERS + "("
-                                            + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                            + USER_NAME + " TEXT, "
-                                            + USER_PHONE + " TEXT UNIQUE,"
-                                            + USER_ADDRESS + " TEXT,"
-                                            + USER_EMAIL + " TEXT UNIQUE,"
-                                            + USER_PASSWORD + " TEXT,"
-                                            + USER_ROLE + " TEXT" + ")";
+            + USERS + "("
+            + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + USER_NAME + " TEXT, "
+            + USER_PHONE + " TEXT UNIQUE,"
+            + USER_ADDRESS + " TEXT,"
+            + USER_EMAIL + " TEXT UNIQUE,"
+            + USER_PASSWORD + " TEXT,"
+            + USER_ROLE + " TEXT" + ")";
 
-//    create table categories
+    //    create table categories
     private static final String CREATE_CATEGORIES = "CREATE TABLE IF NOT EXISTS "
             + CATEGORIES + "("
             + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + CATEGORY_NAME + " TEXT" + ")";
 
-//   create table products
+    //   create table products
     private static final String CREATE_PRODUCTS = "CREATE TABLE IF NOT EXISTS "
             + PRODUCTS + "("
             + PRODUCT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -98,20 +100,20 @@ public class DBHelper extends SQLiteOpenHelper {
             + PRODUCT_QUANTITY + " INTEGER,"
             + PRODUCT_PRICE + " REAL,"
             + PRODUCT_IMAGE + " BLOB,"
-        + "FOREIGN KEY(" + PRODUCT_CATEGORY_ID + ") REFERENCES " + CATEGORIES + "(" + CATEGORY_ID + ")"
-        + ")";
+            + "FOREIGN KEY(" + PRODUCT_CATEGORY_ID + ") REFERENCES " + CATEGORIES + "(" + CATEGORY_ID + ")"
+            + ")";
 
-//   create table bills
+    //   create table bills
     private static final String CREATE_BILLS = "CREATE TABLE IF NOT EXISTS "
             + BILLS + "("
             + BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + BILL_CUSTOMER_ID + " TEXT,"
             + BILL_CREATED_AT + " TEXT DEFAULT CURRENT_TIMESTAMP,"
             + BILL_TOTAL_PRICE + " REAL,"
-        + "FOREIGN KEY(" + BILL_CUSTOMER_ID + ") REFERENCES " + USERS + "(" + USER_ID + ")"
-        + ")";
+            + "FOREIGN KEY(" + BILL_CUSTOMER_ID + ") REFERENCES " + USERS + "(" + USER_ID + ")"
+            + ")";
 
-//    create table detailed bills
+    //    create table detailed bills
     private static final String CREATE_DETAILED_BILLS = "CREATE TABLE IF NOT EXISTS "
             + DETAILED_BILLS + "("
             + DETAILED_BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -119,11 +121,11 @@ public class DBHelper extends SQLiteOpenHelper {
             + DETAILED_BILL_PRODUCT_ID + " TEXT DEFAULT CURRENT_TIMESTAMP,"
             + DETAILED_BILL_QUANTITY + " INTEGER,"
             + DETAILED_BILL_PRICE + " REAL,"
-        + "FOREIGN KEY(" + DETAILED_BILL_BILL_ID + ") REFERENCES " + BILLS + "(" + BILL_ID + "),"
-        + "FOREIGN KEY(" + DETAILED_BILL_PRODUCT_ID + ") REFERENCES " + PRODUCTS + "(" + PRODUCT_ID + ")"
-        + ")";
+            + "FOREIGN KEY(" + DETAILED_BILL_BILL_ID + ") REFERENCES " + BILLS + "(" + BILL_ID + "),"
+            + "FOREIGN KEY(" + DETAILED_BILL_PRODUCT_ID + ") REFERENCES " + PRODUCTS + "(" + PRODUCT_ID + ")"
+            + ")";
 
-//    insert admin info into table users
+    //    insert admin info into table users
     private static final String INSERT_USER = "INSERT INTO " + USERS + " ("
             + USER_NAME + ", "
             + USER_PHONE + ", "
@@ -133,15 +135,16 @@ public class DBHelper extends SQLiteOpenHelper {
             + USER_ROLE + ") "
             + "VALUES ('Than Thi Thuy', '012345678', 'Dong Da', 'thanthuy2811@gmail.com', 'admin', 'admin'),"
             + "('Dao Thi Kieu Trang' , '023456789', 'Dong Da', 'kieutrang021002@gmail.com', 'admin', 'admin'),"
-            + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'buiuyen1207@gmail.com', 'admin', 'admin')";
+            + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'buiuyen1207@gmail.com', 'admin', 'admin'),"
+            + "('ABC', '013345679', 'Dong Da', 'customer@gmail.com', '123', 'customer')";
 
     private static final String TRIGGER_QUANTITY = "CREATE TRIGGER update_quantity " +
             "AFTER INSERT ON detailed_bills " +
             "for each ROW " +
             "BEGIN " +
-                "UPDATE products " +
-                "SET quantity = quantity - NEW.quantity " +
-                "WHERE products.id = NEW.product_id; " +
+            "UPDATE products " +
+            "SET quantity = quantity - NEW.quantity " +
+            "WHERE products.id = NEW.product_id; " +
             "END; ";
 
     @Override
