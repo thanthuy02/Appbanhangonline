@@ -3,6 +3,7 @@ package com.example.appbanhangonline.dbhandler;
 import static com.example.appbanhangonline.database.DBHelper.DATABASE_NAME;
 import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,16 +25,20 @@ public class LoginHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-    public boolean login(String email, String password) {
-        String sql = String.format("SELECT * FROM %s where %s='%s' AND %s ='%s'", DBHelper.USERS, DBHelper.USER_EMAIL, DBHelper.USER_PASSWORD, email, password);
-        Cursor rs = dbHelper.getData(sql);
-        byte count = 0;
-        while (rs.moveToNext()) {
-            if (rs.getString(rs.getColumnIndexOrThrow(DBHelper.USER_EMAIL)) != null && rs.getString(rs.getColumnIndexOrThrow(DBHelper.USER_PASSWORD)) != null) {
-                count++;
-            }
+
+    public String checkLogin(String email, String password) {
+        // Thực hiện truy vấn và kiểm tra email và mật khẩu
+        Cursor cursor = db.rawQuery("SELECT role FROM users WHERE email = ? AND password = ?", new String[]{email, password});
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            @SuppressLint("Range") String role = cursor.getString(cursor.getColumnIndex("role"));
+            cursor.close();
+            return role;
+        } else {
+            cursor.close();
+            return null;
         }
-        return count == 1;
     }
 
     @Override
