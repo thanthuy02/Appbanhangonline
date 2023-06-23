@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
@@ -30,20 +33,26 @@ import com.example.appbanhangonline.models.Product;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
-
     private CategoryHelper categoryHelper;
 
     private DBHelper dbHelper;
     private GridView gvProduct;
-    private List<Category> productList;
-
+    private List<Product> productList;
     private TextView txtCategory;
 
-    @SuppressLint("MissingInflatedId")
+
+
+    RecyclerView rvProduct;
+    ProductUserAdapter productUserAdapter;
+    ArrayList<Product> products = new ArrayList<>();
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +60,26 @@ public class HomeActivity extends AppCompatActivity {
 
         txtCategory = findViewById(R.id.txtCategory);
 
-        ShowProductList();
-//        gvProduct = findViewById(R.id.gvProduct);
-//        categoryHelper = new CategoryHelper();
-//        productList = categoryHelper.getAll();
-//
-//        ProductUserAdapter adapter = new ProductUserAdapter(this, productList);
-//        gvProduct.setAdapter(adapter);
+        for (int i = 0; i < 50; i++) {
+            String price = String.format("%.2f",new Random().nextFloat() * 1000);
+            price = price.replace(",", ".");
+            float productPrice = Float.parseFloat(price);
+            Product p = new Product(i, "Product " + i, 2,20, productPrice);
+
+            int resID = getResId("pen1", R.drawable.class);
+            Uri imgUri = getUri(resID);
+            p.setImage(imgUri);
+            p.setPrice(productPrice);
+            products.add(p);
+        }
+        rvProduct = findViewById(R.id.rvProduct);
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        rvProduct.setLayoutManager(layoutManager);
+
+        productUserAdapter = new ProductUserAdapter(this, products);
+        rvProduct.setAdapter(productUserAdapter);
+
     }
 
     // Hiển thị thông tin người dùng
@@ -131,61 +153,17 @@ public class HomeActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-    public void ShowProductList(){
-        List<Product> productList = new ArrayList<>();
-
-        // Thêm sản phẩm 1
-        byte[] img1 = convertDrawableToByteArray(R.drawable.pen1);
-        Product product1 = new Product(1, "Bút bi", 1, 30,  5000, img1);
-        productList.add(product1);
-
-        // Thêm sản phẩm 2
-        byte[] img2 = convertDrawableToByteArray(R.drawable.denhoc1);
-        Product product2 = new Product(2, "Đèn học",2, 57,97000, img2);
-        productList.add(product2);
-
-        // Thêm sản phẩm 3
-        byte[] img3 = convertDrawableToByteArray(R.drawable.pen2);
-        Product product3 = new Product(3, "Bút nước",1, 153,3500, img3);
-        productList.add(product3);
-
-        // Gán danh sách sản phẩm vào GridView
-        GridView gvProduct = findViewById(R.id.gvProduct);
-        ProductUserAdapter adapter = new ProductUserAdapter(this, productList);
-        gvProduct.setAdapter(adapter);
+    public Uri getUri (int resId){
+        return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
     }
 
-
-
-    private byte[] convertDrawableToByteArray(int drawableId) {
+    public static int getResId(String resName, Class<?> c) {
         try {
-            // Tạo đối tượng BitmapFactory để đọc tài nguyên drawable
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-            // Chuyển đổi drawable thành đối tượng Bitmap
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), drawableId, options);
-
-            // Tạo đối tượng ByteArrayOutputStream để ghi dữ liệu hình ảnh
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-            // Nén hình ảnh và ghi dữ liệu vào stream
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-            // Lấy mảng byte từ stream
-            byte[] byteArray = stream.toByteArray();
-
-            // Đóng stream
-            stream.close();
-
-            return byteArray;
-        } catch (IOException e) {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
-
-
-
-
 }

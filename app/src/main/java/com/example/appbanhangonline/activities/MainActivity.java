@@ -22,12 +22,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static DBHelper dbHelper;
+    private static SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(MainActivity.this);
+        db = dbHelper.getWritableDatabase();
 
 //        trang login, đang ví dụ minh hoạ để làm logout
         Button button = (Button) findViewById(R.id.button);

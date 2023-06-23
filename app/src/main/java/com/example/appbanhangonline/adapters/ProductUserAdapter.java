@@ -10,82 +10,116 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductUserAdapter extends BaseAdapter {
+public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.ProductViewHolder> {
     private Context context;
 
-    private List<Product> productList;
+    private ArrayList<Product> productList;
 
-    public ProductUserAdapter(Context Context, List<Product> productList) {
+
+    public ProductUserAdapter(Context context, ArrayList<Product> productList) {
         this.context = context;
         this.productList = productList;
     }
 
     @Override
-    public int getCount() {
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View listItem= layoutInflater.inflate(R.layout.item_product, parent, false);
+        ProductViewHolder productViewHolder = new ProductViewHolder(listItem);
+        return productViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+        final  Product p = productList.get(position);
+        holder.productName.setText(p.getProductName());
+        holder.productPrice.setText(""+p.getPrice());
+        holder.productImage.setImageURI(p.getImage());
+        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAddCLick(view, p);
+            }
+        });
+    }
+
+    public void btnAddCLick(View view, Product p){
+        Toast.makeText(view.getContext(), "click: " + p.getProductName(), Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public int getItemCount() {
         return productList.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return productList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    public static class ProductViewHolder{
+    public static class ProductViewHolder extends RecyclerView.ViewHolder{
         public ImageView productImage;
         public TextView productName, productPrice;
         public Button btnAdd;
-    }
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        ProductViewHolder holder = null;
 
-        if(view == null){
-            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-            view = inflater.inflate(R.layout.item_product, parent, false);
+        public RelativeLayout relativeLayout;
 
-            holder = new ProductViewHolder();
-            holder.productImage = view.findViewById(R.id.productImage);
-            holder.productName = view.findViewById(R.id.productName);
-            holder.productPrice = view.findViewById(R.id.productPrice);
-            holder.btnAdd = view.findViewById(R.id.btnAdd);
-
-            view.setTag(holder);
-        } else {
-            holder = (ProductViewHolder) view.getTag();
+        public ProductViewHolder(@NonNull View itemView) {
+            super(itemView);
+            productImage = itemView.findViewById(R.id.productImage);
+            productName = itemView.findViewById(R.id.productName);
+            productPrice = itemView.findViewById(R.id.productPrice);
+            btnAdd = itemView.findViewById(R.id.btnAdd);
+            relativeLayout = itemView.findViewById(R.id.relativelayout);
         }
-
-        Product product = productList.get(position);
-
-//        Glide.with(context).load(product.getImage()).into(holder.productImage);
+    }
+//    @Override
+//    public View getView(int position, View view, ViewGroup parent) {
+//        ProductViewHolder holder = null;
+//
+//        if(view == null){
+//            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+//            view = inflater.inflate(R.layout.item_product, parent, false);
+//
+//            holder = new ProductViewHolder();
+//            holder.productImage = view.findViewById(R.id.productImage);
+//            holder.productName = view.findViewById(R.id.productName);
+//            holder.productPrice = view.findViewById(R.id.productPrice);
+//            holder.btnAdd = view.findViewById(R.id.btnAdd);
+//
+//            view.setTag(holder);
+//        } else {
+//            holder = (ProductViewHolder) view.getTag();
+//        }
+//
+//        Product product = productList.get(position);
+//
+////        Glide.with(context).load(product.getImage()).into(holder.productImage);
+////        holder.productName.setText(product.getProductName());
+////        holder.productPrice.setText("Giá:" + product.getPrice());
+//
+////        byte[] productImage = product.getImage();
+////        Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
+//
+////        holder.productImage.setImageBitmap(bitmap);
+//
+//        holder.productImage.setImageURI(product.getImage());
 //        holder.productName.setText(product.getProductName());
 //        holder.productPrice.setText("Giá:" + product.getPrice());
-
-        byte[] productImage = product.getImage();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
-
-        holder.productImage.setImageBitmap(bitmap);
-        holder.productName.setText(product.getProductName());
-        holder.productPrice.setText("Giá:" + product.getPrice());
-        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return view;
-    }
+//        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(v.getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        return view;
+//    }
 }
