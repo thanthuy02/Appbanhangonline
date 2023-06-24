@@ -106,4 +106,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             linearLayoutCart = itemView.findViewById(R.id.linearLayoutCart);
         }
     }
+
+    public void updateUI() {
+        notifyDataSetChanged();
+        // Xóa tất cả sản phẩm trong giỏ hàng
+        cart.cartList.clear();
+    }
 }

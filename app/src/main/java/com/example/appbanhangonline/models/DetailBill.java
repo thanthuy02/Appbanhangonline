@@ -2,15 +2,15 @@ package com.example.appbanhangonline.models;
 
 public class DetailBill {
     private int billDetailID;
-    private String billID;
-    private String productId;
+    private int billID;
+    private int productId;
     private int quantity;
     private int price;
 
     public DetailBill() {
     }
 
-    public DetailBill(int billDetailID, String billID, String productId, int quantity, int price) {
+    public DetailBill(int billDetailID, int billID, int productId, int quantity, int price) {
         this.billDetailID = billDetailID;
         this.billID = billID;
         this.productId = productId;
@@ -26,19 +26,19 @@ public class DetailBill {
         this.billDetailID = billDetailID;
     }
 
-    public String getBillID() {
+    public int getBillID() {
         return billID;
     }
 
-    public void setBillID(String billID) {
+    public void setBillID(int billID) {
         this.billID = billID;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

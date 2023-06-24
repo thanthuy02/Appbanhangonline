@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,7 +64,6 @@ public class HomeUserActivity extends AppCompatActivity {
 
         productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
         rvProduct.setAdapter(productUserAdapter);
-
     }
 
     private void Anhxa() {
@@ -74,41 +74,41 @@ public class HomeUserActivity extends AppCompatActivity {
 
         //productHandler = new ProductHandler(this);
 
-//        String imagePath1 = "android.resource://" + getPackageName() + "/drawable/pd1";
-//        String imagePath2 = "android.resource://" + getPackageName() + "/drawable/pd2";
-//        String imagePath3 = "android.resource://" + getPackageName() + "/drawable/pd3";
-//        String imagePath4 = "android.resource://" + getPackageName() + "/drawable/pd4";
-//        String imagePath5 = "android.resource://" + getPackageName() + "/drawable/pd5";
-//        String imagePath6 = "android.resource://" + getPackageName() + "/drawable/pd6";
-//        String imagePath7 = "android.resource://" + getPackageName() + "/drawable/pd7";
-//        String imagePath8 = "android.resource://" + getPackageName() + "/drawable/pd8";
-//        String imagePath9 = "android.resource://" + getPackageName() + "/drawable/pd9";
-//        String imagePath10 = "android.resource://" + getPackageName() + "/drawable/pd10";
-//        String imagePath11 = "android.resource://" + getPackageName() + "/drawable/pd11";
-//
-//        Uri imageUri1 = Uri.parse(imagePath1);
-//        Uri imageUri2 = Uri.parse(imagePath2);
-//        Uri imageUri3 = Uri.parse(imagePath3);
-//        Uri imageUri4 = Uri.parse(imagePath4);
-//        Uri imageUri5 = Uri.parse(imagePath5);
-//        Uri imageUri6 = Uri.parse(imagePath6);
-//        Uri imageUri7 = Uri.parse(imagePath7);
-//        Uri imageUri8 = Uri.parse(imagePath8);
-//        Uri imageUri9 = Uri.parse(imagePath9);
-//        Uri imageUri10 = Uri.parse(imagePath10);
-//        Uri imageUri11 = Uri.parse(imagePath11);
-//
-//        String image1 = imageUri1.toString();
-//        String image2 = imageUri2.toString();
-//        String image3 = imageUri3.toString();
-//        String image4 = imageUri4.toString();
-//        String image5 = imageUri5.toString();
-//        String image6 = imageUri6.toString();
-//        String image7 = imageUri7.toString();
-//        String image8 = imageUri8.toString();
-//        String image9 = imageUri9.toString();
-//        String image10 = imageUri10.toString();
-//        String image11 = imageUri11.toString();
+        String imagePath1 = "android.resource://" + getPackageName() + "/drawable/pd1";
+        String imagePath2 = "android.resource://" + getPackageName() + "/drawable/pd2";
+        String imagePath3 = "android.resource://" + getPackageName() + "/drawable/pd3";
+        String imagePath4 = "android.resource://" + getPackageName() + "/drawable/pd4";
+        String imagePath5 = "android.resource://" + getPackageName() + "/drawable/pd5";
+        String imagePath6 = "android.resource://" + getPackageName() + "/drawable/pd6";
+        String imagePath7 = "android.resource://" + getPackageName() + "/drawable/pd7";
+        String imagePath8 = "android.resource://" + getPackageName() + "/drawable/pd8";
+        String imagePath9 = "android.resource://" + getPackageName() + "/drawable/pd9";
+        String imagePath10 = "android.resource://" + getPackageName() + "/drawable/pd10";
+        String imagePath11 = "android.resource://" + getPackageName() + "/drawable/pd11";
+
+        Uri imageUri1 = Uri.parse(imagePath1);
+        Uri imageUri2 = Uri.parse(imagePath2);
+        Uri imageUri3 = Uri.parse(imagePath3);
+        Uri imageUri4 = Uri.parse(imagePath4);
+        Uri imageUri5 = Uri.parse(imagePath5);
+        Uri imageUri6 = Uri.parse(imagePath6);
+        Uri imageUri7 = Uri.parse(imagePath7);
+        Uri imageUri8 = Uri.parse(imagePath8);
+        Uri imageUri9 = Uri.parse(imagePath9);
+        Uri imageUri10 = Uri.parse(imagePath10);
+        Uri imageUri11 = Uri.parse(imagePath11);
+
+        String image1 = imageUri1.toString();
+        String image2 = imageUri2.toString();
+        String image3 = imageUri3.toString();
+        String image4 = imageUri4.toString();
+        String image5 = imageUri5.toString();
+        String image6 = imageUri6.toString();
+        String image7 = imageUri7.toString();
+        String image8 = imageUri8.toString();
+        String image9 = imageUri9.toString();
+        String image10 = imageUri10.toString();
+        String image11 = imageUri11.toString();
 //
 //        productHandler.add("Bút bi", 1, 35, 6000, image1);
 //        productHandler.add("Bút 3 màu", 1, 15, 15000, image2);
@@ -126,23 +126,56 @@ public class HomeUserActivity extends AppCompatActivity {
 
         //System.out.println(productList);
 
-        for (int i = 0; i < 50; i++) {
-            int productID = i;
-            String productName = "Product " + i;
-            int categoryID = 2;
-            int quantity = 15;
-            int minPrice = 3000;
-            int maxPrice = 10000;
-            int price = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
+//        for (int i = 0; i < 50; i++) {
+//            int productID = i;
+//            String productName = "Product " + i;
+//            int categoryID = 2;
+//            int quantity = 15;
+//            int minPrice = 3000;
+//            int maxPrice = 10000;
+//            int price = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
+//
+//            String imagePath = "android.resource://" + getPackageName() + "/drawable/pd" + (i % 11 + 1);
+//            Uri imageUri = Uri.parse(imagePath);
+//            String image = imageUri.toString();
+//
+//            Product p = new Product(productID, productName, categoryID, quantity, price, image);
+//
+//            productList.add(p);
+//        }
 
-            String imagePath = "android.resource://" + getPackageName() + "/drawable/pd" + (i % 11 + 1);
-            Uri imageUri = Uri.parse(imagePath);
-            String image = imageUri.toString();
+        Product p1 = new Product(1, "Bút bi", 1, 35, 6000, image1);
+        productList.add(p1);
 
-            Product p = new Product(productID, productName, categoryID, quantity, price, image);
+        Product p2 = new Product(2, "Bút 3 màu", 1, 15, 15000, image2);
+        productList.add(p2);
 
-            productList.add(p);
-        }
+        Product p3 = new Product(3, "Đèn học trắng", 4, 21, 85000, image3);
+        productList.add(p3);
+
+        Product p4 = new Product(4, "Vở bìa cứng", 2, 10, 28000, image4);
+        productList.add(p4);
+
+        Product p5 = new Product(5, "Vở 200 trang", 2, 4, 20000, image5);
+        productList.add(p5);
+
+        Product p6 = new Product(6, "Vở lò xo", 2, 12, 56000, image6);
+        productList.add(p6);
+
+        Product p7 = new Product(7, "Máy tính 570", 3, 15, 427000, image7);
+        productList.add(p7);
+
+        Product p8 = new Product(8, "Máy tính 580", 3, 6, 510000, image8);
+        productList.add(p8);
+
+        Product p9 = new Product(9, "Đèn học chân cao", 4, 5, 90000, image9);
+        productList.add(p9);
+
+        Product p10 = new Product(10, "Đèn học cao cấp", 4, 14, 150000, image10);
+        productList.add(p10);
+
+        Product p11 = new Product(11, "Bút chì 2B", 1, 56, 4000, image11);
+        productList.add(p11);
 
         productRepository = new ProductRepository(productList);
 
@@ -213,7 +246,7 @@ public class HomeUserActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-<<<<<<< HEAD
+
 //    public void productList(){
 //        ArrayList<Product> products = new ArrayList<>();
 //        for (int i = 0; i < 50; i++) {
@@ -234,8 +267,7 @@ public class HomeUserActivity extends AppCompatActivity {
 //        }
 //        productRepository = new ProductRepository(products);
 //    }
-=======
->>>>>>> 463de74e639dad9ad690496b156d6fafb6ed0049
+
     public Uri getUri (int resId){
         return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
     }
@@ -249,6 +281,7 @@ public class HomeUserActivity extends AppCompatActivity {
             return -1;
         }
     }
+
 
     public void onShowProductByOder(View v){
         Intent intent = new Intent(HomeUserActivity.this, CartActivity.class);
