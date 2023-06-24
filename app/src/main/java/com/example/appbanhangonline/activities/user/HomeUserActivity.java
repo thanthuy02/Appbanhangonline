@@ -31,14 +31,18 @@ import com.example.appbanhangonline.models.ProductRepository;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
     TextView txtCategory;
     RecyclerView rvProduct;
-    ProductRepository productRepository;
+
+    ArrayList<Product> productList;
 
     ProductUserAdapter productUserAdapter;
+
+    ProductRepository productRepository;
 
     ProductHandler productHandler;
 
@@ -48,19 +52,95 @@ public class HomeUserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        txtCategory = findViewById(R.id.txtCategory);
-
-        productList();
-
-        rvProduct = findViewById(R.id.rvProduct);
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-        rvProduct.setLayoutManager(layoutManager);
-
+        Anhxa();
         productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
         rvProduct.setAdapter(productUserAdapter);
+
     }
+
+    private void Anhxa() {
+        txtCategory = findViewById(R.id.txtCategory);
+        rvProduct = findViewById(R.id.rvProduct);
+
+        productList = new ArrayList<>();
+
+        //productHandler = new ProductHandler(this);
+
+//        String imagePath1 = "android.resource://" + getPackageName() + "/drawable/pd1";
+//        String imagePath2 = "android.resource://" + getPackageName() + "/drawable/pd2";
+//        String imagePath3 = "android.resource://" + getPackageName() + "/drawable/pd3";
+//        String imagePath4 = "android.resource://" + getPackageName() + "/drawable/pd4";
+//        String imagePath5 = "android.resource://" + getPackageName() + "/drawable/pd5";
+//        String imagePath6 = "android.resource://" + getPackageName() + "/drawable/pd6";
+//        String imagePath7 = "android.resource://" + getPackageName() + "/drawable/pd7";
+//        String imagePath8 = "android.resource://" + getPackageName() + "/drawable/pd8";
+//        String imagePath9 = "android.resource://" + getPackageName() + "/drawable/pd9";
+//        String imagePath10 = "android.resource://" + getPackageName() + "/drawable/pd10";
+//        String imagePath11 = "android.resource://" + getPackageName() + "/drawable/pd11";
+//
+//        Uri imageUri1 = Uri.parse(imagePath1);
+//        Uri imageUri2 = Uri.parse(imagePath2);
+//        Uri imageUri3 = Uri.parse(imagePath3);
+//        Uri imageUri4 = Uri.parse(imagePath4);
+//        Uri imageUri5 = Uri.parse(imagePath5);
+//        Uri imageUri6 = Uri.parse(imagePath6);
+//        Uri imageUri7 = Uri.parse(imagePath7);
+//        Uri imageUri8 = Uri.parse(imagePath8);
+//        Uri imageUri9 = Uri.parse(imagePath9);
+//        Uri imageUri10 = Uri.parse(imagePath10);
+//        Uri imageUri11 = Uri.parse(imagePath11);
+//
+//        String image1 = imageUri1.toString();
+//        String image2 = imageUri2.toString();
+//        String image3 = imageUri3.toString();
+//        String image4 = imageUri4.toString();
+//        String image5 = imageUri5.toString();
+//        String image6 = imageUri6.toString();
+//        String image7 = imageUri7.toString();
+//        String image8 = imageUri8.toString();
+//        String image9 = imageUri9.toString();
+//        String image10 = imageUri10.toString();
+//        String image11 = imageUri11.toString();
+//
+//        productHandler.add("Bút bi", 1, 35, 6000, image1);
+//        productHandler.add("Bút 3 màu", 1, 15, 15000, image2);
+//        productHandler.add("Đèn học trắng", 4, 21, 85000, image3);
+//        productHandler.add("Vở bìa cứng", 2, 10, 28000, image4);
+//        productHandler.add("Vở 200 trang", 2, 4, 20000, image5);
+//        productHandler.add("Vở lò xo", 2, 12, 56000, image6);
+//        productHandler.add("Máy tính 570", 3, 15, 427000, image7);
+//        productHandler.add("Máy tính 580", 3, 6, 510000, image8);
+//        productHandler.add("Đèn học chân cao", 4, 5, 90000, image9);
+//        productHandler.add("Đèn học cao cấp", 4, 14, 150000, image10);
+//        productHandler.add("Bút chì 2B", 1, 56, 4000, image11);
+//
+//        productList = productHandler.getAll();
+
+        //System.out.println(productList);
+
+        for (int i = 0; i < 50; i++) {
+            int productID = i;
+            String productName = "Product " + i;
+            int categoryID = 2;
+            int quantity = 15;
+            int minPrice = 3000;
+            int maxPrice = 10000;
+            int price = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
+
+            String imagePath = "android.resource://" + getPackageName() + "/drawable/pd" + (i % 11 + 1);
+            Uri imageUri = Uri.parse(imagePath);
+            String image = imageUri.toString();
+
+            Product p = new Product(productID, productName, categoryID, quantity, price, image);
+
+            productList.add(p);
+        }
+
+        productRepository = new ProductRepository(productList);
+
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+            rvProduct.setLayoutManager(layoutManager);
+        }
 
     // Hiển thị thông tin người dùng
     public void toggleUserInfo(View view) {
@@ -122,38 +202,9 @@ public class HomeUserActivity extends AppCompatActivity {
         });
 
         popupMenu.inflate(R.menu.category_menu);
-
-//        Menu menu = popupMenu.getMenu();
-//        for(Category category : categoryList){
-//            String categoryName = category.getCategoryName();
-//            menu.add(R.id.categories, Menu.NONE, Menu.NONE, categoryName);
-//        }
-
-        //popupMenu.inflate(R.menu.category_menu);
-
         popupMenu.show();
     }
 
-    public void productList(){
-        ArrayList<Product> products = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-
-            int minPrice = 3000;
-            int maxPrice = 10000;
-            int randomPrice = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
-            String price = String.valueOf(randomPrice);
-            price = price.replace(",", ".");
-            float productPrice = Float.parseFloat(price);
-            Product p = new Product(i, "Product " + i, 2,20, productPrice);
-
-            int resID = getResId("pd" + (i%11 + 1), R.drawable.class);
-            Uri imgUri = getUri(resID);
-            p.setImage(imgUri);
-            p.setPrice(productPrice);
-            products.add(p);
-        }
-        productRepository = new ProductRepository(products);
-    }
     public Uri getUri (int resId){
         return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
     }
@@ -172,4 +223,7 @@ public class HomeUserActivity extends AppCompatActivity {
         Intent intent = new Intent(HomeUserActivity.this, CartActivity.class);
         startActivity(intent);
     }
+
 }
+
+
