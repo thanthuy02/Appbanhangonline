@@ -91,7 +91,7 @@ public class CategoryHandle implements IManager<Category, Integer> {
         List<Category> categories = new ArrayList<>();
         try {
             DBHelper dbHelper = MainActivity.getDB();
-            assert dbHelper != null;
+            //assert dbHelper != null;
             dbHelper.getReadableDatabase().beginTransaction();
             String sql = String.format("SELECT * from %s", DBHelper.CATEGORIES);
             Log.d("sql :: ", sql);
