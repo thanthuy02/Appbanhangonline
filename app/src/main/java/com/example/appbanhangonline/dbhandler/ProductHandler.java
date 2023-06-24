@@ -31,7 +31,6 @@ public class ProductHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-
     public ArrayList<Product> getAll() {
         ArrayList<Product> products = new ArrayList<>();
         try {
