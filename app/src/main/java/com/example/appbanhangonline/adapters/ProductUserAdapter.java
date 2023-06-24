@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
+import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
 
     private ArrayList<Product> productList;
 
+    public Cart cart = new Cart();
 
     public ProductUserAdapter(Context context, ArrayList<Product> productList) {
         this.context = context;
@@ -57,12 +59,28 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
     }
 
     public void btnAddCLick(View view, Product p){
-        Toast.makeText(view.getContext(), "click: " + p.getProductName(), Toast.LENGTH_SHORT).show();
+//        cart.addCart(p);
+//        Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
+        boolean r = cart.addCart(p);
+        if(r == true) {
+            Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
+        } else {
+            // Số lượng vượt quá giới hạn cho phép
+            Toast.makeText(view.getContext(), "Số lượng sản phẩm vượt quá giới hạn cho phép!", Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public int getItemCount() {
         return productList.size();
     }
+
+//    public Product getProductById(int id){
+//        for ( Product p : productList) {
+//            if (id == p.getProductID())
+//                return p;
+//        }
+//        return null;
+//    }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
         public ImageView productImage;

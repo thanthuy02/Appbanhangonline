@@ -1,23 +1,15 @@
-package com.example.appbanhangonline.activities;
+package com.example.appbanhangonline.activities.user;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-;
-
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,33 +17,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
+import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
-import com.example.appbanhangonline.database.CategoryHelper;
-import com.example.appbanhangonline.database.DBHelper;
-import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
+import com.example.appbanhangonline.models.ProductRepository;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-public class HomeActivity extends AppCompatActivity {
-    private CategoryHelper categoryHelper;
-
-    private DBHelper dbHelper;
-    private GridView gvProduct;
-    private List<Product> productList;
+public class HomeUserActivity extends AppCompatActivity {
     private TextView txtCategory;
-
-
-
     RecyclerView rvProduct;
-    ProductUserAdapter productUserAdapter;
-    ArrayList<Product> products = new ArrayList<>();
+    ProductRepository productRepository;
 
+    ProductUserAdapter productUserAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,26 +40,15 @@ public class HomeActivity extends AppCompatActivity {
 
         txtCategory = findViewById(R.id.txtCategory);
 
-        for (int i = 0; i < 50; i++) {
-            String price = String.format("%.2f",new Random().nextFloat() * 1000);
-            price = price.replace(",", ".");
-            float productPrice = Float.parseFloat(price);
-            Product p = new Product(i, "Product " + i, 2,20, productPrice);
+        productList();
 
-            int resID = getResId("pen1", R.drawable.class);
-            Uri imgUri = getUri(resID);
-            p.setImage(imgUri);
-            p.setPrice(productPrice);
-            products.add(p);
-        }
         rvProduct = findViewById(R.id.rvProduct);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvProduct.setLayoutManager(layoutManager);
 
-        productUserAdapter = new ProductUserAdapter(this, products);
+        productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
         rvProduct.setAdapter(productUserAdapter);
-
     }
 
     // Hiển thị thông tin người dùng
@@ -96,11 +65,12 @@ public class HomeActivity extends AppCompatActivity {
     //Đăng xuất
     public void logoutClicked(View v){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Đăng xuất");
         builder.setMessage("Bạn có muốn đăng xuất không?")
                 .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                        Intent intent = new Intent(HomeUserActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -153,6 +123,26 @@ public class HomeActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    public void productList(){
+        ArrayList<Product> products = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+
+            int minPrice = 3000;
+            int maxPrice = 10000;
+            int randomPrice = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
+            String price = String.valueOf(randomPrice);
+            price = price.replace(",", ".");
+            float productPrice = Float.parseFloat(price);
+            Product p = new Product(i, "Product " + i, 2,20, productPrice);
+
+            int resID = getResId("pen1", R.drawable.class);
+            Uri imgUri = getUri(resID);
+            p.setImage(imgUri);
+            p.setPrice(productPrice);
+            products.add(p);
+        }
+        productRepository = new ProductRepository(products);
+    }
     public Uri getUri (int resId){
         return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
     }
@@ -165,5 +155,10 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    public void onShowProductByOder(View v){
+        Intent intent = new Intent(HomeUserActivity.this, CartActivity.class);
+        startActivity(intent);
     }
 }

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.admin.MenuAdminActivity;
-import com.example.appbanhangonline.activities.user.MenuUserActivity;
+import com.example.appbanhangonline.activities.user.HomeUserActivity;
 import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 import java.util.Objects;
@@ -72,7 +72,7 @@ public class LoginActivity extends Activity {
                             "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                     finish();
                 } else if (Objects.equals(loginHandler.checkLogin(email, password), "customer")){
-                    Intent i = new Intent(getApplicationContext(), MenuUserActivity.class);
+                    Intent i = new Intent(getApplicationContext(), HomeUserActivity.class);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),
                             "Đăng nhập thành công", Toast.LENGTH_LONG).show();

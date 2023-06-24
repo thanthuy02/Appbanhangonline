@@ -17,11 +17,11 @@
         <!-- Logo -->
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="2dp"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/applogo" />
 
         <TextView
             android:id="@+id/txtTuT"
@@ -43,7 +43,9 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/imgBtnUser"
-            android:background="@drawable/ic_cart" />
+            android:background="@drawable/ic_cart"
+            android:onClick="onShowProductByOder"/>
+
 
         <!-- Icon user -->
         <ImageButton
@@ -192,18 +194,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0"
         android:background="@drawable/border"
-        android:paddingBottom="60dp"
+        android:paddingBottom="30dp"
         />
-
-
-    <!--    <GridView-->
-<!--        android:id="@+id/gvProduct"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:numColumns="2"-->
-<!--        tools:layout_editor_absoluteX="5dp"-->
-<!--        tools:layout_editor_absoluteY="173dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/layout_filter"-->
-<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
