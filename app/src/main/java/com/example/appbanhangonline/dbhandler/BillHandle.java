@@ -1,11 +1,16 @@
 package com.example.appbanhangonline.dbhandler;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+
 import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.dbhandler.interfaces.IManager;
 import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.DetailBill;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class BillHandle implements IManager<Bill, Integer> {
@@ -23,7 +28,6 @@ public class BillHandle implements IManager<Bill, Integer> {
         }
         return I;
     }
-
 
     @Override
     public void add(Bill bill) {
@@ -52,6 +56,33 @@ public class BillHandle implements IManager<Bill, Integer> {
             throw new RuntimeException("no bill detail to add");
         }
 
+    }
+
+    public int insertBill(Bill bill){
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ContentValues values = new ContentValues();
+        values.put("user_id", bill.getBillCustomerID());
+        String currentTime = date.format(new Date(System.currentTimeMillis()));
+        values.put("created_at", currentTime);
+        values.put("total_price", bill.getBillTotalPrice());
+
+        long result = mDbHelper.getWritableDatabase().insert("bills", null, values);
+        if (result <= 0) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    public int getBillIdNew() {
+        int bill_id = -1;
+        String query = "SELECT id FROM bills ORDER BY id DESC LIMIT 1;";
+
+        Cursor c = mDbHelper.getReadableDatabase().rawQuery(query, null);
+        c.moveToFirst();
+        bill_id = c.getInt(0);
+        c.close();
+        return bill_id;
     }
 
     @Override

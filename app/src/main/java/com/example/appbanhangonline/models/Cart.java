@@ -17,13 +17,13 @@ public class Cart {
 
     public ProductRepository productRepository = new ProductRepository();
 
-    private static double total_price;
+    private static int total_price;
 
-    public double getTotal_price(){
+    public int getTotal_price(){
         return this.total_price;
     }
 
-    public void setTotal_price(double total_price) {
+    public void setTotal_price(int total_price) {
         this.total_price = total_price;
     }
 
@@ -55,7 +55,7 @@ public class Cart {
 
 
 
-    public double getLinePrice(Product p){
+    public int getLinePrice(Product p){
         return p.getPrice() * cartList.getOrDefault(p.getProductID(), 0);
     }
 

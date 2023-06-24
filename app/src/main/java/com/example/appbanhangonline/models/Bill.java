@@ -2,7 +2,7 @@ package com.example.appbanhangonline.models;
 
 public class Bill {
     private int billID;
-    private String billCustomerID;
+    private int billCustomerID;
     private String createdAt;
     private int billTotalPrice;
 
@@ -13,7 +13,7 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(int billID, String billCustomerID, String createdAt, int billTotalPrice) {
+    public Bill(int billID, int billCustomerID, String createdAt, int billTotalPrice) {
         this.billID = billID;
         this.billCustomerID = billCustomerID;
         this.createdAt = createdAt;
@@ -26,6 +26,7 @@ public class Bill {
 
     public void setDetailBill(DetailBill detailBill) {
         this.detailBill = detailBill;
+        detailBill.setBillID(this.billID);
     }
 
     public int getBillID() {
@@ -36,11 +37,11 @@ public class Bill {
         this.billID = billID;
     }
 
-    public String getBillCustomerID() {
+    public int getBillCustomerID() {
         return billCustomerID;
     }
 
-    public void setBillCustomerID(String billCustomerID) {
+    public void setBillCustomerID(int billCustomerID) {
         this.billCustomerID = billCustomerID;
     }
 

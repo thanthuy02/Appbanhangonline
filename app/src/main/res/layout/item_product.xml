@@ -40,21 +40,34 @@
             android:text="Bút bi"/>
 
         <!-- Giá sản phẩm -->
-        <TextView
-            android:id="@+id/productPrice"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/llprice"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/productName"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:text="Giá: 5000"/>
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_money"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/productPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/productName"
+                android:textSize="14sp"
+                android:text="5000"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
 
         <!-- Button Add -->
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/productPrice"
+            android:layout_below="@+id/llprice"
             android:text="Thêm vào giỏ hàng"
             android:layout_marginTop="8dp"
             app:backgroundTint="@null"
