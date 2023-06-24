@@ -24,9 +24,10 @@
         <activity android:name=".activities.login.LoginActivity" />
         <activity android:name=".activities.admin.ProductActivity" />
         <activity android:name=".activities.admin.MenuAdminActivity" />
-        <activity android:name=".activities.user.MenuUserActivity" />
         <activity android:name=".activities.login.ForgotPasswordActivity" />
         <activity android:name=".activities.login.RegisterActivity" />
+        <activity android:name=".activities.user.HomeUserActivity"/>
+        <activity android:name=".activities.user.CartActivity"/>
 
     </application>
 
