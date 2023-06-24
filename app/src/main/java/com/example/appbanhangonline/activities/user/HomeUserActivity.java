@@ -261,19 +261,21 @@ public class HomeUserActivity extends AppCompatActivity {
         productUserAdapter.notifyDataSetChanged();
     }
 
-//    public Uri getUri (int resId){
-//        return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
-//    }
-//
-//    public static int getResId(String resName, Class<?> c) {
-//        try {
-//            Field idField = c.getDeclaredField(resName);
-//            return idField.getInt(idField);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return -1;
-//        }
-//    }
+
+    public Uri getUri (int resId){
+        return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     public void onShowProductByOder(View v){
         Intent intent = new Intent(HomeUserActivity.this, CartActivity.class);

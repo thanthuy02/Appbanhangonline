@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(),
                         RegisterActivity.class);
@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(),
                         ForgotPasswordActivity.class);
@@ -60,7 +60,7 @@ public class LoginActivity extends Activity {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
@@ -83,6 +83,13 @@ public class LoginActivity extends Activity {
                             Toast.LENGTH_LONG).show();
                 }
 
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             }
         });
     }

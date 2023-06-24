@@ -50,7 +50,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(""+p.getPrice());
-        Glide.with(context).load(p.getImage()).into(holder.productImage);
+//        holder.productImage.setImageURI(p.getImage());
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
