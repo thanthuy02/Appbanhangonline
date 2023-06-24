@@ -2,6 +2,9 @@ package com.example.appbanhangonline.activities.user;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,19 +22,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
+import com.example.appbanhangonline.dbhandler.CategoryHandle;
+import com.example.appbanhangonline.dbhandler.ProductHandler;
+import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
-    private TextView txtCategory;
+    TextView txtCategory;
     RecyclerView rvProduct;
     ProductRepository productRepository;
 
     ProductUserAdapter productUserAdapter;
+
+    ProductHandler productHandler;
+
+    CategoryHandle categoryHandle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,7 +146,7 @@ public class HomeUserActivity extends AppCompatActivity {
             float productPrice = Float.parseFloat(price);
             Product p = new Product(i, "Product " + i, 2,20, productPrice);
 
-            int resID = getResId("pen1", R.drawable.class);
+            int resID = getResId("pd" + (i%11 + 1), R.drawable.class);
             Uri imgUri = getUri(resID);
             p.setImage(imgUri);
             p.setPrice(productPrice);

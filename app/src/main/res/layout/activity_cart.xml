@@ -23,6 +23,18 @@
             android:layout_margin="5dp"
             android:background="@drawable/ic_back"
             android:onClick="backHome" />
+
+        <TextView
+            android:id="@+id/txtTuT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/imgBtnBack"
+            android:text="Giỏ hàng"
+            android:textColor="#2AA2BF"
+            android:textSize="25dp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -50,7 +62,7 @@
         android:id="@+id/btnPay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/round_btn"
         android:layout_margin="5dp"
         android:text="Thanh toán"
         android:textColor="#FFFFFF"

@@ -29,7 +29,7 @@ public class Cart {
 
     public boolean addCart(Product p) {
         Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
-        if (quantity >= 3) {
+        if (quantity >= 15) {
             return false;
         }
         cartList.put(p.getProductID(), quantity + 1);

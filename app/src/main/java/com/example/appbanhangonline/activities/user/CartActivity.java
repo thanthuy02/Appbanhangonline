@@ -27,7 +27,6 @@ public class CartActivity extends AppCompatActivity {
     private TextView total;
 
     private Button btnPay;
-    private int selectedPaymentOption = -1;
 
     private Cart cart = new Cart();
 
@@ -85,67 +84,4 @@ public class CartActivity extends AppCompatActivity {
     }
 }
 
-//    public static class Item {
-//        private int product_id;
-//        private int quantity;
-//
-//        public Item(int product_id, int quantity) {
-//            this.product_id = product_id;
-//            this.quantity = quantity;
-//        }
-//
-//        public int getProduct_id() {
-//            return product_id;
-//        }
-//
-//        public void setProduct_id(int product_id) {
-//            this.product_id = product_id;
-//        }
-//
-//        public int getQuantity() {
-//            return quantity;
-//        }
-//
-//        public void setQuantity(int quantity) {
-//            this.quantity = quantity;
-//        }
-//    }
-//
-//    public static List<Item> listItem;
-//
-//    public static boolean addItem(int product_id, int quantity) {
-//        if (listItem == null) {
-//            listItem = new ArrayList<>();
-//        }
-//
-//        for (Item item : listItem) {
-//            if (item.product_id == product_id) {
-//                item.quantity += quantity;
-//                return true;
-//            }
-//        }
-//
-//        Item item = new Item(product_id, quantity);
-//        listItem.add(item);
-//        return true;
-//    }
-//
-//    public static boolean removeItem(int product_id) {
-//        for (Item item : listItem) {
-//            if (item.product_id == product_id || item.quantity == 0) {
-//                listItem.remove(item);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public static int sum() {
-//        int s = 0;
-//        for (Item item : listItem) {
-//            s += item.quantity;
-//        }
-//        return s;
-//    }
-//}
 

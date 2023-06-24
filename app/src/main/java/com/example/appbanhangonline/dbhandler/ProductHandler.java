@@ -83,4 +83,42 @@ public class ProductHandler extends SQLiteOpenHelper {
 
     }
 
+//    public ArrayList<Product> getAllProduct() {
+//        ArrayList<Product> productList = new ArrayList<>();
+//        String query = "SELECT * FROM products";
+//        Cursor c = dbHelper.getData(query);
+//        while (c.moveToNext()) {
+//            Product product = new Product();
+//            product.setProductID(c.getInt(0));
+//            product.setProductName(c.getString(1));
+//            product.setCategoryID(c.getInt(2));
+//            product.setQuantity(c.getInt(3));
+//            product.setPrice(c.getDouble(4));
+//            product.setImage(c.getBlob(5));
+//
+//            productList.add(product);
+//            c.moveToNext();
+//        }
+//        c.close();
+//        return productList;
+//    }
+//
+//    public Product getProductById(int id) {
+//        Product product = null;
+//        String query = "SELECT * FROM products WHERE id = ?";
+//        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(query, new String[] {"" + id});
+//        if (cursor.moveToFirst()) {
+//            int productId = cursor.getInt(0);
+//            String name = cursor.getString(1);
+//            int categoryId = cursor.getInt(2);
+//            int quantity = cursor.getInt(3);
+//            double price = cursor.getDouble(4);
+//            byte[] image = cursor.getBlob(5);
+//
+//            product = new Product(productId, name, categoryId, quantity, price, image);
+//        }
+//        cursor.close();
+//        return product;
+//    }
+
 }

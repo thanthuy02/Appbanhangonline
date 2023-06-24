@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Appbanhangonline</string>
-    <string-array name="payment_options">
-        <item>Thanh toán khi nhận hàng</item>
-    </string-array>
 </resources>
