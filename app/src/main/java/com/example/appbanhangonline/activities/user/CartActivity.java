@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.MainActivity;
+import com.example.appbanhangonline.activities.admin.MenuAdminActivity;
 import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
 import com.example.appbanhangonline.dbhandler.BillHandle;
@@ -31,9 +33,10 @@ import java.util.List;
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
 
-    TextView total;
+    TextView total, emptyCart;
 
     Button btnPay;
+    ImageButton btnBack;
 
     Cart cart = new Cart();
 
@@ -50,10 +53,23 @@ public class CartActivity extends AppCompatActivity {
 
         Anhxa();
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, HomeUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        if(Cart.cartList.isEmpty()){
+            emptyCart.setVisibility(View.VISIBLE);
+        }
+
         cartAdapter = new CartAdapter(this, this.cart);
         rvCart.setAdapter(cartAdapter);
 
-        total.setText("Thành tiền: " + this.cart.getTotal_price());
+        // tổng tiền hóa đơn
+        updateData();
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +87,8 @@ public class CartActivity extends AppCompatActivity {
         total = findViewById(R.id.total);
         rvCart = findViewById(R.id.rvCart);
         btnPay = findViewById(R.id.btnPay);
+        btnBack = findViewById(R.id.imgBtnBack);
+        emptyCart = findViewById(R.id.emptyCart);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
         rvCart.setLayoutManager(layoutManager);
@@ -80,19 +98,30 @@ public class CartActivity extends AppCompatActivity {
     private void showPaymentDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thanh toán");
-        builder.setMessage("Thanh toán khi nhận hàng.")
-                .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        showSuccessToast();
-                    }
-                })
-                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+
+        if(Cart.cartList.isEmpty()){
+            builder.setMessage("Không có sản phẩm nào trong giỏ hàng.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+        } else {
+            builder.setMessage("Thanh toán khi nhận hàng.")
+                    .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            showSuccessToast();
+                        }
+                    })
+                    .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+        }
         AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -137,6 +166,7 @@ public class CartActivity extends AppCompatActivity {
         cartAdapter.updateUI();
         cart.setTotal_price(0);
         total.setText("Thành tiền: " + this.cart.getTotal_price());
+        emptyCart.setVisibility(View.VISIBLE);
     }
 }
 
