@@ -14,36 +14,44 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
+import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
+import com.example.appbanhangonline.dbhandler.BillHandle;
+import com.example.appbanhangonline.dbhandler.DetailBillHandler;
+import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.Cart;
+import com.example.appbanhangonline.models.DetailBill;
+import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
-    private RecyclerView rvCart;
+    RecyclerView rvCart;
 
-    private TextView total;
+    TextView total;
 
-    private Button btnPay;
+    Button btnPay;
 
-    private Cart cart = new Cart();
+    Cart cart = new Cart();
+
+    CartAdapter cartAdapter;
+
+    BillHandle billHandle;
+
+    DetailBillHandler detailBillHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        total = findViewById(R.id.total);
-        rvCart = findViewById(R.id.rvCart);
-        btnPay = findViewById(R.id.btnPay);
+        Anhxa();
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
-        rvCart.setLayoutManager(layoutManager);
-
-        CartAdapter adapter = new CartAdapter(this, this.cart);
-        rvCart.setAdapter(adapter);
+        cartAdapter = new CartAdapter(this, this.cart);
+        rvCart.setAdapter(cartAdapter);
 
         total.setText("Thành tiền: " + this.cart.getTotal_price());
 
@@ -59,6 +67,16 @@ public class CartActivity extends AppCompatActivity {
         total.setText("Thành tiền: " + this.cart.getTotal_price());
     }
 
+    public void Anhxa(){
+        total = findViewById(R.id.total);
+        rvCart = findViewById(R.id.rvCart);
+        btnPay = findViewById(R.id.btnPay);
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
+        rvCart.setLayoutManager(layoutManager);
+
+
+    }
     private void showPaymentDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thanh toán");
@@ -80,7 +98,45 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void showSuccessToast() {
-        Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+//        Bill bill = new Bill();
+//        bill.setBillCustomerID(MainActivity.user_id);
+//        bill.setBillTotalPrice(cart.getTotal_price());
+//        Date now = new Date();
+//        bill.setCreatedAt(now.toString());
+//
+//        if(BillHandle.gI().insertBill(bill) == 1){
+            //int bill_id = billHandle.getBillIdNew();
+            // Thành công sẽ thêm hóa đơn chi tiết
+            Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+            ((CartActivity) this).load();
+
+
+            // Lặp qua các phần tử trong cartList để lấy sản phẩm
+//            for (Integer productId : cart.cartList.keySet()) {
+//                // Sử dụng phương thức getProductByOrder để lấy sản phẩm dựa trên vị trí
+//                Product product = cart.getProductByOrder(productId);
+//                int quantity = cart.cartList.getOrDefault(productId, 0);
+//
+//                DetailBill detailBill = new DetailBill();
+//                detailBill.setBillID(bill_id);
+//                detailBill.setProductId(product.getProductID());
+//                detailBill.setQuantity(quantity);
+//                detailBill.setPrice(product.getPrice());
+//            }
+//
+//            Cart.cartList.clear();
+
+//        } else {
+//            Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
+//        }
+    }
+
+//    xóa sp trong giỏ hàng và đặt lại tổng tiền = 0
+    public void load() {
+        cartAdapter.notifyDataSetChanged();
+        cartAdapter.updateUI();
+        cart.setTotal_price(0);
+        total.setText("Thành tiền: " + this.cart.getTotal_price());
     }
 }
 
