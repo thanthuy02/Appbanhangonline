@@ -49,7 +49,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         final  Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(""+p.getPrice());
-        holder.productImage.setImageURI(p.getImage());
+//        holder.productImage.setImageURI(p.getImage());
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

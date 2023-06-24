@@ -51,7 +51,7 @@ public class HomeUserActivity extends AppCompatActivity {
 
         txtCategory = findViewById(R.id.txtCategory);
 
-        productList();
+//        productList();
 
         rvProduct = findViewById(R.id.rvProduct);
 
@@ -134,26 +134,26 @@ public class HomeUserActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-    public void productList(){
-        ArrayList<Product> products = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-
-            int minPrice = 3000;
-            int maxPrice = 10000;
-            int randomPrice = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
-            String price = String.valueOf(randomPrice);
-            price = price.replace(",", ".");
-            float productPrice = Float.parseFloat(price);
-            Product p = new Product(i, "Product " + i, 2,20, productPrice);
-
-            int resID = getResId("pd" + (i%11 + 1), R.drawable.class);
-            Uri imgUri = getUri(resID);
-            p.setImage(imgUri);
-            p.setPrice(productPrice);
-            products.add(p);
-        }
-        productRepository = new ProductRepository(products);
-    }
+//    public void productList(){
+//        ArrayList<Product> products = new ArrayList<>();
+//        for (int i = 0; i < 50; i++) {
+//
+//            int minPrice = 3000;
+//            int maxPrice = 10000;
+//            int randomPrice = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
+//            String price = String.valueOf(randomPrice);
+//            price = price.replace(",", ".");
+//            float productPrice = Float.parseFloat(price);
+//            Product p = new Product(i, "Product " + i, 2,20, productPrice);
+//
+//            int resID = getResId("pd" + (i%11 + 1), R.drawable.class);
+//            Uri imgUri = getUri(resID);
+//            p.setImage(imgUri);
+//            p.setPrice(productPrice);
+//            products.add(p);
+//        }
+//        productRepository = new ProductRepository(products);
+//    }
     public Uri getUri (int resId){
         return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
     }

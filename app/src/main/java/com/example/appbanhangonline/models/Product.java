@@ -6,7 +6,7 @@ public class Product {
     private int productID;
     private String productName;
     private int categoryID;
-    private int quantity
+    private int quantity;
     private int price;
     private String image;
 
