@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="peach">#FFE4B5</color> // background
+    <color name="curious_blue">#2AA2BF</color> // text
+    <color name="alizarin_crimson">#E42B25</color>
 </resources>
