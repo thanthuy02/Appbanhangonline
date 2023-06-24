@@ -53,15 +53,7 @@ public class HomeUserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        txtCategory = findViewById(R.id.txtCategory);
-
-//        productList();
-
-        rvProduct = findViewById(R.id.rvProduct);
-
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
-        rvProduct.setLayoutManager(layoutManager);
-
+        Anhxa();
         productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
         rvProduct.setAdapter(productUserAdapter);
     }
@@ -219,23 +211,35 @@ public class HomeUserActivity extends AppCompatActivity {
 
     // Hiển thị tên các danh mục vào popup menu
     public void onShowCategoryMenu(View view){
-//        categoryHelper = new CategoryHelper();
-//
-//        List<Category> categoryList = categoryHelper.getAll();
-
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.item1:
+                        txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(1);
+                        return true;
 
                     case R.id.item2:
+                        txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(2);
+                        return true;
 
                     case R.id.item3:
+                        txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(3);
+                        return true;
 
                     case R.id.item4:
                         txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(4);
+                        return true;
+
+                    case R.id.item5:
+                        txtCategory.setText(item.getTitle().toString());
+                        productUserAdapter.setProductList(productList);
+                        productUserAdapter.notifyDataSetChanged();
                         return true;
                 }
                 return false;
@@ -246,27 +250,17 @@ public class HomeUserActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    public void filterProductByCategory(int categoryId){
+        ArrayList<Product> filter = new ArrayList<>();
+        for(Product p : productList){
+            if(p.getCategoryID() == categoryId) {
+                filter.add(p);
+            }
+        }
+        productUserAdapter.setProductList(filter);
+        productUserAdapter.notifyDataSetChanged();
+    }
 
-//    public void productList(){
-//        ArrayList<Product> products = new ArrayList<>();
-//        for (int i = 0; i < 50; i++) {
-//
-//            int minPrice = 3000;
-//            int maxPrice = 10000;
-//            int randomPrice = new Random().nextInt(maxPrice - minPrice + 1) + minPrice;
-//            String price = String.valueOf(randomPrice);
-//            price = price.replace(",", ".");
-//            float productPrice = Float.parseFloat(price);
-//            Product p = new Product(i, "Product " + i, 2,20, productPrice);
-//
-//            int resID = getResId("pd" + (i%11 + 1), R.drawable.class);
-//            Uri imgUri = getUri(resID);
-//            p.setImage(imgUri);
-//            p.setPrice(productPrice);
-//            products.add(p);
-//        }
-//        productRepository = new ProductRepository(products);
-//    }
 
     public Uri getUri (int resId){
         return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);

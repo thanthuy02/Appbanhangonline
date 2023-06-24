@@ -1,13 +1,9 @@
 package com.example.appbanhangonline.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,6 +30,10 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
 
     public ProductUserAdapter(Context context, ArrayList<Product> productList) {
         this.context = context;
+        this.productList = productList;
+    }
+
+    public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
 
@@ -64,7 +64,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
 //        Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
         boolean r = cart.addCart(p);
         if(r == true) {
-            Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng" + p.getProductID(), Toast.LENGTH_LONG).show();
         } else {
             // Số lượng vượt quá giới hạn cho phép
             Toast.makeText(view.getContext(), "Số lượng sản phẩm vượt quá giới hạn cho phép!", Toast.LENGTH_SHORT).show();
@@ -90,46 +90,4 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
             relativeLayout = itemView.findViewById(R.id.relativelayout);
         }
     }
-//    @Override
-//    public View getView(int position, View view, ViewGroup parent) {
-//        ProductViewHolder holder = null;
-//
-//        if(view == null){
-//            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-//            view = inflater.inflate(R.layout.item_product, parent, false);
-//
-//            holder = new ProductViewHolder();
-//            holder.productImage = view.findViewById(R.id.productImage);
-//            holder.productName = view.findViewById(R.id.productName);
-//            holder.productPrice = view.findViewById(R.id.productPrice);
-//            holder.btnAdd = view.findViewById(R.id.btnAdd);
-//
-//            view.setTag(holder);
-//        } else {
-//            holder = (ProductViewHolder) view.getTag();
-//        }
-//
-//        Product product = productList.get(position);
-//
-////        Glide.with(context).load(product.getImage()).into(holder.productImage);
-////        holder.productName.setText(product.getProductName());
-////        holder.productPrice.setText("Giá:" + product.getPrice());
-//
-////        byte[] productImage = product.getImage();
-////        Bitmap bitmap = BitmapFactory.decodeByteArray(productImage, 0, productImage.length);
-//
-////        holder.productImage.setImageBitmap(bitmap);
-//
-//        holder.productImage.setImageURI(product.getImage());
-//        holder.productName.setText(product.getProductName());
-//        holder.productPrice.setText("Giá:" + product.getPrice());
-//        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        return view;
-//    }
 }
