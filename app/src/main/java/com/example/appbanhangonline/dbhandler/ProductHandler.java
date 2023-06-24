@@ -33,8 +33,8 @@ public class ProductHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-    public List<Product> getAll() {
-        List<Product> products = new ArrayList<>();
+    public ArrayList<Product> getAll() {
+        ArrayList<Product> products = new ArrayList<>();
         try {
             DBHelper dbHelper = MainActivity.getDB();
             assert dbHelper != null;
