@@ -5,12 +5,12 @@ public class DetailBill {
     private String billID;
     private String productId;
     private int quantity;
-    private double price;
+    private int price;
 
     public DetailBill() {
     }
 
-    public DetailBill(int billDetailID, String billID, String productId, int quantity, double price) {
+    public DetailBill(int billDetailID, String billID, String productId, int quantity, int price) {
         this.billDetailID = billDetailID;
         this.billID = billID;
         this.productId = productId;
@@ -50,11 +50,11 @@ public class DetailBill {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

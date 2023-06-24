@@ -8,8 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
+import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.database.DBHelper;
+import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ public class ProductHandler extends SQLiteOpenHelper {
 
     DBHelper dbHelper;
     private Context context;
+    CategoryHandle categoryHandle = new CategoryHandle();
 
     //    ham tao
     public ProductHandler(Context context) {
@@ -29,12 +33,24 @@ public class ProductHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
+    public List<Product> getAll() {
+        List<Product> products = new ArrayList<>();
+        try {
+            DBHelper dbHelper = MainActivity.getDB();
+            assert dbHelper != null;
+            dbHelper.getReadableDatabase().beginTransaction();
+            String sql = String.format("SELECT * from %s", DBHelper.PRODUCTS);
+            Log.d("sql :: ", sql);
+            Cursor cursor = dbHelper.getData(sql);
 
-    public Cursor getAll() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        // Thực hiện truy vấn SQL và nhận một Cursor
-        Cursor cursor = db.rawQuery("SELECT * FROM products;", null);
-        return cursor;
+            while (cursor.moveToNext()){
+                products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(2), cursor.getInt(3), cursor.getString(5)));
+            }
+        } catch (Exception e) {
+            MainActivity.getDB().getReadableDatabase().endTransaction();
+            Log.d("error : ", e.getMessage());
+        }
+        return products;
     }
 
     public void add(String name, int category_id, int quantity, int price, byte[] image) {
