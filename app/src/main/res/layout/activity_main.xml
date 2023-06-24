@@ -2,53 +2,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CCFFFF"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp"
+    android:background="#FFFFFF"
     tools:context="com.example.appbanhangonline.activities.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F8F8F8"
+        android:background="#FFFFFF"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/progressBar1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="49dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="90dp"
             android:gravity="center"
-            android:text="ỨNG DỤNG QUẢN LÝ BÁN HÀNG ONLINE"
-            android:textColor="#3F51B5"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="VĂN PHÒNG PHẨM TUT"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="#2AA2BF"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/rounded_corner"
-            android:src="@drawable/applogo" />
+            android:layout_gravity="center"
+            android:src="@drawable/table_lamp_logo"/>
 
 
         <ProgressBar
             android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyleLarge"
-            android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-
-
-
+            android:layout_gravity="center"
+            android:backgroundTint="#2AA2BF"
+            android:layout_marginTop="50dp"/>
     </LinearLayout>
 
 
