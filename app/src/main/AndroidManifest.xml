@@ -28,10 +28,10 @@
         <activity android:name=".activities.admin.CategoryActivity" />
         <activity android:name=".activities.admin.CustomerActivity" />
         <activity android:name=".activities.admin.RevenueActivity" />
-
-        <activity android:name=".activities.user.MenuUserActivity" />
         <activity android:name=".activities.login.ForgotPasswordActivity" />
         <activity android:name=".activities.login.RegisterActivity" />
+        <activity android:name=".activities.user.HomeUserActivity"/>
+        <activity android:name=".activities.user.CartActivity"/>
 
     </application>
 

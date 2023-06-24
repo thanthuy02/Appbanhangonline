@@ -1,5 +1,7 @@
 package com.example.appbanhangonline.dtos;
 
+import android.net.Uri;
+
 import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 

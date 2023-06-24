@@ -6,9 +6,10 @@ public class Product {
     private int productID;
     private String productName;
     private int categoryID;
-    private int quantity;
+    private int quantity
     private int price;
     private String image;
+
 
 
     public Product() {
@@ -64,6 +65,7 @@ public class Product {
     }
 
     public String getImage() {return image; }
+
 
     public void setImage(String image) {
         this.image = image;
