@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.user.CartActivity;
 import com.example.appbanhangonline.models.Cart;
@@ -40,11 +41,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Integer product_id = cart.getProductByOrder(position).getProductID();
-        final Product p = cart.productRepository.getProductById(product_id);
+        Integer product_id = cart.getProductByOrder(position).getProductID();
+        Product p = cart.productRepository.getProductById(product_id);
 
         Integer amount = cart.cartList.get(product_id);
-        holder.productImage.setImageURI(p.getImage());
+        Glide.with(context).load(p.getImage()).into(holder.productImage);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText("Giá: " + p.getPrice());
         holder.productQuantity.setText("" + amount);

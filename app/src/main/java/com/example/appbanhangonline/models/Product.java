@@ -1,31 +1,27 @@
 package com.example.appbanhangonline.models;
 
-import android.net.Uri;
-
-
 public class Product {
     private int productID;
     private String productName;
     private int categoryID;
     private int quantity;
-    private double price;
-    private Uri img_byte;
-    private String productDesc;
+    private int price;
 
+    private String image;
 
     public Product() {
     }
 
-    public Product(int productID, String productName, int categoryID, int quantity, double price, Uri image) {
+    public Product(int productID, String productName, int categoryID, int quantity, int price, String image) {
         this.productID = productID;
         this.productName = productName;
         this.categoryID = categoryID;
         this.quantity = quantity;
         this.price = price;
-        this.img_byte = image;
+        this.image = image;
     }
 
-    public Product(int productID, String productName, int categoryID, int quantity, double price) {
+    public Product(int productID, String productName, int categoryID, int quantity, int price) {
         this.productID = productID;
         this.productName = productName;
         this.categoryID = categoryID;
@@ -65,27 +61,20 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public Uri getImage() {return img_byte; }
+    public String getImage() {return image; }
 
 
-    public void setImage(Uri img_byte) {
-        this.img_byte = img_byte;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getProductDesc() {
-        return productDesc;
-    }
-
-    public void setProductDesc(String productDesc) {
-        this.productDesc = productDesc;
-    }
 
 }
