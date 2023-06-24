@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
@@ -46,7 +47,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        final  Product p = productList.get(position);
+        Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(""+p.getPrice());
 //        holder.productImage.setImageURI(p.getImage());
@@ -74,19 +75,10 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         return productList.size();
     }
 
-//    public Product getProductById(int id){
-//        for ( Product p : productList) {
-//            if (id == p.getProductID())
-//                return p;
-//        }
-//        return null;
-//    }
-
     public static class ProductViewHolder extends RecyclerView.ViewHolder{
         public ImageView productImage;
         public TextView productName, productPrice;
         public Button btnAdd;
-
         public RelativeLayout relativeLayout;
 
         public ProductViewHolder(@NonNull View itemView) {

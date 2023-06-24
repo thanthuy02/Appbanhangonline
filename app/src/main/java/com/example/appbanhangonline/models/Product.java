@@ -1,7 +1,5 @@
 package com.example.appbanhangonline.models;
 
-import android.net.Uri;
-
 public class Product {
     private int productID;
     private String productName;
@@ -9,8 +7,6 @@ public class Product {
     private int quantity;
     private int price;
     private String image;
-
-
 
     public Product() {
     }
@@ -66,9 +62,7 @@ public class Product {
 
     public String getImage() {return image; }
 
-
     public void setImage(String image) {
         this.image = image;
     }
-
 }

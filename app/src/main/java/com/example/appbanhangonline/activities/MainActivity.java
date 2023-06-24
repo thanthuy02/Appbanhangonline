@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
+import com.example.appbanhangonline.activities.user.HomeUserActivity;
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.dbhandler.CategoryHandle;
 import com.example.appbanhangonline.models.Category;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     // TODO: handle exception
                 } finally {
+//                    Intent i = new Intent(getApplicationContext(),
+//                            LoginActivity.class);
                     Intent i = new Intent(getApplicationContext(),
                             LoginActivity.class);
                     startActivity(i);
