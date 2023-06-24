@@ -96,8 +96,8 @@ public class DBHelper extends SQLiteOpenHelper {
             + PRODUCT_NAME + " TEXT,"
             + PRODUCT_CATEGORY_ID + " INTEGER,"
             + PRODUCT_QUANTITY + " INTEGER,"
-            + PRODUCT_PRICE + " REAL,"
-            + PRODUCT_IMAGE + " BLOB,"
+            + PRODUCT_PRICE + " INTEGER,"
+            + PRODUCT_IMAGE + " TEXT,"
             + "FOREIGN KEY(" + PRODUCT_CATEGORY_ID + ") REFERENCES " + CATEGORIES + "(" + CATEGORY_ID + ")"
             + ")";
 
@@ -107,7 +107,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + BILL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + BILL_CUSTOMER_ID + " TEXT,"
             + BILL_CREATED_AT + " TEXT DEFAULT CURRENT_TIMESTAMP,"
-            + BILL_TOTAL_PRICE + " REAL,"
+            + BILL_TOTAL_PRICE + " INTEGER,"
             + "FOREIGN KEY(" + BILL_CUSTOMER_ID + ") REFERENCES " + USERS + "(" + USER_ID + ")"
             + ")";
 
@@ -118,7 +118,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + DETAILED_BILL_BILL_ID + " INTEGER,"
             + DETAILED_BILL_PRODUCT_ID + " TEXT DEFAULT CURRENT_TIMESTAMP,"
             + DETAILED_BILL_QUANTITY + " INTEGER,"
-            + DETAILED_BILL_PRICE + " REAL,"
+            + DETAILED_BILL_PRICE + " INTEGER,"
             + "FOREIGN KEY(" + DETAILED_BILL_BILL_ID + ") REFERENCES " + BILLS + "(" + BILL_ID + "),"
             + "FOREIGN KEY(" + DETAILED_BILL_PRODUCT_ID + ") REFERENCES " + PRODUCTS + "(" + PRODUCT_ID + ")"
             + ")";

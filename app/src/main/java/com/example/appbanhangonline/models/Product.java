@@ -6,7 +6,6 @@ public class Product {
     private int categoryID;
     private int quantity;
     private int price;
-
     private String image;
 
     public Product() {
@@ -19,14 +18,6 @@ public class Product {
         this.quantity = quantity;
         this.price = price;
         this.image = image;
-    }
-
-    public Product(int productID, String productName, int categoryID, int quantity, int price) {
-        this.productID = productID;
-        this.productName = productName;
-        this.categoryID = categoryID;
-        this.quantity = quantity;
-        this.price = price;
     }
 
     public int getProductID() {
@@ -71,10 +62,7 @@ public class Product {
 
     public String getImage() {return image; }
 
-
     public void setImage(String image) {
         this.image = image;
     }
-
-
 }

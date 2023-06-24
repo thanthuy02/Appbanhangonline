@@ -4,7 +4,7 @@ public class Bill {
     private int billID;
     private String billCustomerID;
     private String createdAt;
-    private double billTotalPrice;
+    private int billTotalPrice;
 
     private DetailBill detailBill;
 
@@ -13,7 +13,7 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(int billID, String billCustomerID, String createdAt, double billTotalPrice) {
+    public Bill(int billID, String billCustomerID, String createdAt, int billTotalPrice) {
         this.billID = billID;
         this.billCustomerID = billCustomerID;
         this.createdAt = createdAt;
@@ -52,11 +52,11 @@ public class Bill {
         this.createdAt = createdAt;
     }
 
-    public double getBillTotalPrice() {
+    public int getBillTotalPrice() {
         return billTotalPrice;
     }
 
-    public void setBillTotalPrice(double billTotalPrice) {
+    public void setBillTotalPrice(int billTotalPrice) {
         this.billTotalPrice = billTotalPrice;
     }
 }
