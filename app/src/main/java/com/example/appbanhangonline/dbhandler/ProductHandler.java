@@ -28,7 +28,7 @@ public class ProductHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-    public ArrayList<Product> getAllProduct() {
+    public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
         String query = "SELECT * FROM products";
         Cursor c = dbHelper.getReadableDatabase().rawQuery(query, null);

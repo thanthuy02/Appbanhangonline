@@ -1,5 +1,7 @@
 package com.example.appbanhangonline.models;
 
+import androidx.annotation.NonNull;
+
 public class Category {
     private String categoryName;
     private int categoryID;
@@ -24,7 +26,11 @@ public class Category {
         return categoryID;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryID(int categoryID) { this.categoryID = categoryID; }
+
+
+    @Override
+    public String toString() {
+        return "id: " + categoryID + " , name: " + categoryName;
     }
 }

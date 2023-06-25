@@ -15,36 +15,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.activities.MainActivity;
-import com.example.appbanhangonline.activities.admin.MenuAdminActivity;
-import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
-import com.example.appbanhangonline.dbhandler.BillHandle;
-import com.example.appbanhangonline.dbhandler.DetailBillHandler;
-import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.Cart;
-import com.example.appbanhangonline.models.DetailBill;
-import com.example.appbanhangonline.models.Product;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
-
     TextView total, emptyCart;
-
     Button btnPay;
     ImageButton btnBack;
-
     Cart cart = new Cart();
-
     CartAdapter cartAdapter;
-
-    BillHandle billHandle;
-
-    DetailBillHandler detailBillHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,24 +33,27 @@ public class CartActivity extends AppCompatActivity {
 
         Anhxa();
 
+        // quay lại trang home
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CartActivity.this, HomeUserActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
 
-        if(Cart.cartList.isEmpty()){
-            emptyCart.setVisibility(View.VISIBLE);
-        }
+        // Nếu giỏ hàng ko có sp nào thì hiển thị là Giỏ hàng trống
+        empty_cart();
 
+        // đổ dữ liệu vào rvCart
         cartAdapter = new CartAdapter(this, this.cart);
         rvCart.setAdapter(cartAdapter);
 
         // tổng tiền hóa đơn
         updateData();
 
+        //Khi user bấm vào nút thanh toán
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,10 +62,19 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
+    // cập nhật lại tổng tiền của giỏ hàng
     public void updateData() {
         total.setText("Thành tiền: " + this.cart.getTotal_price());
     }
 
+    // nếu ko có sp nào trong giỏ hàng thì hiển thị giỏ trống
+    public void empty_cart(){
+        if(Cart.cartList.isEmpty()){
+            emptyCart.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // ánh xạ các đối tượng
     public void Anhxa(){
         total = findViewById(R.id.total);
         rvCart = findViewById(R.id.rvCart);
@@ -95,6 +87,8 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
+
+    // Xử lý sự kiện khi user bấm nút thanh toán
     private void showPaymentDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thanh toán");
@@ -126,38 +120,10 @@ public class CartActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    // thông báo đặt hàng thành công
     private void showSuccessToast() {
-//        Bill bill = new Bill();
-//        bill.setBillCustomerID(MainActivity.user_id);
-//        bill.setBillTotalPrice(cart.getTotal_price());
-//        Date now = new Date();
-//        bill.setCreatedAt(now.toString());
-//
-//        if(BillHandle.gI().insertBill(bill) == 1){
-            //int bill_id = billHandle.getBillIdNew();
-            // Thành công sẽ thêm hóa đơn chi tiết
-            Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-            ((CartActivity) this).load();
-
-
-            // Lặp qua các phần tử trong cartList để lấy sản phẩm
-//            for (Integer productId : cart.cartList.keySet()) {
-//                // Sử dụng phương thức getProductByOrder để lấy sản phẩm dựa trên vị trí
-//                Product product = cart.getProductByOrder(productId);
-//                int quantity = cart.cartList.getOrDefault(productId, 0);
-//
-//                DetailBill detailBill = new DetailBill();
-//                detailBill.setBillID(bill_id);
-//                detailBill.setProductId(product.getProductID());
-//                detailBill.setQuantity(quantity);
-//                detailBill.setPrice(product.getPrice());
-//            }
-//
-//            Cart.cartList.clear();
-
-//        } else {
-//            Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
-//        }
+        Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+        ((CartActivity) this).load();
     }
 
 //    xóa sp trong giỏ hàng và đặt lại tổng tiền = 0

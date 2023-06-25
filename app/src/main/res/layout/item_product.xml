@@ -25,7 +25,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/pd1"
+            android:src="@drawable/pd1"
             />
 
         <!-- Tên sản phẩm -->
