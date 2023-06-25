@@ -2,18 +2,13 @@ package com.example.appbanhangonline.activities.user;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,15 +20,11 @@ import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
 import com.example.appbanhangonline.dbhandler.CategoryHandle;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
-import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
     TextView txtCategory;
@@ -136,37 +127,37 @@ public class HomeUserActivity extends AppCompatActivity {
 //            productList.add(p);
 //        }
 
-        Product p1 = new Product(1, "Bút bi", 1, 35, 6000, image1);
+        Product p1 = new Product(1, "Bút bi", productHandler.getCategoryName(1), 35, 6000, image1);
         productList.add(p1);
 
-        Product p2 = new Product(2, "Bút 3 màu", 1, 15, 15000, image2);
+        Product p2 = new Product(2, "Bút 3 màu", productHandler.getCategoryName(1), 15, 15000, image2);
         productList.add(p2);
 
-        Product p3 = new Product(3, "Đèn học trắng", 4, 21, 85000, image3);
+        Product p3 = new Product(3, "Đèn học trắng", productHandler.getCategoryName(4), 21, 85000, image3);
         productList.add(p3);
 
-        Product p4 = new Product(4, "Vở bìa cứng", 2, 10, 28000, image4);
+        Product p4 = new Product(4, "Vở bìa cứng", productHandler.getCategoryName(4), 10, 28000, image4);
         productList.add(p4);
 
-        Product p5 = new Product(5, "Vở 200 trang", 2, 4, 20000, image5);
+        Product p5 = new Product(5, "Vở 200 trang", productHandler.getCategoryName(2), 4, 20000, image5);
         productList.add(p5);
 
-        Product p6 = new Product(6, "Vở lò xo", 2, 12, 56000, image6);
+        Product p6 = new Product(6, "Vở lò xo", productHandler.getCategoryName(2), 12, 56000, image6);
         productList.add(p6);
 
-        Product p7 = new Product(7, "Máy tính 570", 3, 15, 427000, image7);
+        Product p7 = new Product(7, "Máy tính 570", productHandler.getCategoryName(2), 15, 427000, image7);
         productList.add(p7);
 
-        Product p8 = new Product(8, "Máy tính 580", 3, 6, 510000, image8);
+        Product p8 = new Product(8, "Máy tính 580", productHandler.getCategoryName(3), 6, 510000, image8);
         productList.add(p8);
 
-        Product p9 = new Product(9, "Đèn học chân cao", 4, 5, 90000, image9);
+        Product p9 = new Product(9, "Đèn học chân cao", productHandler.getCategoryName(4), 5, 90000, image9);
         productList.add(p9);
 
-        Product p10 = new Product(10, "Đèn học cao cấp", 4, 14, 150000, image10);
+        Product p10 = new Product(10, "Đèn học cao cấp", productHandler.getCategoryName(4), 14, 150000, image10);
         productList.add(p10);
 
-        Product p11 = new Product(11, "Bút chì 2B", 1, 56, 4000, image11);
+        Product p11 = new Product(11, "Bút chì 2B", productHandler.getCategoryName(1), 56, 4000, image11);
         productList.add(p11);
 
         productRepository = new ProductRepository(productList);
@@ -253,7 +244,7 @@ public class HomeUserActivity extends AppCompatActivity {
     public void filterProductByCategory(int categoryId){
         ArrayList<Product> filter = new ArrayList<>();
         for(Product p : productList){
-            if(p.getCategoryID() == categoryId) {
+            if(productHandler.getCategoryIdByName(p.getCategoryName()) == categoryId) {
                 filter.add(p);
             }
         }

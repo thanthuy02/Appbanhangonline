@@ -8,14 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 
-import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductHandler extends SQLiteOpenHelper {
     SQLiteDatabase db;
@@ -31,24 +28,47 @@ public class ProductHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-    public ArrayList<Product> getAll() {
+    public ArrayList<Product> getAllProduct() {
         ArrayList<Product> products = new ArrayList<>();
-        try {
-            DBHelper dbHelper = MainActivity.getDB();
-            //assert dbHelper != null;
-            dbHelper.getReadableDatabase().beginTransaction();
-            String sql = String.format("SELECT * from %s", DBHelper.PRODUCTS);
-            Log.d("sql :: ", sql);
-            Cursor cursor = dbHelper.getData(sql);
+        String query = "SELECT * FROM products";
+        Cursor c = dbHelper.getReadableDatabase().rawQuery(query, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Product product = new Product();
+            product.setProductID(c.getInt(0));
+            product.setProductName(c.getString(2));
+            product.setCategoryName(getCategoryName(c.getInt(3)));
+            product.setQuantity(c.getInt(4));
+            product.setPrice(c.getInt(5));
+            product.setImage(c.getString(6));
 
-            while (cursor.moveToNext()){
-                products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(2), cursor.getInt(3), cursor.getString(5)));
-            }
-        } catch (Exception e) {
-            //MainActivity.getDB().getReadableDatabase().endTransaction();
-            Log.d("error : ", e.getMessage());
+            products.add(product);
+            c.moveToNext();
         }
+        c.close();
         return products;
+    }
+
+    public String getCategoryName(int category_id) {
+        String categoryName = "";
+        String query = "SELECT category FROM categories WHERE id = ?";
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(query, new String[] {"" + category_id});
+        if (cursor.moveToFirst()) {
+            categoryName = cursor.getString(0);
+        }
+        cursor.close();
+        return categoryName;
+    }
+
+    public int getCategoryIdByName(String category) {
+        int categoryId = 0;
+        String query = "SELECT id FROM categories WHERE categories.category = ?";
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(query, new String[] {"" + category});
+        if (cursor.moveToFirst()) {
+            categoryId = cursor.getInt(0);
+        }
+        cursor.close();
+        return categoryId;
     }
 
     public void add(String name, int category_id, int quantity, int price, String image) {

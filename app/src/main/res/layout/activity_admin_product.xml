@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:padding="10dp"
+            android:layout_marginTop="10dp"
             android:src="@drawable/ic_back"
             android:contentDescription="Go back" />
 
@@ -42,7 +43,7 @@
         android:padding="18dp">
 
         <Button
-            android:id="@+id/btnCreateProduct"
+            android:id="@+id/btnCreate"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
