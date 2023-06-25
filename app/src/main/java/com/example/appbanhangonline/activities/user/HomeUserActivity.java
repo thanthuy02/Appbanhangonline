@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
+import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 import java.util.ArrayList;
@@ -30,10 +31,13 @@ public class HomeUserActivity extends AppCompatActivity {
 
     ProductRepository productRepository;
 
+    ProductHandler productHandler;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        productHandler  = new ProductHandler(this);
         Anhxa();
         productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
         rvProduct.setAdapter(productUserAdapter);
@@ -56,11 +60,12 @@ public class HomeUserActivity extends AppCompatActivity {
         int minQuantity = 2;
         int maxQuantity = 30;
 
+
         for (int i = 1; i <= 11; i++) {
             String imagePath= "android.resource://" + getPackageName() + "/drawable/pd" + i;
             Uri imageUri = Uri.parse(imagePath);
             String image = imageUri.toString();
-            Product p = new Product(i, productName[i-1], category_id[i-1], random.nextInt(maxQuantity - minQuantity + 1) + minQuantity , price[i-1], image);
+            Product p = new Product(i, productName[i-1], productHandler.getCategoryName(category_id[i-1]), random.nextInt(maxQuantity - minQuantity + 1) + minQuantity , price[i-1], image);
             productList.add(p);
         }
 
@@ -150,7 +155,7 @@ public class HomeUserActivity extends AppCompatActivity {
     public void filterProductByCategory(int categoryId){
         ArrayList<Product> filter = new ArrayList<>();
         for(Product p : productList){
-            if(p.getCategoryID() == categoryId) {
+            if(productHandler.getCategoryIdByName(p.getCategoryName()) == categoryId) {
                 filter.add(p);
             }
         }
