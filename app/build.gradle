@@ -34,7 +34,12 @@ android {
         exclude "META-INF/LICENSE.md"
     }
     buildToolsVersion '33.0.2'
+
+    viewBinding {
+        enable = true
+    }
 }
+
 
 dependencies {
 

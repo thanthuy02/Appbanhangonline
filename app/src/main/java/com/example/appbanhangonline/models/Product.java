@@ -3,7 +3,7 @@ package com.example.appbanhangonline.models;
 public class Product {
     private int productID;
     private String productName;
-    private int categoryID;
+    private String categoryName;
     private int quantity;
     private int price;
     private String image;
@@ -11,10 +11,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(int productID, String productName, int categoryID, int quantity, int price, String image) {
+    public Product(int productID, String productName, String categoryName, int quantity, int price, String image) {
         this.productID = productID;
         this.productName = productName;
-        this.categoryID = categoryID;
+        this.categoryName = categoryName;
         this.quantity = quantity;
         this.price = price;
         this.image = image;
@@ -36,12 +36,12 @@ public class Product {
         this.productName = productName;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public int getQuantity() {
@@ -65,4 +65,10 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "Product [id=" + productID + ", name=" + productName + ", category=" + categoryName + ", quantity=" + quantity + ", price=" + price + ", image=" + image + "]";
+    }
+
 }

@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //  define database name
 
-    public static final String DATABASE_NAME = "SMS";
+    public static final String DATABASE_NAME = "SMS.db";
 
     //  define database version
     public static final int DATABASE_VERSION = 1;
