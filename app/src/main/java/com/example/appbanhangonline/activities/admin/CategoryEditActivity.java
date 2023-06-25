@@ -28,7 +28,7 @@ public class CategoryEditActivity extends AppCompatActivity {
         setContentView(rootView);
 
         // Lấy thông tin người dùng từ intent
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("CategoryPreferences", Context.MODE_PRIVATE);
         int categoryId = sharedPreferences.getInt("categoryId", 0); // Giá trị mặc định 0 nếu không tìm thấy khóa
         String categoryName = sharedPreferences.getString("categoryName", ""); // Giá trị mặc định là chuỗi rỗng nếu không tìm thấy khóa
 

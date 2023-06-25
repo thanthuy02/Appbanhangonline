@@ -10,27 +10,23 @@ import android.widget.Toast;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
+import com.example.appbanhangonline.databinding.ActivityAdminCategoryBinding;
+import com.example.appbanhangonline.databinding.ActivityAdminMainBinding;
 
 public class MenuAdminActivity extends Activity {
-    ImageButton btnLogout;
-    Button btnCategory;
-    Button btnProduct;
-    Button btnCustomer;
-    Button btnBill;
-    Button btnStatistic;
+    private ActivityAdminMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_main);
-        btnLogout = (ImageButton) findViewById(R.id.btnLogout);
-        btnCategory = (Button) findViewById(R.id.btnCategoryAdmin);
-        btnProduct = (Button) findViewById(R.id.btnProductAdmin);
-        btnCustomer = (Button) findViewById(R.id.btnCustomerAdmin);
-        btnBill = (Button) findViewById(R.id.btnBillAdmin);
-        btnStatistic = (Button) findViewById(R.id.btnStatisticAdmin);
+        // Khởi tạo binding
+        binding = ActivityAdminMainBinding.inflate(getLayoutInflater());
+        // Lấy ra root view từ binding
+        View rootView = binding.getRoot();
+        // Gán layout cho Activity
+        setContentView(rootView);
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
@@ -39,7 +35,7 @@ public class MenuAdminActivity extends Activity {
             }
         });
 
-        btnCategory.setOnClickListener(new View.OnClickListener() {
+        binding.cardCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), CategoryActivity.class);
@@ -47,14 +43,14 @@ public class MenuAdminActivity extends Activity {
             }
         });
 
-        btnProduct.setOnClickListener(new View.OnClickListener() {
+        binding.cardProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ProductActivity.class));
             }
         });
 
-        btnCustomer.setOnClickListener(new View.OnClickListener() {
+        binding.cardCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), CustomerActivity.class);
@@ -62,7 +58,7 @@ public class MenuAdminActivity extends Activity {
             }
         });
 
-        btnBill.setOnClickListener(new View.OnClickListener() {
+        binding.cardBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), BillActivity.class);
@@ -70,7 +66,7 @@ public class MenuAdminActivity extends Activity {
             }
         });
 
-        btnStatistic.setOnClickListener(new View.OnClickListener() {
+        binding.cardChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), RevenueActivity.class);

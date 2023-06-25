@@ -1,7 +1,9 @@
 package com.example.appbanhangonline.activities.admin;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,6 +15,7 @@ import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.admin.CustomerAdminAdapter;
 import com.example.appbanhangonline.databinding.ActivityAdminUserBinding;
 import com.example.appbanhangonline.dbhandler.UserHandle;
+import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.User;
 
 import java.util.ArrayList;
@@ -41,7 +44,7 @@ public class CustomerActivity extends Activity {
         // Thiết lập Adapter
         customerAdminAdapter = new CustomerAdminAdapter();
         binding.rcvUserAdmin.setAdapter(customerAdminAdapter);
-        customerAdminAdapter.setCategories(users);
+        customerAdminAdapter.setCustomer(users);
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,9 +58,23 @@ public class CustomerActivity extends Activity {
             @Override
             public void onItemClick(User user) {
                 // Xử lý sự kiện khi người dùng nhấp vào mục ở đây
-                startActivity(new Intent(getApplicationContext(), CustomerBillActivity.class));
-                finish();
+                showUserDetails(rootView, user);
+
             }
         });
+    }
+
+    private void showUserDetails(View v, User user) {
+        // Lưu thông tin người dùng vào SharedPreferences
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("userId", user.getUserID());
+        editor.putString("userName", user.getUsername());
+        editor.putString("userEmail", user.getEmail());
+        editor.apply();
+
+        // Chuyển đến CategoryActivity
+        Intent intent = new Intent(v.getContext(), CustomerBillActivity.class);
+        v.getContext().startActivity(intent);
     }
 }

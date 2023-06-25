@@ -14,9 +14,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
-            android:background="@drawable/ic_category"
+            android:background="@drawable/ic_bill"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_customer_bill_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,16 +23,30 @@
             android:id="@+id/txt_customer_bill_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:padding="5dp"
             android:text="Item Item Item Item Item v Item Item Item Item Item v "
             android:textColor="@color/curious_blue"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image_customer_bill"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_customer_bill_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Item Item Item Item Item v Item Item Item Item Item v "
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/image_customer_bill"
+            app:layout_constraintTop_toBottomOf="@+id/txt_customer_bill_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

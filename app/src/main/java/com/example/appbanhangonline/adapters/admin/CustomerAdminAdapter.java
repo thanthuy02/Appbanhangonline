@@ -19,7 +19,7 @@ public class CustomerAdminAdapter extends RecyclerView.Adapter<CustomerAdminAdap
         users = new ArrayList<>();
     }
 
-    public void setCategories(List<User> users) {
+    public void setCustomer(List<User> users) {
         this.users = users;
         notifyDataSetChanged();
     }

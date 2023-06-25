@@ -96,14 +96,14 @@ public class CategoryActivity extends Activity {
             public void onEditClicked(int position, Category category) {
                 // Xử lý sự kiện khi nút chỉnh sửa được nhấn
                 // Ví dụ: mở cửa sổ chỉnh sửa mục tại vị trí position
-                showUserDetails(rootView, category);
+                showCategoryDetails(rootView, category);
             }
         });
     }
 
-    private void showUserDetails(View v, Category category) {
+    private void showCategoryDetails(View v, Category category) {
         // Lưu thông tin người dùng vào SharedPreferences
-        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("CategoryPreferences", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("categoryId", category.getCategoryID());
         editor.putString("categoryName", category.getCategoryName());

@@ -143,6 +143,17 @@ public class DBHelper extends SQLiteOpenHelper {
             "('Máy tính'), " +
             "('Đèn học')";
 
+    private static final String INSERT_BILL = "INSERT INTO " + BILLS + " (" +
+            BILL_CUSTOMER_ID + ", " +
+            BILL_CREATED_AT + ", " +
+            BILL_TOTAL_PRICE + ") " +
+            "VALUES " +
+            "(1, '2023-06-25 10:30:00', 100.0), " +
+            "(2, '2023-06-26 11:45:00', 150.0), " +
+            "(3, '2023-06-27 09:15:00', 200.0)";
+
+
+
 
 //    String imagePath1 = "android.resource://" + context.getPackageName() + "/drawable/pd1";
 //    String imagePath2 = "android.resource://" + context.getPackageName() + "/drawable/pd2";
@@ -218,6 +229,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(INSERT_USER);
         db.execSQL(TRIGGER_QUANTITY);
         db.execSQL(INSERT_CATEGORY);
+        db.execSQL(INSERT_BILL);
         //db.execSQL(INSERT_PRODUCT);
     }
 
