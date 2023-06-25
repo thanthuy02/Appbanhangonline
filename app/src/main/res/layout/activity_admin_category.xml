@@ -1,18 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.appbanhangonline.activities.admin.CategoryActivity">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Category"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:padding="0dp"
+        android:background="#FFE4B5">
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:layout_marginVertical="10dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Go back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="Category"
+            android:textColor="#2AA2BF"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <Button
+            android:id="@+id/btnCreateProduct"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:width="300dp"
+            android:background="@drawable/round_btn"
+            android:gravity="center"
+            android:text="Thêm mới"
+            android:textColorLink="#000011"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_category_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            tools:listitem="@layout/item_category_admin"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+</LinearLayout>
+
+</layout>
