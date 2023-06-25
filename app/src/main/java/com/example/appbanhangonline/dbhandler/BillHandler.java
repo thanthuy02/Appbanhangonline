@@ -58,6 +58,34 @@ public class BillHandler extends SQLiteOpenHelper implements IManager<Bill, Inte
         return bills;
     }
 
+    public List<Bill> getAllBill() {
+        List<Bill> bills = new ArrayList<>();
+        try {
+            SQLiteDatabase database = getReadableDatabase();
+            String[] projection = {
+                    DBHelper.BILL_ID,
+                    DBHelper.BILL_CUSTOMER_ID,
+                    DBHelper.BILL_TOTAL_PRICE,
+                    DBHelper.BILL_CREATED_AT
+            };
+            String sortOrder = DBHelper.BILL_CREATED_AT + " DESC";
+            Cursor cursor = database.query(DBHelper.BILLS, projection, null, null, null, null, sortOrder);
+
+            while (cursor.moveToNext()) {
+                Bill bill = new Bill();
+                bill.setBillID(cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.BILL_ID)));
+                bill.setBillCustomerID(cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.BILL_CUSTOMER_ID)));
+                bill.setBillTotalPrice(cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.BILL_TOTAL_PRICE)));
+                bill.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.BILL_CREATED_AT)));
+                bills.add(bill);
+            }
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        }
+        return bills;
+    }
+
+
 
 
     @Override
