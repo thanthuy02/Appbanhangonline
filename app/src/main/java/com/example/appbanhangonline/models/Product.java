@@ -1,6 +1,8 @@
 package com.example.appbanhangonline.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private int productID;
     private String productName;
     private String categoryName;

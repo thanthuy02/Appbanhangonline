@@ -2,6 +2,7 @@ package com.example.appbanhangonline.activities.admin;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,16 +16,20 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.dbhandler.ProductHandler;
-import com.example.appbanhangonline.utils.Logger;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import com.bumptech.glide.Glide;
+import com.example.appbanhangonline.R;
+import com.example.appbanhangonline.adapters.ProductAdapter;
+import com.example.appbanhangonline.dbhandler.ProductHandler;
+import com.example.appbanhangonline.models.Product;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCreateActivity extends Activity {
-
+public class ProductEditActivity extends Activity {
+    Product product;
     ProductHandler productHandler;
     Spinner spinnerCategory;
     ImageButton ibnUpload;
@@ -36,12 +41,13 @@ public class ProductCreateActivity extends Activity {
     EditText txtProductName;
     int REQUEST_CODE_FOLDER = 456;
     String selectedImagePath = "";
+    int id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_product_create);
+        setContentView(R.layout.activity_admin_product_edit);
         imgProductUpload = (ImageView) findViewById(R.id.imgProductUpload);
         btnSave = (Button) findViewById(R.id.btnSave);
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
@@ -51,6 +57,7 @@ public class ProductCreateActivity extends Activity {
         txtQuantity = (EditText) findViewById(R.id.txtQuantity);
         productHandler = new ProductHandler(this);
         loadSpinner();
+        getData();
 
         ibnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +72,13 @@ public class ProductCreateActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 categoryId = productHandler.getCategoryIdByName(spinnerCategory.getSelectedItem().toString().trim());
-                productHandler.add(txtProductName.getText().toString(), categoryId, Integer.parseInt(txtQuantity.getText().toString()), Integer.parseInt(txtPrice.getText().toString()), selectedImagePath);
-                Toast.makeText(ProductCreateActivity.this, "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                productHandler.edit(id, txtProductName.getText().toString(), categoryId, Integer.parseInt(txtQuantity.getText().toString()), Integer.parseInt(txtPrice.getText().toString()), selectedImagePath);
+                Toast.makeText(ProductEditActivity.this, "Sửa sản phẩm thành công!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getApplicationContext(), ProductActivity.class);
                 startActivity(i);
                 finish();
             }
         });
-
     }
 
     public void loadSpinner() {
@@ -80,6 +86,11 @@ public class ProductCreateActivity extends Activity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, category);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spinnerCategory.setAdapter(dataAdapter);
+
+        // hiển thị category của product
+        product = (Product) getIntent().getSerializableExtra("ProductEdit");
+        int position = dataAdapter.getPosition(String.valueOf(product.getCategoryName()));
+        spinnerCategory.setSelection(position);
     }
 
     @Override
@@ -91,5 +102,20 @@ public class ProductCreateActivity extends Activity {
             imgProductUpload.setImageURI(selectedImageUri);
         }
     }
+
+    public void getData() {
+        if (getIntent().getExtras() != null) {
+            product = (Product) getIntent().getSerializableExtra("ProductEdit");
+            id = product.getProductID();
+            txtProductName.setText(product.getProductName());
+            txtQuantity.setText(String.valueOf(product.getQuantity()));
+            txtPrice.setText(String.valueOf(product.getPrice()));
+            selectedImagePath = product.getImage();
+            Glide.with(ProductEditActivity.this)
+                    .load(Uri.parse(selectedImagePath))
+                    .into(imgProductUpload);
+        }
+    }
+
 
 }

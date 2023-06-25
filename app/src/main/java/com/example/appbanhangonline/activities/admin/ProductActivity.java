@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -73,6 +74,16 @@ public class ProductActivity extends Activity {
                 return true;
             }
         });
+
+        listViewProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ProductActivity.this, ProductEditActivity.class);
+                intent.putExtra("ProductEdit", productAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
+
     }
 
 

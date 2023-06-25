@@ -34,6 +34,7 @@
         <activity android:name=".activities.admin.BillActivity" />
         <activity android:name=".activities.admin.CategoryActivity" />
         <activity android:name=".activities.admin.CustomerActivity" />
+        <activity android:name=".activities.admin.ProductEditActivity" />
         <activity android:name=".activities.admin.RevenueActivity" />
         <activity android:name=".activities.login.ForgotPasswordActivity" />
         <activity android:name=".activities.login.RegisterActivity" />
