@@ -31,23 +31,24 @@ public class ProductHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-    public ArrayList<Product> getAll() {
+    public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
-        try {
-            DBHelper dbHelper = MainActivity.getDB();
-            //assert dbHelper != null;
-            dbHelper.getReadableDatabase().beginTransaction();
-            String sql = String.format("SELECT * from %s", DBHelper.PRODUCTS);
-            Log.d("sql :: ", sql);
-            Cursor cursor = dbHelper.getData(sql);
+        String query = "SELECT * FROM products";
+        Cursor c = dbHelper.getReadableDatabase().rawQuery(query, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            Product product = new Product();
+            product.setProductID(c.getInt(0));
+            product.setProductName(c.getString(2));
+            product.setCategoryID(c.getInt(3));
+            product.setQuantity(c.getInt(4));
+            product.setPrice(c.getInt(5));
+            product.setImage(c.getString(6));
 
-            while (cursor.moveToNext()){
-                products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(2), cursor.getInt(3), cursor.getString(5)));
-            }
-        } catch (Exception e) {
-            //MainActivity.getDB().getReadableDatabase().endTransaction();
-            Log.d("error : ", e.getMessage());
+            products.add(product);
+            c.moveToNext();
         }
+        c.close();
         return products;
     }
 

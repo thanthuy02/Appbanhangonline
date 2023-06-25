@@ -119,7 +119,7 @@
         android:id="@+id/layout_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:background="@drawable/bg_search"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -149,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/layout_search"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:padding="5dp"
         android:background="#FDE2B5">
 
@@ -187,11 +187,10 @@
         android:id="@+id/rvProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/layout_filter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0"
         android:background="@drawable/border"
-        android:paddingBottom="30dp"/>
+        android:paddingBottom="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_filter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
