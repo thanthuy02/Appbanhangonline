@@ -137,11 +137,12 @@ public class DBHelper extends SQLiteOpenHelper {
             + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'admin', 'admin', 'admin'),"
             + "('ABC', '013345679', 'Dong Da', 'customer@gmail.com', '123', 'customer')";
 
-    private static final String INSERT_CATEGORY = "INSERT INTO " + CATEGORIES + " (" + CATEGORY_NAME + ") "
-            + "VALUES ('Bút'),"
-            + "('Vở'),"
-            + "('Máy tính'),"
-            + "('Đèn học')";
+    private static final String INSERT_CATEGORY = "INSERT INTO " + CATEGORIES + " (" + CATEGORY_NAME + ") " +
+            "VALUES ('Bút'), " +
+            "('Vở'), " +
+            "('Máy tính'), " +
+            "('Đèn học')";
+
 
 //    String imagePath1 = "android.resource://" + context.getPackageName() + "/drawable/pd1";
 //    String imagePath2 = "android.resource://" + context.getPackageName() + "/drawable/pd2";
@@ -216,7 +217,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_DETAILED_BILLS);
         db.execSQL(INSERT_USER);
         db.execSQL(TRIGGER_QUANTITY);
-//        db.execSQL(INSERT_CATEGORY);
+        db.execSQL(INSERT_CATEGORY);
         //db.execSQL(INSERT_PRODUCT);
     }
 
