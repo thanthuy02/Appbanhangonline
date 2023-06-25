@@ -8,25 +8,46 @@ import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.dbhandler.interfaces.IManager;
 import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.DetailBill;
+import com.example.appbanhangonline.utils.Logger;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class BillHandle implements IManager<Bill, Integer> {
+public class BillHandler implements IManager<Bill, Integer> {
 
-    private static BillHandle I;
+    private static BillHandler I;
     private final DBHelper mDbHelper;
 
-    public BillHandle() {
+    public BillHandler() {
         this.mDbHelper = MainActivity.getDB();
     }
 
-    public static BillHandle gI() {
+    public static BillHandler gI() {
         if (I == null) {
-            I = new BillHandle();
+            I = new BillHandler();
         }
         return I;
+    }
+
+    public List<Bill> getByUserID(int userID) {
+        List<Bill> bills = new ArrayList<>();
+        try {
+            String sql = String.format("SELECT * FROM %s where %s=%d", DBHelper.BILLS, DBHelper.BILL_CUSTOMER_ID, userID);
+            Cursor result = mDbHelper.getData(sql);
+            while (result.moveToFirst()) {
+                Bill bill = new Bill();
+                bill.setBillID(result.getInt(result.getColumnIndexOrThrow(DBHelper.BILL_ID)));
+                bill.setBillCustomerID(result.getInt(result.getColumnIndexOrThrow(DBHelper.BILL_CUSTOMER_ID)));
+                bill.setBillTotalPrice(result.getInt(result.getColumnIndexOrThrow(DBHelper.BILL_TOTAL_PRICE)));
+                bill.setCreatedAt(result.getString(result.getColumnIndexOrThrow(DBHelper.BILL_CREATED_AT)));
+                bills.add(bill);
+            }
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        }
+        return bills;
     }
 
     @Override
@@ -58,7 +79,7 @@ public class BillHandle implements IManager<Bill, Integer> {
 
     }
 
-    public int insertBill(Bill bill){
+    public int insertBill(Bill bill) {
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ContentValues values = new ContentValues();
         values.put("user_id", bill.getBillCustomerID());

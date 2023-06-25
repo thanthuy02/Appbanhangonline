@@ -40,7 +40,6 @@ public class ProductHandler extends SQLiteOpenHelper {
             String sql = String.format("SELECT * from %s", DBHelper.PRODUCTS);
             Log.d("sql :: ", sql);
             Cursor cursor = dbHelper.getData(sql);
-
             while (cursor.moveToNext()){
                 products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(2), cursor.getInt(3), cursor.getString(5)));
             }

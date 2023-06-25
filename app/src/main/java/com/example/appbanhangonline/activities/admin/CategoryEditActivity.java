@@ -10,14 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.databinding.ActivityCategoryCreateBinding;
 import com.example.appbanhangonline.databinding.ActivityCategoryEditBinding;
-import com.example.appbanhangonline.dbhandler.CategoryHandle;
+import com.example.appbanhangonline.dbhandler.CategoryHandler;
 import com.example.appbanhangonline.models.Category;
 
 public class CategoryEditActivity extends AppCompatActivity {
     private ActivityCategoryEditBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +33,7 @@ public class CategoryEditActivity extends AppCompatActivity {
         String categoryName = sharedPreferences.getString("categoryName", ""); // Giá trị mặc định là chuỗi rỗng nếu không tìm thấy khóa
 
 
-        Log.d("TAG_categoryId", "onCreate: "+categoryId);
+        Log.d("TAG_categoryId", "onCreate: " + categoryId);
         binding.etCategoryName.setText(categoryName);
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -51,13 +50,13 @@ public class CategoryEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                if(binding.etCategoryName.getText() == null){
+                if (binding.etCategoryName.getText() == null) {
                     Toast.makeText(CategoryEditActivity.this, "Không được để trống", Toast.LENGTH_SHORT).show();
                 }
-                Log.d("TAG_categoryId", "onClick: "+categoryId);
+                Log.d("TAG_categoryId", "onClick: " + categoryId);
                 String categoryName = String.valueOf(binding.etCategoryName.getText()).trim();
                 Category newCategory = new Category(categoryName, categoryId);
-                CategoryHandle.gI().update(newCategory);
+                CategoryHandler.gI(CategoryEditActivity.this).update(newCategory);
 
                 // Sua thanh cong
                 Toast.makeText(CategoryEditActivity.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
@@ -66,7 +65,6 @@ public class CategoryEditActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

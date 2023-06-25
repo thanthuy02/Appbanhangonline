@@ -15,20 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.activities.MainActivity;
-import com.example.appbanhangonline.activities.admin.MenuAdminActivity;
-import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
-import com.example.appbanhangonline.dbhandler.BillHandle;
+import com.example.appbanhangonline.dbhandler.BillHandler;
 import com.example.appbanhangonline.dbhandler.DetailBillHandler;
-import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.Cart;
-import com.example.appbanhangonline.models.DetailBill;
-import com.example.appbanhangonline.models.Product;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
@@ -42,7 +32,7 @@ public class CartActivity extends AppCompatActivity {
 
     CartAdapter cartAdapter;
 
-    BillHandle billHandle;
+    BillHandler billHandle;
 
     DetailBillHandler detailBillHandler;
 
@@ -133,7 +123,7 @@ public class CartActivity extends AppCompatActivity {
 //        Date now = new Date();
 //        bill.setCreatedAt(now.toString());
 //
-//        if(BillHandle.gI().insertBill(bill) == 1){
+//        if(BillHandler.gI().insertBill(bill) == 1){
             //int bill_id = billHandle.getBillIdNew();
             // Thành công sẽ thêm hóa đơn chi tiết
             Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();

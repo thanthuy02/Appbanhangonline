@@ -10,15 +10,16 @@ import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 public class DBHelper extends SQLiteOpenHelper {
     public Cursor getData(String sql) {
-        return getReadableDatabase().rawQuery(sql, null);
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        close();
+        return cursor;
     }
 
     public void queryData(String sql) {
         getWritableDatabase().execSQL(sql);
+        close();
     }
-
-
-//  define database name
+    //  define database name
 
     public static final String DATABASE_NAME = "SMS";
 
@@ -133,7 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + USER_ROLE + ") "
             + "VALUES ('Than Thi Thuy', '012345678', 'Dong Da', 'thanthuy2811@gmail.com', 'admin', 'admin'),"
             + "('Dao Thi Kieu Trang' , '023456789', 'Dong Da', 'kieutrang021002@gmail.com', 'admin', 'admin'),"
-            + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'buiuyen1207@gmail.com', 'admin', 'admin'),"
+            + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'admin', 'admin', 'admin'),"
             + "('ABC', '013345679', 'Dong Da', 'customer@gmail.com', '123', 'customer')";
 
     private static final String INSERT_CATEGORY = "INSERT INTO " + CATEGORIES + " (" + CATEGORY_NAME + ") "
@@ -215,7 +216,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_DETAILED_BILLS);
         db.execSQL(INSERT_USER);
         db.execSQL(TRIGGER_QUANTITY);
-        db.execSQL(INSERT_CATEGORY);
+//        db.execSQL(INSERT_CATEGORY);
         //db.execSQL(INSERT_PRODUCT);
     }
 

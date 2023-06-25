@@ -19,6 +19,7 @@ import com.example.appbanhangonline.listener.OnSwipeTouchListener;
 import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdapter.ViewHolder> {
@@ -26,13 +27,21 @@ public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdap
     private List<Category> categories;
     private CategoryAdminAdapterListener listener;
 
-    public CategoryAdminAdapter(List<Category> categories) {
-        this.categories = categories;
+    public CategoryAdminAdapter() {
+        categories = new ArrayList<>();
     }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+        notifyDataSetChanged();
+    }
+
     public interface CategoryAdminAdapterListener {
         void onDeleteClicked(int position, Category category);
+
         void onEditClicked(int position, Category category);
     }
+
     public void setListener(CategoryAdminAdapterListener listener) {
         this.listener = listener;
     }
@@ -41,7 +50,7 @@ public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemCategoryAdminBinding itemCategoryAdminBinding = ItemCategoryAdminBinding.inflate(
-                LayoutInflater.from(parent.getContext()),parent,false
+                LayoutInflater.from(parent.getContext()), parent, false
         );
         return new ViewHolder(itemCategoryAdminBinding);
     }
@@ -123,7 +132,7 @@ public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdap
             });
         }
 
-        public void setDataCategory(Category category){
+        public void setDataCategory(Category category) {
             binding.txtCategoryName.setText(category.getCategoryName());
         }
     }

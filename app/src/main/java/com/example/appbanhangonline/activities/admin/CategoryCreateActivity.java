@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.databinding.ActivityAdminCategoryBinding;
 import com.example.appbanhangonline.databinding.ActivityCategoryCreateBinding;
-import com.example.appbanhangonline.dbhandler.CategoryHandle;
+import com.example.appbanhangonline.dbhandler.CategoryHandler;
 import com.example.appbanhangonline.models.Category;
 
 import java.util.List;
@@ -29,7 +27,6 @@ public class CategoryCreateActivity extends AppCompatActivity {
         View rootView = binding.getRoot();
         // Gán layout cho Activity
         setContentView(rootView);
-        List<Category> categories = CategoryHandle.gI().getAll();
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,17 +40,10 @@ public class CategoryCreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                int maxCategoryId = 0;
-                for (Category category : categories) {
-                    if (category.getCategoryID() > maxCategoryId) {
-                        maxCategoryId = category.getCategoryID();
-                    }
-                }
-                int newCategoryId = maxCategoryId + 1;
                 String categoryName = String.valueOf(binding.etCategoryName.getText());
-
-                Log.d("TAG_newCategory", "onClick: "+newCategoryId);
-                CategoryHandle.gI().add(new Category(categoryName, newCategoryId));
+                Category category = new Category();
+                category.setCategoryName(categoryName);
+                CategoryHandler.gI(CategoryCreateActivity.this).add(category);
 
                 // Them thanh cong
                 Toast.makeText(CategoryCreateActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
