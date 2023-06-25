@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import com.example.appbanhangonline.R;
 
-public class RegisterActivity extends Activity {
+public class ResetPasswordActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_reset_password);
     }
 }

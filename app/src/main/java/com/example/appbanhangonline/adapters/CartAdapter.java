@@ -14,8 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
+
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.user.CartActivity;
 import com.example.appbanhangonline.models.Cart;

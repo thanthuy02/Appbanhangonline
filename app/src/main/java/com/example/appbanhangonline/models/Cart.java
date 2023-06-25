@@ -20,8 +20,9 @@ public class Cart {
     private static int total_price;
 
     public int getTotal_price(){
-        return this.total_price;
+        return (int) (this.total_price * 0.9);
     }
+
 
     public void setTotal_price(int total_price) {
         this.total_price = total_price;
@@ -29,7 +30,7 @@ public class Cart {
 
     public boolean addCart(Product p) {
         Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
-        if (quantity >= 15) {
+        if (quantity >= p.getQuantity()) {
             return false;
         }
         cartList.put(p.getProductID(), quantity + 1);

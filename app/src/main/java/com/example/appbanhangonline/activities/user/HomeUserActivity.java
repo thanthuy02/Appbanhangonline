@@ -211,23 +211,35 @@ public class HomeUserActivity extends AppCompatActivity {
 
     // Hiển thị tên các danh mục vào popup menu
     public void onShowCategoryMenu(View view){
-//        categoryHelper = new CategoryHelper();
-//
-//        List<Category> categoryList = categoryHelper.getAll();
-
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.item1:
+                        txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(1);
+                        return true;
 
                     case R.id.item2:
+                        txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(2);
+                        return true;
 
                     case R.id.item3:
+                        txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(3);
+                        return true;
 
                     case R.id.item4:
                         txtCategory.setText(item.getTitle().toString());
+                        filterProductByCategory(4);
+                        return true;
+
+                    case R.id.item5:
+                        txtCategory.setText(item.getTitle().toString());
+                        productUserAdapter.setProductList(productList);
+                        productUserAdapter.notifyDataSetChanged();
                         return true;
                 }
                 return false;
@@ -238,19 +250,32 @@ public class HomeUserActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
-//    public Uri getUri (int resId){
-//        return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
-//    }
-//
-//    public static int getResId(String resName, Class<?> c) {
-//        try {
-//            Field idField = c.getDeclaredField(resName);
-//            return idField.getInt(idField);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return -1;
-//        }
-//    }
+    public void filterProductByCategory(int categoryId){
+        ArrayList<Product> filter = new ArrayList<>();
+        for(Product p : productList){
+            if(p.getCategoryID() == categoryId) {
+                filter.add(p);
+            }
+        }
+        productUserAdapter.setProductList(filter);
+        productUserAdapter.notifyDataSetChanged();
+    }
+
+
+    public Uri getUri (int resId){
+        return Uri.parse("android.resource://"  + this.getPackageName().toString() + "/" + resId);
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     public void onShowProductByOder(View v){
         Intent intent = new Intent(HomeUserActivity.this, CartActivity.class);
