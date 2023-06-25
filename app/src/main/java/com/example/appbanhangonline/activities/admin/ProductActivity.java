@@ -1,10 +1,13 @@
 package com.example.appbanhangonline.activities.admin;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -51,12 +54,32 @@ public class ProductActivity extends Activity {
                         ProductCreateActivity.class));
             }
         });
+
+        listViewProduct.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Product product = productAdapter.getItem(position);
+                AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
+                dialog.setTitle("XÓA SẢN PHẨM");
+                dialog.setMessage("Bạn muốn xóa sản phẩm này?");
+                dialog.setPositiveButton("XÓA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        productHandler.delete(product.getProductID());
+                        Toast.makeText(ProductActivity.this, "Đã xóa!", Toast.LENGTH_SHORT).show();
+                        showItem();
+                    }
+                }).setNegativeButton("Hủy", null).show();
+                return true;
+            }
+        });
     }
 
+
     public void showItem() {
-       productHandler = new ProductHandler(this);
-       ArrayList<Product> products = productHandler.getAllProducts();
-       productAdapter = new ProductAdapter(this, R.layout.listview_product_item, products);
-       listViewProduct.setAdapter(productAdapter);
+        productHandler = new ProductHandler(this);
+        ArrayList<Product> products = productHandler.getAllProducts();
+        productAdapter = new ProductAdapter(this, R.layout.listview_product_item, products);
+        listViewProduct.setAdapter(productAdapter);
     }
 }
