@@ -26,13 +26,14 @@
         <activity android:name=".activities.admin.MenuAdminActivity" />
         <activity android:name=".activities.admin.BillActivity" />
         <activity android:name=".activities.admin.CategoryActivity" />
+        <activity android:name=".activities.admin.CategoryCreateActivity" />
+        <activity android:name=".activities.admin.CategoryEditActivity" />
         <activity android:name=".activities.admin.CustomerActivity" />
         <activity android:name=".activities.admin.RevenueActivity" />
         <activity android:name=".activities.login.ForgotPasswordActivity" />
         <activity android:name=".activities.login.RegisterActivity" />
-        <activity android:name=".activities.user.HomeUserActivity"/>
-        <activity android:name=".activities.user.CartActivity"/>
-
+        <activity android:name=".activities.user.HomeUserActivity" />
+        <activity android:name=".activities.user.CartActivity" />
     </application>
 
 </manifest>

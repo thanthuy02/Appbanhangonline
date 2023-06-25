@@ -40,7 +40,7 @@ public class CategoryHandle implements IManager<Category, Integer> {
     @Override
     public void update(Category category) {
         try {
-            String sql = String.format("UPDATE %s SET %s='%s'", DBHelper.CATEGORIES, DBHelper.CATEGORY_NAME, category.getCategoryName());
+            String sql = String.format("UPDATE %s SET %s='%s' WHERE %s=%d", DBHelper.CATEGORIES, DBHelper.CATEGORY_NAME, category.getCategoryName(), DBHelper.CATEGORY_ID, category.getCategoryID());
             mDbHelper.queryData(sql);
         } catch (Exception e) {
             Logger.error(e.getMessage());
@@ -50,9 +50,11 @@ public class CategoryHandle implements IManager<Category, Integer> {
     @Override
     public boolean delete(Integer integer) {
         try {
-            String sql = String.format("DELETE * FROM %s where %s=%d", DBHelper.CATEGORIES, DBHelper.CATEGORY_ID, integer);
+            String sql = String.format("DELETE FROM %s WHERE %s = %d", DBHelper.CATEGORIES, DBHelper.CATEGORY_ID, integer);
             mDbHelper.queryData(sql);
             // query to remove product by category
+            //
+            //String sql_move)//
             return true;
         } catch (Exception e) {
             Logger.error(e.getMessage());

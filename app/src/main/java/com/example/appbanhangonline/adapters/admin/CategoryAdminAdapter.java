@@ -24,10 +24,19 @@ import java.util.List;
 public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdapter.ViewHolder> {
 
     private List<Category> categories;
+    private CategoryAdminAdapterListener listener;
 
     public CategoryAdminAdapter(List<Category> categories) {
         this.categories = categories;
     }
+    public interface CategoryAdminAdapterListener {
+        void onDeleteClicked(int position, Category category);
+        void onEditClicked(int position, Category category);
+    }
+    public void setListener(CategoryAdminAdapterListener listener) {
+        this.listener = listener;
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,6 +50,27 @@ public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Category category = categories.get(position);
         holder.setDataCategory(category);
+
+        holder.binding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onDeleteClicked(position, category);
+                    hideButtonWithAnimation(holder.binding.btnDelete);
+                    hideButtonWithAnimation(holder.binding.btnEdit);
+                }
+            }
+        });
+
+        holder.binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onEditClicked(position, category);
+                }
+            }
+        });
+
 
         // Bắt sự kiện swipe để hiển thị nút
         holder.itemView.setOnTouchListener(new OnSwipeTouchListener(holder.itemView.getContext()) {
@@ -59,13 +89,13 @@ public class CategoryAdminAdapter extends RecyclerView.Adapter<CategoryAdminAdap
         });
 
         // Bắt sự kiện nút action
-        holder.binding.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Xử lý sự kiện khi nút được nhấn
-                // Ví dụ: mở cửa sổ xem chi tiết, xoá mục, v.v.
-            }
-        });
+//        holder.binding.btnDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Xử lý sự kiện khi nút được nhấn
+//                // Ví dụ: mở cửa sổ xem chi tiết, xoá mục, v.v.
+//            }
+//        });
     }
 
     @Override
