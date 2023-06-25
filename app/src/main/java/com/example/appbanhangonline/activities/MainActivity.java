@@ -13,12 +13,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static DBHelper dbHelper;
 
-    public static int user_id = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         dbHelper = new DBHelper(this);
 
 //        ProductHandler productHandler = new ProductHandler(this);
@@ -38,12 +37,10 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread() {
             public void run() {
                 try {
-                    sleep(2000);
+                    sleep(1500);
                 } catch (Exception e) {
                     // TODO: handle exception
                 } finally {
-//                    Intent i = new Intent(getApplicationContext(),
-//                            LoginActivity.class);
                     Intent i = new Intent(getApplicationContext(),
                             LoginActivity.class);
                     startActivity(i);

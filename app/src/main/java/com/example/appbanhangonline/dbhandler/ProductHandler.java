@@ -13,6 +13,7 @@ import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductHandler extends SQLiteOpenHelper {
     SQLiteDatabase db;
@@ -47,22 +48,37 @@ public class ProductHandler extends SQLiteOpenHelper {
 
         String query = "SELECT * FROM products";
         Cursor c = dbHelper.getReadableDatabase().rawQuery(query, null);
-        c.moveToFirst();
-        while (!c.isAfterLast()) {
+        while (c.moveToNext()) {
             Product product = new Product();
             product.setProductID(c.getInt(0));
-            product.setProductName(c.getString(2));
-            product.setCategoryName(getCategoryName(c.getInt(3)));
-            product.setQuantity(c.getInt(4));
-            product.setPrice(c.getInt(5));
-            product.setImage(c.getString(6));
-
+            product.setProductName(c.getString(1));
+            product.setCategoryName(getCategoryName(c.getInt(2)));
+            product.setQuantity(c.getInt(3));
+            product.setPrice(c.getInt(4));
+            product.setImage(c.getString(5));
             products.add(product);
+
             c.moveToNext();
             //
+
         }
         c.close();
         return products;
+    }
+
+    public List<String> getAllNameCategory() {
+        List<String> listCategoryName = new ArrayList<String>();
+        String selectQuery = "SELECT * FROM categories;";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                listCategoryName.add(c.getString(1));
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return listCategoryName;
     }
 
     public String getCategoryName(int category_id) {
@@ -75,6 +91,8 @@ public class ProductHandler extends SQLiteOpenHelper {
         cursor.close();
         return categoryName;
     }
+
+
 
     public int getCategoryIdByName(String category) {
         int categoryId = 0;
