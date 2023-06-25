@@ -35,25 +35,27 @@ public class CustomerActivity extends Activity {
         // Thiết lập Layout Manager
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.rcvUserAdmin.setLayoutManager(layoutManager);
-
-        // Tạo danh sách dữ liệu
-        UserHandle userHandle = new UserHandle();
         users = new ArrayList<>();
 
-        List<User> users = UserHandle.gI().getAll();
-
-        users.add(new User(1,"bùi thị thu uyên", "0987654321", "aush", "e", "ppp", "admin"));
-        users.add(new User(2,"đào thị kiểu trang", "0987654321", "aush", "e", "ppp", "admin"));
-        users.add(new User(3,"thân thị thùy", "0987654321", "aush", "e", "ppp", "admin"));
+        List<User> users = UserHandle.gI(this).getAll();
         // Thiết lập Adapter
-        customerAdminAdapter = new CustomerAdminAdapter(users);
+        customerAdminAdapter = new CustomerAdminAdapter();
         binding.rcvUserAdmin.setAdapter(customerAdminAdapter);
+        customerAdminAdapter.setCategories(users);
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 startActivity(new Intent(getApplicationContext(), MenuAdminActivity.class));
+                finish();
+            }
+        });
+        customerAdminAdapter.setOnItemClickListener(new CustomerAdminAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(User user) {
+                // Xử lý sự kiện khi người dùng nhấp vào mục ở đây
+                startActivity(new Intent(getApplicationContext(), CustomerBillActivity.class));
                 finish();
             }
         });

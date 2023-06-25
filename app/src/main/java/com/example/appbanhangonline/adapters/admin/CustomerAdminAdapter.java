@@ -1,19 +1,33 @@
 package com.example.appbanhangonline.adapters.admin;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbanhangonline.databinding.ItemUserAdminBinding;
+import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerAdminAdapter extends RecyclerView.Adapter<CustomerAdminAdapter.ViewHolder> {
 
     private List<User> users;
+    private OnItemClickListener listener;
+    public CustomerAdminAdapter() {
+        users = new ArrayList<>();
+    }
 
-    public CustomerAdminAdapter(List<User> users) {
+    public void setCategories(List<User> users) {
         this.users = users;
+        notifyDataSetChanged();
+    }
+    public interface OnItemClickListener {
+        void onItemClick(User user);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -28,6 +42,15 @@ public class CustomerAdminAdapter extends RecyclerView.Adapter<CustomerAdminAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         User user = users.get(position);
         holder.setDataUser(user);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(user);
+                }
+            }
+        });
     }
 
     @Override
