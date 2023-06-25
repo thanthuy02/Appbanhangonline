@@ -50,7 +50,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(""+p.getPrice());
-//        holder.productImage.setImageURI(p.getImage());
+        Glide.with(context).load(p.getImage()).into(holder.productImage);
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,12 +59,12 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         });
     }
 
+
+    // user bấm nút "Thêm vào giỏ hàng"
     public void btnAddCLick(View view, Product p){
-//        cart.addCart(p);
-//        Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
         boolean r = cart.addCart(p);
         if(r == true) {
-            Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng" + p.getProductID(), Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
         } else {
             // Số lượng vượt quá giới hạn cho phép
             Toast.makeText(view.getContext(), "Số lượng sản phẩm vượt quá giới hạn cho phép!", Toast.LENGTH_SHORT).show();

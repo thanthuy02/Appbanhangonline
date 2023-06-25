@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,9 +23,8 @@ import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-
-    private Context context;
-    private Cart cart;
+    Context context;
+    Cart cart;
 
     public CartAdapter(Context context, Cart cart) {
         this.context = context;
@@ -51,6 +51,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.productQuantity.setText("" + amount);
         holder.lineTotalPrice.setText("" + cart.getLinePrice(p));
 
+        // tăng số lượng
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +66,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
+        // giảm số lượng
         holder.btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,8 +78,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
+        // xóa 1 sản phẩm ra khỏi giỏ hàng
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cart.deleteProduct(p);
+                notifyDataSetChanged();
+                ((CartActivity) context).updateData();
+                ((CartActivity) context).empty_cart();
+                Toast.makeText(v.getContext(), "Đã xóa '" + p.getProductName() + "' khỏi giỏ hàng", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
+    // lấy ra số lượng sản phẩm (mỗi item trong giỏ là 1 sản phẩm)
     @Override
     public int getItemCount() {
         return cart.cartList.size();
@@ -90,7 +105,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         public EditText productQuantity;
 
-        public Button btnPlus, btnMinus;
+        public Button btnPlus, btnMinus, btnDelete;
 
         public LinearLayoutCompat linearLayoutCart;
 
@@ -103,10 +118,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             productQuantity = itemView.findViewById(R.id.productQuantity);
             btnPlus = itemView.findViewById(R.id.btnPlus);
             lineTotalPrice = itemView.findViewById(R.id.lineTotalPrice);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
             linearLayoutCart = itemView.findViewById(R.id.linearLayoutCart);
         }
     }
 
+    // xóa all sản phẩm trong giỏ và load lại trang
     public void updateUI() {
         notifyDataSetChanged();
         // Xóa tất cả sản phẩm trong giỏ hàng

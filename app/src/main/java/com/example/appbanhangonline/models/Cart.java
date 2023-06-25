@@ -19,15 +19,22 @@ public class Cart {
 
     private static int total_price;
 
+    // Nếu hóa đơn trên 200k sẽ tính thuế 10%
     public int getTotal_price(){
-        return (int) (this.total_price * 0.9);
+        if(total_price > 200000) {
+            return (int) (this.total_price * 1.1);
+        } else {
+            return this.total_price;
+        }
     }
 
 
+    // tổng giá tiền toàn hóa đơn
     public void setTotal_price(int total_price) {
         this.total_price = total_price;
     }
 
+    // khi bấm thêm/ tăng sản phẩm => tính toán lại giá cả
     public boolean addCart(Product p) {
         Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
         if (quantity >= p.getQuantity()) {
@@ -38,32 +45,31 @@ public class Cart {
         return true;
     }
 
+    // khi giảm số lượng thì tính toán lại giá , mặc định số lượng nhỏ nhất có thể là 1
     public void removeCart(Product p) {
         Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
-        if (quantity <= 0) return;
-        cartList.put(p.getProductID(), quantity - 1);
-        total_price -= p.getPrice();
-
-
-//        if (quantity < 1) {
-//            cartList.remove(p.getProductID());
-//        } else {
-//            cartList.put(p.getProductID(), quantity - 1);
-//        }
-//        total_price -= p.getPrice();
+        if (quantity > 1) {
+            cartList.put(p.getProductID(), quantity - 1);
+            total_price -= p.getPrice();
+        }
     }
 
+    // xóa hoàn toàn 1 sản phẩm ra khỏi giỏ hàng, dùng khi người dùng bấm vào nút btnDelete
+    public void deleteProduct(Product p){
+        Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
+        total_price -= p.getPrice() * quantity;
+        cartList.remove(p.getProductID());
+    }
 
-
-
+    // lấy ra giá tiền từng sản phẩm  * số lượng nó đang có trong giỏ
     public int getLinePrice(Product p){
         return p.getPrice() * cartList.getOrDefault(p.getProductID(), 0);
     }
 
+    // lấy thông tin sp từ giỏ hàng dựa trên vị trí (position) của sản phẩm trong giỏ hàng
+    // và sử dụng product_id để truy xuất thông tin sản phẩm từ productRepository.
     public Product getProductByOrder(Integer position){
         keys = cartList.keySet().toArray();
         return productRepository.getProductById(Integer.parseInt(keys[position].toString()));
     }
-
-
 }

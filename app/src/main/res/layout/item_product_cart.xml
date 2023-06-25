@@ -23,7 +23,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="centerCrop"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/pd1"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -98,6 +99,14 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_gravity="center_vertical"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_delete"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

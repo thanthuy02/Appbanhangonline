@@ -66,11 +66,13 @@
         android:id="@+id/total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thành tiền: 0000000"
+        android:text="Tổng tiền: 0000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/btnPay"
         android:layout_marginBottom="10dp"
-        android:textAlignment="textEnd" />
+        android:textAlignment="textEnd"
+        android:textColor="#BF2A2A"
+        android:textSize="15dp"/>
 
     <Button
         android:id="@+id/btnPay"
