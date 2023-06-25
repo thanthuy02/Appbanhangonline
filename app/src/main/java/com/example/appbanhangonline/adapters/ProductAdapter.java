@@ -1,6 +1,7 @@
 package com.example.appbanhangonline.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.admin.ProductActivity;
+import com.example.appbanhangonline.activities.admin.ProductEditActivity;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 
@@ -23,8 +25,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
-
-    private ArrayList<Product> products;
 
     public ProductAdapter(ProductActivity context, int resource, ArrayList<Product> products) {
         super(context, resource, products);
