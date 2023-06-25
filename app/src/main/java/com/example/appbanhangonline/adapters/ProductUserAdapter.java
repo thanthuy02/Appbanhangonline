@@ -19,7 +19,6 @@ import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.ProductViewHolder> {
     private Context context;

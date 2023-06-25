@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:gravity="center_horizontal"
-            android:text="Kieu Trang"
+            android:text="ABC"
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="kieutrang021002@gmail.com"
+            android:text="customer@gmail.com"
             android:textColor="#000"
             android:textSize="16sp" />
 

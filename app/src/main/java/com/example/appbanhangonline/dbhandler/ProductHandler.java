@@ -8,14 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 
-import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductHandler extends SQLiteOpenHelper {
     SQLiteDatabase db;
