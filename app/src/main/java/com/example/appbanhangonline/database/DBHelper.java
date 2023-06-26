@@ -134,7 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + USER_ROLE + ") "
             + "VALUES ('Than Thi Thuy', '012345678', 'Dong Da', 'thanthuy2811@gmail.com', 'admin', 'admin'),"
             + "('Dao Thi Kieu Trang' , '023456789', 'Dong Da', 'kieutrang021002@gmail.com', 'admin', 'admin'),"
-            + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'admin', 'admin', 'admin'),"
+            + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'buiuyen1207@gmail.com', 'admin', 'admin'),"
             + "('ABC', '013345679', 'Dong Da', 'customer@gmail.com', '123', 'customer')";
 
     private static final String INSERT_CATEGORY = "INSERT INTO " + CATEGORIES + " (" + CATEGORY_NAME + ") " +
@@ -155,9 +155,9 @@ public class DBHelper extends SQLiteOpenHelper {
             BILL_CREATED_AT + ", " +
             BILL_TOTAL_PRICE + ") " +
             "VALUES " +
-            "(1, '2023-06-25 10:30:00', 100.0), " +
-            "(2, '2023-06-26 11:45:00', 150.0), " +
-            "(3, '2023-06-27 09:15:00', 200.0)";
+            "(1, '2023-04-25 10:30:00', 120000), " +
+            "(2, '2023-05-26 11:45:00', 11000), " +
+            "(3, '2023-06-27 09:15:00', 80000)";
 
     private static final String INSERT_DETAILED_BILLS = "INSERT INTO " + DETAILED_BILLS + " (" +
             DETAILED_BILL_BILL_ID + ", " +
