@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
+import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.Product;
 
@@ -31,6 +33,21 @@ public class ProductHandler extends SQLiteOpenHelper {
 
     public ArrayList<Product> getAllProducts() {
         ArrayList<Product> products = new ArrayList<>();
+
+//        try {
+//            DBHelper dbHelper = MainActivity.getDB();
+//            //assert dbHelper != null;
+//            dbHelper.getReadableDatabase().beginTransaction();
+//            String sql = String.format("SELECT * from %s", DBHelper.PRODUCTS);
+//            Log.d("sql :: ", sql);
+//            Cursor cursor = dbHelper.getData(sql);
+//            while (cursor.moveToNext()){
+//                products.add(new Product(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(2), cursor.getInt(3), cursor.getString(5)));
+//            }
+//        } catch (Exception e) {
+//            //MainActivity.getDB().getReadableDatabase().endTransaction();
+//            Log.d("error : ", e.getMessage());
+
         String query = "SELECT * FROM products";
         Cursor c = dbHelper.getReadableDatabase().rawQuery(query, null);
         while (c.moveToNext()) {
@@ -42,6 +59,10 @@ public class ProductHandler extends SQLiteOpenHelper {
             product.setPrice(c.getInt(4));
             product.setImage(c.getString(5));
             products.add(product);
+
+            c.moveToNext();
+            //
+
         }
         c.close();
         return products;
@@ -101,6 +122,35 @@ public class ProductHandler extends SQLiteOpenHelper {
         statement.executeInsert();
         db.close();
     }
+
+    public Product getProductById(int productId) {
+        Product product = null;
+        try {
+            DBHelper dbHelper = MainActivity.getDB();
+            SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+            String selection = DBHelper.PRODUCT_ID + "=?";
+            String[] selectionArgs = {String.valueOf(productId)};
+
+            Cursor cursor = database.query(DBHelper.PRODUCTS, null, selection, selectionArgs, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                product = new Product();
+                product.setProductID(productId);
+                product.setProductName(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.PRODUCT_NAME)));
+//                product.setCategoryName(cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.P)));
+                product.setQuantity(cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.PRODUCT_QUANTITY)));
+                product.setPrice(cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.PRODUCT_PRICE)));
+                product.setImage(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.PRODUCT_IMAGE)));
+            }
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.d("error : ", e.getMessage());
+        }
+        return product;
+    }
+
 
     public void edit(int id, String name, int category_id, int quantity, int price, String image) {
         SQLiteDatabase db = getWritableDatabase();

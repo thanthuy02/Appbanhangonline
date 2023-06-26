@@ -51,7 +51,7 @@
             android:background="@drawable/round_btn"
             android:gravity="center"
             android:text="Thêm mới"
-            android:textColorLink="#000011"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
 

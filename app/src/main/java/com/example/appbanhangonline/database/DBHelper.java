@@ -10,15 +10,16 @@ import com.example.appbanhangonline.dbhandler.LoginHandler;
 
 public class DBHelper extends SQLiteOpenHelper {
     public Cursor getData(String sql) {
-        return getReadableDatabase().rawQuery(sql, null);
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        close();
+        return cursor;
     }
 
     public void queryData(String sql) {
         getWritableDatabase().execSQL(sql);
+        close();
     }
-
-
-//  define database name
+    //  define database name
 
     public static final String DATABASE_NAME = "SMS.db";
 
@@ -136,11 +137,43 @@ public class DBHelper extends SQLiteOpenHelper {
             + "('Bui Thi Thu Uyen', '012345679', 'Dong Da', 'buiuyen1207@gmail.com', 'admin', 'admin'),"
             + "('ABC', '013345679', 'Dong Da', 'customer@gmail.com', '123', 'customer')";
 
-    private static final String INSERT_CATEGORY = "INSERT INTO " + CATEGORIES + " (" + CATEGORY_NAME + ") "
-            + "VALUES ('Bút'),"
-            + "('Vở'),"
-            + "('Máy tính'),"
-            + "('Đèn học')";
+    private static final String INSERT_CATEGORY = "INSERT INTO " + CATEGORIES + " (" + CATEGORY_NAME + ") " +
+            "VALUES ('Bút'), " +
+            "('Vở'), " +
+            "('Máy tính'), " +
+            "('Đèn học')";
+
+    private static final String INSERT_PRODUCTS = "INSERT INTO " + PRODUCTS + " (" + PRODUCT_NAME + ", " + PRODUCT_CATEGORY_ID + ", " + PRODUCT_QUANTITY + ", " + PRODUCT_PRICE + ", " + PRODUCT_IMAGE + ") " +
+            "VALUES ('Bút máy doraemon', 1, 10, 120000, ''), " +
+            "('Vở viết 3D', 2, 20, 11000, ''), " +
+            "('Máy tính bỏ túi', 3, 30, 80000, ''), " +
+            "('Đèn học thông minh', 4, 40, 100000, '')";
+
+
+    private static final String INSERT_BILL = "INSERT INTO " + BILLS + " (" +
+            BILL_CUSTOMER_ID + ", " +
+            BILL_CREATED_AT + ", " +
+            BILL_TOTAL_PRICE + ") " +
+            "VALUES " +
+            "(1, '2023-04-25 10:30:00', 120000), " +
+            "(2, '2023-05-26 11:45:00', 11000), " +
+            "(3, '2023-06-27 09:15:00', 80000)";
+
+    private static final String INSERT_DETAILED_BILLS = "INSERT INTO " + DETAILED_BILLS + " (" +
+            DETAILED_BILL_BILL_ID + ", " +
+            DETAILED_BILL_PRODUCT_ID + ", " +
+            DETAILED_BILL_QUANTITY + ", " +
+            DETAILED_BILL_PRICE +
+            ") VALUES (" +
+            "1, 1, 1, 120000" +
+            "), (" +
+            "2, 2, 1, 11000" +
+            "), (" +
+            "3, 3, 1, 80000" +
+            ")";
+
+
+
 
 //    String imagePath1 = "android.resource://" + context.getPackageName() + "/drawable/pd1";
 //    String imagePath2 = "android.resource://" + context.getPackageName() + "/drawable/pd2";
@@ -216,6 +249,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(INSERT_USER);
         db.execSQL(TRIGGER_QUANTITY);
         db.execSQL(INSERT_CATEGORY);
+        db.execSQL(INSERT_PRODUCTS);
+        db.execSQL(INSERT_BILL);
+        db.execSQL(INSERT_DETAILED_BILLS);
         //db.execSQL(INSERT_PRODUCT);
     }
 

@@ -5,11 +5,16 @@ import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.DetailBill;
+import com.example.appbanhangonline.utils.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailBillHandler extends SQLiteOpenHelper {
 
@@ -39,6 +44,47 @@ public class DetailBillHandler extends SQLiteOpenHelper {
         } else {
             return 1;
         }
+    }
+    public List<DetailBill> getBillDetailsByBillID(int billID) {
+        List<DetailBill> billDetails = new ArrayList<>();
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+
+        try {
+            database = getReadableDatabase();
+            String[] projection = {
+                    "product_id",
+                    "quantity",
+                    "price"
+            };
+            String selection = "bill_id=?";
+            String[] selectionArgs = {String.valueOf(billID)};
+
+            cursor = database.query("detailed_bills", projection, selection, selectionArgs, null, null, null);
+
+            while (cursor.moveToNext()) {
+                int productId = cursor.getInt(cursor.getColumnIndexOrThrow("product_id"));
+                int quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"));
+                int price = cursor.getInt(cursor.getColumnIndexOrThrow("price"));
+
+                DetailBill detailBill = new DetailBill();
+                detailBill.setProductId(productId);
+                detailBill.setQuantity(quantity);
+                detailBill.setPrice(price);
+
+                billDetails.add(detailBill);
+            }
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (database != null) {
+                database.close();
+            }
+        }
+        return billDetails;
     }
 
 
