@@ -143,6 +143,13 @@ public class DBHelper extends SQLiteOpenHelper {
             "('Máy tính'), " +
             "('Đèn học')";
 
+    private static final String INSERT_PRODUCTS = "INSERT INTO " + PRODUCTS + " (" + PRODUCT_NAME + ", " + PRODUCT_CATEGORY_ID + ", " + PRODUCT_QUANTITY + ", " + PRODUCT_PRICE + ", " + PRODUCT_IMAGE + ") " +
+            "VALUES ('Bút máy doraemon', 1, 10, 120000, ''), " +
+            "('Vở viết 3D', 2, 20, 11000, ''), " +
+            "('Máy tính bỏ túi', 3, 30, 80000, ''), " +
+            "('Đèn học thông minh', 4, 40, 100000, '')";
+
+
     private static final String INSERT_BILL = "INSERT INTO " + BILLS + " (" +
             BILL_CUSTOMER_ID + ", " +
             BILL_CREATED_AT + ", " +
@@ -151,6 +158,19 @@ public class DBHelper extends SQLiteOpenHelper {
             "(1, '2023-06-25 10:30:00', 100.0), " +
             "(2, '2023-06-26 11:45:00', 150.0), " +
             "(3, '2023-06-27 09:15:00', 200.0)";
+
+    private static final String INSERT_DETAILED_BILLS = "INSERT INTO " + DETAILED_BILLS + " (" +
+            DETAILED_BILL_BILL_ID + ", " +
+            DETAILED_BILL_PRODUCT_ID + ", " +
+            DETAILED_BILL_QUANTITY + ", " +
+            DETAILED_BILL_PRICE +
+            ") VALUES (" +
+            "1, 1, 1, 120000" +
+            "), (" +
+            "2, 2, 1, 11000" +
+            "), (" +
+            "3, 3, 1, 80000" +
+            ")";
 
 
 
@@ -229,7 +249,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(INSERT_USER);
         db.execSQL(TRIGGER_QUANTITY);
         db.execSQL(INSERT_CATEGORY);
+        db.execSQL(INSERT_PRODUCTS);
         db.execSQL(INSERT_BILL);
+        db.execSQL(INSERT_DETAILED_BILLS);
         //db.execSQL(INSERT_PRODUCT);
     }
 

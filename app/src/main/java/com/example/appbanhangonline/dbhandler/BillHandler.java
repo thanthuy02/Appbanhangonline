@@ -1,5 +1,8 @@
 package com.example.appbanhangonline.dbhandler;
 
+import static com.example.appbanhangonline.database.DBHelper.DATABASE_NAME;
+import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,6 +25,16 @@ import java.util.Date;
 import java.util.List;
 
 public class BillHandler extends SQLiteOpenHelper implements IManager<Bill, Integer> {
+    SQLiteDatabase db;
+
+    DBHelper dbHelper;
+    private Context context;
+    public BillHandler(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+        dbHelper = new DBHelper(context);
+        db = dbHelper.getWritableDatabase();
+    }
 
     public BillHandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -56,6 +69,49 @@ public class BillHandler extends SQLiteOpenHelper implements IManager<Bill, Inte
             Logger.error(e.getMessage());
         }
         return bills;
+    }
+    public Bill getBillById(int billId) {
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+        Bill bill = null;
+
+        try {
+            database = getReadableDatabase();
+            String[] projection = {
+                    DBHelper.BILL_ID,
+                    DBHelper.BILL_CUSTOMER_ID,
+                    DBHelper.BILL_CREATED_AT,
+                    DBHelper.BILL_TOTAL_PRICE
+            };
+            String selection = DBHelper.BILL_ID + "=?";
+            String[] selectionArgs = { String.valueOf(billId) };
+
+            cursor = database.query(DBHelper.BILLS, projection, selection, selectionArgs, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                int billID = cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.BILL_ID));
+                int customerID = cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.BILL_CUSTOMER_ID));
+                String createdAt = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.BILL_CREATED_AT));
+                int totalPrice = cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.BILL_TOTAL_PRICE));
+
+                bill = new Bill();
+                bill.setBillID(billID);
+                bill.setBillCustomerID(customerID);
+                bill.setCreatedAt(createdAt);
+                bill.setBillTotalPrice(totalPrice);
+            }
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (database != null) {
+                database.close();
+            }
+        }
+
+        return bill;
     }
 
     public List<Bill> getAllBill() {

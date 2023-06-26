@@ -17,6 +17,7 @@ import com.example.appbanhangonline.databinding.ActivityAdminBillBinding;
 import com.example.appbanhangonline.databinding.ActivityCustomerBillBinding;
 import com.example.appbanhangonline.dbhandler.BillHandler;
 import com.example.appbanhangonline.models.Bill;
+import com.example.appbanhangonline.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +58,18 @@ public class BillActivity extends Activity {
         billAdminAdapter.setOnItemClickListener(new BillAdminAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Bill bill) {
-                // Xử lý sự kiện khi người dùng nhấp vào mục ở đây
-                startActivity(new Intent(getApplicationContext(), BillAdminAdapter.class));
-                finish();
+                showBillDetails(rootView, bill);
             }
         });
+    }
+    private void showBillDetails(View v, Bill bill) {
+        // Lưu thông tin người dùng vào SharedPreferences
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("BillPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("billId", bill.getBillID());
+        editor.apply();
+
+        Intent intent = new Intent(v.getContext(), BillDetailsActivity.class);
+        v.getContext().startActivity(intent);
     }
 }

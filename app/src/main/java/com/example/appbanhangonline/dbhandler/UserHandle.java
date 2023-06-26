@@ -1,5 +1,8 @@
 package com.example.appbanhangonline.dbhandler;
 
+import static com.example.appbanhangonline.database.DBHelper.DATABASE_NAME;
+import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,6 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserHandle extends SQLiteOpenHelper implements IManager<User, Integer> {
+    SQLiteDatabase db;
+
+    DBHelper dbHelper;
+    private Context context;
+    public UserHandle(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+        dbHelper = new DBHelper(context);
+        db = dbHelper.getWritableDatabase();
+    }
 
     public UserHandle(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -67,15 +80,20 @@ public class UserHandle extends SQLiteOpenHelper implements IManager<User, Integ
     }
 
     @Override
-    public User getById(Integer integer) {
+    public User getById(Integer userId) {
         User user = null;
         try {
             DBHelper dbHelper = MainActivity.getDB();
-            String sql = String.format("SELECT * from %s where %s=%d ", DBHelper.USERS, DBHelper.USER_ID, integer);
-            Cursor cursor = dbHelper.getData(sql);
-            while (cursor.moveToNext()) {
+            SQLiteDatabase database = dbHelper.getReadableDatabase();
+
+            String selection = DBHelper.USER_ID + "=?";
+            String[] selectionArgs = {String.valueOf(userId)};
+
+            Cursor cursor = database.query(DBHelper.USERS, null, selection, selectionArgs, null, null, null);
+
+            if (cursor.moveToFirst()) {
                 user = new User();
-                user.setUserID(integer);
+                user.setUserID(userId);
                 user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.USER_NAME)));
                 user.setNumberPhone(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.USER_PHONE)));
                 user.setEmail(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.USER_EMAIL)));
@@ -83,12 +101,14 @@ public class UserHandle extends SQLiteOpenHelper implements IManager<User, Integ
                 user.setRole(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.USER_ROLE)));
                 user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.USER_PASSWORD)));
             }
+
+            cursor.close();
         } catch (Exception e) {
-            MainActivity.getDB().getReadableDatabase().endTransaction();
             Log.d("error : ", e.getMessage());
         }
         return user;
     }
+
 
     @Override
     public List<User> getListByPage(int page, int limit) {

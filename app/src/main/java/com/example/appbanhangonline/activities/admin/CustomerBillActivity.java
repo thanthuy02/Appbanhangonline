@@ -66,10 +66,19 @@ public class CustomerBillActivity extends AppCompatActivity {
         customerBillAdapter.setOnItemClickListener(new CustomerBillAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Bill bill) {
-                // Xử lý sự kiện khi người dùng nhấp vào mục ở đây
-                startActivity(new Intent(getApplicationContext(), CustomerBillActivity.class));
-                finish();
+                showBillDetails(rootView, bill);
             }
         });
+    }
+
+    private void showBillDetails(View v, Bill bill) {
+        // Lưu thông tin người dùng vào SharedPreferences
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("BillPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("billId", bill.getBillID());
+        editor.apply();
+
+        Intent intent = new Intent(v.getContext(), BillDetailsActivity.class);
+        v.getContext().startActivity(intent);
     }
 }
