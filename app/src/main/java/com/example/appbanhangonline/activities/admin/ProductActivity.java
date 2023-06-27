@@ -91,7 +91,6 @@ public class ProductActivity extends Activity {
     public void showItem() {
         productHandler = new ProductHandler(this);
         ArrayList<Product> products = productHandler.getAllProducts();
-        Logger.info(String.valueOf(products));
         productAdapter = new ProductAdapter(this, R.layout.listview_product_item, products);
         listViewProduct.setAdapter(productAdapter);
     }
