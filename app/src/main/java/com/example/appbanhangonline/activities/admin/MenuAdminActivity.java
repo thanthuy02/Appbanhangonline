@@ -14,18 +14,31 @@ import com.example.appbanhangonline.databinding.ActivityAdminCategoryBinding;
 import com.example.appbanhangonline.databinding.ActivityAdminMainBinding;
 
 public class MenuAdminActivity extends Activity {
+
+    // Khai báo biến
+    // billAdminAdapter: Đối tượng ActivityAdminMainBinding để quản lý danh sách hóa đơn trong RecyclerView.
     private ActivityAdminMainBinding binding;
 
+    // Phương thức onCreate: Được gọi khi activity được tạo.
+    // Trong phương thức này, các bước khởi tạo và thiết lập giao diện và xử lý sự kiện được thực hiện.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Khởi tạo binding
+
+        // Tạo đối tượng binding bằng cách inflate layout ActivityAdminMainBinding và gán cho biến binding.
+        // Điều này liên kết layout XML "activity_admin_main" với activity.
         binding = ActivityAdminMainBinding.inflate(getLayoutInflater());
-        // Lấy ra root view từ binding
+
+        // Lấy ra root view từ binding.
+        // Root view là view gốc của layout activity.
         View rootView = binding.getRoot();
-        // Gán layout cho Activity
+
+        // Thiết lập layout gốc cho activity bằng cách sử dụng root view.
         setContentView(rootView);
 
+        // Xử lý sự kiện khi nút "Logout" được click:
+        // Gắn một OnClickListener cho nút "Logout" (binding.btnLogout).
+        // Khi nút được click, một Intent được tạo để chuyển đến LoginActivity, và sau đó kết thúc activity hiện tại.
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,6 +48,9 @@ public class MenuAdminActivity extends Activity {
             }
         });
 
+        // Xử lý sự kiện khi thẻ "Category" được click:
+        // Gắn một OnClickListener cho thẻ "Category" (binding.cardCategory).
+        // Khi thẻ được click, tạo một Intent để chuyển đến CategoryActivity và bắt đầu một activity mới.
         binding.cardCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,6 +59,7 @@ public class MenuAdminActivity extends Activity {
             }
         });
 
+        // các xự kiện onClick bên dưới tương tự như trên
         binding.cardProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
