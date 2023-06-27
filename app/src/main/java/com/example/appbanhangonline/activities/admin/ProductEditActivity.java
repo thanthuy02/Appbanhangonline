@@ -2,11 +2,9 @@ package com.example.appbanhangonline.activities.admin;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,16 +14,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import com.bumptech.glide.Glide;
 import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.adapters.ProductAdapter;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
+import com.example.appbanhangonline.utils.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProductEditActivity extends Activity {
@@ -39,7 +33,7 @@ public class ProductEditActivity extends Activity {
     EditText txtQuantity;
     EditText txtPrice;
     EditText txtProductName;
-    int REQUEST_CODE_FOLDER = 456;
+    int PICK_IMAGE_REQUEST = 456;
     String selectedImagePath = "";
     int id;
 
@@ -62,9 +56,8 @@ public class ProductEditActivity extends Activity {
         ibnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent in = new Intent(Intent.ACTION_PICK);
-                in.setType("image/*");
-                startActivityForResult(in, REQUEST_CODE_FOLDER);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_IMAGE_REQUEST);
             }
         });
 
@@ -96,7 +89,7 @@ public class ProductEditActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_FOLDER && resultCode == RESULT_OK & data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK & data != null) {
             Uri selectedImageUri = data.getData();
             selectedImagePath = selectedImageUri.toString();
             imgProductUpload.setImageURI(selectedImageUri);
@@ -111,9 +104,6 @@ public class ProductEditActivity extends Activity {
             txtQuantity.setText(String.valueOf(product.getQuantity()));
             txtPrice.setText(String.valueOf(product.getPrice()));
             selectedImagePath = product.getImage();
-            Glide.with(ProductEditActivity.this)
-                    .load(Uri.parse(selectedImagePath))
-                    .into(imgProductUpload);
         }
     }
 
