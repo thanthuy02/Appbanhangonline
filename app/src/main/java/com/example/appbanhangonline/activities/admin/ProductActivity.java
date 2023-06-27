@@ -21,6 +21,7 @@ import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.adapters.ProductAdapter;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
+import com.example.appbanhangonline.utils.Logger;
 
 import java.util.ArrayList;
 
