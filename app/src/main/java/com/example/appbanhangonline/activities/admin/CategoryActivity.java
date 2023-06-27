@@ -20,34 +20,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryActivity extends Activity {
-    private CategoryAdminAdapter categoryAdminAdapter;
-    private ActivityAdminCategoryBinding binding;
-    private CategoryHandler categoryHandle;
-    private List<Category> categories;
 
+    // Khai báo biến categoryAdminAdapter.
+    // Đây là adapter để hiển thị danh sách các danh mục.
+    private CategoryAdminAdapter categoryAdminAdapter;
+
+    // binding: Đối tượng ActivityAdminCategoryBinding.
+    // Đây là đối tượng được tạo tự động bởi Data Binding để liên kết các thành phần giao diện trong layout của activity.
+    private ActivityAdminCategoryBinding binding;
+
+    // Phương thức onCreate: Được gọi khi activity được tạo.
+    // Trong phương thức này, các bước khởi tạo và thiết lập giao diện và dữ liệu được thực hiện.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Khởi tạo binding
+
+        // Tạo đối tượng binding bằng cách inflate layout ActivityAdminCategoryBinding và gán cho biến binding.
+        // Liên kết layout XML "activity_admin_category" với activity.
         binding = ActivityAdminCategoryBinding.inflate(getLayoutInflater());
-        // Lấy ra root view từ binding
+
+        // Lấy ra root view từ binding.
+        // Root view là view gốc của layout activity.
         View rootView = binding.getRoot();
-        // Gán layout cho Activity
+
+        // Thiết lập layout gốc cho activity bằng cách sử dụng root view.
         setContentView(rootView);
 
-        // Thiết lập Layout Manager
+        // Thiết lập Layout Manager cho RecyclerView:
+        // Tạo một LayoutManager mới (LinearLayoutManager) và thiết lập cho RecyclerView (binding.rcvCategoryAdmin).
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.rcvCategoryAdmin.setLayoutManager(layoutManager);
-        categories = new ArrayList<>();
 
+        // Lấy danh sách các danh mục từ CategoryHandler:
+        // Sử dụng CategoryHandler để lấy danh sách các danh mục từ CSDL.
         List<Category> categories = CategoryHandler.gI(this).getAll();
 
-        // Thiết lập Adapter
+        // Thiết lập Adapter cho RecyclerView:
+        // Khởi tạo categoryAdminAdapter và thiết lập nó cho RecyclerView (binding.rcvCategoryAdmin).
+        // Sau đó, gọi phương thức setCategories() trên adapter để đưa danh sách các danh mục vào adapter.
         categoryAdminAdapter = new CategoryAdminAdapter();
         binding.rcvCategoryAdmin.setAdapter(categoryAdminAdapter);
         categoryAdminAdapter.setCategories(categories);
 
-        // onClick
+        // Xử lý sự kiện khi nút "Back" được click:
+        // Gắn một OnClickListener cho nút "Back" (binding.btnBack).
+        // Khi nút được click, một Intent được tạo để chuyển đến MenuAdminActivity, và sau đó kết thúc activity hiện tại.
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +74,9 @@ public class CategoryActivity extends Activity {
             }
         });
 
+        // Xử lý sự kiện khi nút "Create Product" được click:
+        // Gắn một OnClickListener cho nút "Create Product" (binding.btnCreateProduct).
+        // Khi nút được click, một Intent được tạo để chuyển đến CategoryCreateActivity, và sau đó kết thúc activity hiện tại.
         binding.btnCreateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +86,11 @@ public class CategoryActivity extends Activity {
             }
         });
 
+        // Xử lý sự kiện trong Adapter:
+        // Sử dụng phương thức setListener() trên categoryAdminAdapter để thiết lập một đối tượng lắng nghe sự kiện (CategoryAdminAdapterListener).
+        // Trong phương thức này, xử lý sự kiện khi nút "Delete" và nút "Edit" được click trong adapter.
+        // Khi nút "Delete" được click, xóa danh mục tại vị trí tương ứng và cập nhật giao diện.
+        // Khi nút "Edit" được click, hiển thị thông tin chi tiết của danh mục.
         categoryAdminAdapter.setListener(new CategoryAdminAdapter.CategoryAdminAdapterListener() {
             @Override
             public void onDeleteClicked(int position, Category category) {
@@ -101,6 +126,9 @@ public class CategoryActivity extends Activity {
         });
     }
 
+    // Phương thức showCategoryDetails():
+    // Lưu thông tin của danh mục được click vào SharedPreferences
+    // và sau đó chuyển đến CategoryEditActivity bằng cách tạo và khởi chạy một Intent.
     private void showCategoryDetails(View v, Category category) {
         // Lưu thông tin người dùng vào SharedPreferences
         SharedPreferences sharedPreferences = v.getContext().getSharedPreferences("CategoryPreferences", Context.MODE_PRIVATE);
