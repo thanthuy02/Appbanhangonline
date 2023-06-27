@@ -38,7 +38,7 @@ public class DetailBillHandler extends SQLiteOpenHelper {
         values.put("quantity", detailBill.getQuantity());
         values.put("price", detailBill.getPrice());
 
-        long result = dbHelper.getWritableDatabase().insert("detailed_bills", null, values);
+        long result = db.insert("detailed_bills", null, values);
         if (result <= 0) {
             return -1;
         } else {

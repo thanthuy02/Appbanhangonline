@@ -15,17 +15,23 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
+import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
 import com.example.appbanhangonline.dbhandler.BillHandler;
 import com.example.appbanhangonline.dbhandler.DetailBillHandler;
+import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.Cart;
+import com.example.appbanhangonline.models.DetailBill;
+import com.example.appbanhangonline.models.Product;
+
+import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
     TextView total, emptyCart;
     Button btnPay;
     ImageButton btnBack;
-    Cart cart = new Cart();
+    Cart cart;
     CartAdapter cartAdapter;
 
     BillHandler billHandle;
@@ -86,7 +92,11 @@ public class CartActivity extends AppCompatActivity {
         rvCart = findViewById(R.id.rvCart);
         btnPay = findViewById(R.id.btnPay);
         btnBack = findViewById(R.id.imgBtnBack);
+        cart = new Cart();
         emptyCart = findViewById(R.id.emptyCart);
+        billHandle = BillHandler.gI(this);
+        detailBillHandler = new DetailBillHandler(this);
+
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
         rvCart.setLayoutManager(layoutManager);
@@ -112,7 +122,7 @@ public class CartActivity extends AppCompatActivity {
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showSuccessToast();
+                            processPayment();
                         }
                     })
                     .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -126,44 +136,43 @@ public class CartActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // thông báo đặt hàng thành công
-    private void showSuccessToast() {
-//        Bill bill = new Bill();
-//        bill.setBillCustomerID(MainActivity.user_id);
-//        bill.setBillTotalPrice(cart.getTotal_price());
-//        Date now = new Date();
-//        bill.setCreatedAt(now.toString());
-//
-//        if(BillHandler.gI().insertBill(bill) == 1){
-            //int bill_id = billHandle.getBillIdNew();
-            // Thành công sẽ thêm hóa đơn chi tiết
-            Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-            ((CartActivity) this).load();
+    // Xử lý thanh toán và lưu thông tin vào bill và bill detail
+    private void processPayment() {
+        Bill bill = new Bill();
+        bill.setBillCustomerID(MainActivity.user_id);
+        bill.setBillTotalPrice(cart.getTotal_price());
+        Date now = new Date();
+        bill.setCreatedAt(now.toString());
 
+        if (billHandle.insertBill(bill) == 1) {
+            int bill_id = billHandle.getBillIdNew();
+            Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
 
             // Lặp qua các phần tử trong cartList để lấy sản phẩm
-//            for (Integer productId : cart.cartList.keySet()) {
-//                // Sử dụng phương thức getProductByOrder để lấy sản phẩm dựa trên vị trí
-//                Product product = cart.getProductByOrder(productId);
-//                int quantity = cart.cartList.getOrDefault(productId, 0);
-//
-//                DetailBill detailBill = new DetailBill();
-//                detailBill.setBillID(bill_id);
-//                detailBill.setProductId(product.getProductID());
-//                detailBill.setQuantity(quantity);
-//                detailBill.setPrice(product.getPrice());
-//            }
-//
-//            Cart.cartList.clear();
+            for (Integer productId : cart.cartList.keySet()) {
+                Product product = cart.getProductByOrder(productId);
+                int quantity = cart.cartList.getOrDefault(productId, 0);
 
-//        } else {
-//            Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
-//        }
-        Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
-        ((CartActivity) this).load();
+                DetailBill detailBill = new DetailBill();
+                detailBill.setBillID(bill_id);
+                detailBill.setProductId(product.getProductID());
+                detailBill.setQuantity(quantity);
+                detailBill.setPrice(product.getPrice());
+
+                detailBillHandler.insertDetailBill(detailBill);
+            }
+
+            // Xóa toàn bộ sản phẩm trong giỏ hàng
+            Cart.cartList.clear();
+
+            // Cập nhật giao diện giỏ hàng
+            load();
+        } else {
+            Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
+        }
     }
 
-//    xóa sp trong giỏ hàng và đặt lại tổng tiền = 0
+    // Cập nhật giao diện giỏ hàng
     public void load() {
         cartAdapter.notifyDataSetChanged();
         cartAdapter.updateUI();

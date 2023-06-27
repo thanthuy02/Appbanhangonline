@@ -45,9 +45,9 @@ public class HomeUserActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        productHandler  = new ProductHandler(this);
+        //productHandler  = new ProductHandler(this);
         Anhxa();
-        productUserAdapter = new ProductUserAdapter(this, productList);
+        productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
         rvProduct.setAdapter(productUserAdapter);
     }
 
@@ -56,8 +56,6 @@ public class HomeUserActivity extends AppCompatActivity {
         txtCategory = findViewById(R.id.txtCategory);
         rvProduct = findViewById(R.id.rvProduct);
         productList = new ArrayList<>();
-        productHandler = new ProductHandler(this);
-
 //        Các mảng chứa thông tin sản phẩm
         String[] productName = {"Bút bi","Bút 3 màu","Đèn học trắng","Vở bìa cứng","Vở 200 trang","Vở lò xo","Máy tính 570","Máy tính 580",
                 "Đèn học chân cao","Đèn học cao cấp","Bút chì 2B"};
@@ -75,13 +73,13 @@ public class HomeUserActivity extends AppCompatActivity {
             String imagePath= "android.resource://" + getPackageName() + "/drawable/pd" + i;
             Uri imageUri = Uri.parse(imagePath);
             String image = imageUri.toString();
-//            Product p = new Product(i, productName[i-1], productHandler.getCategoryName(category_id[i-1]), random.nextInt(maxQuantity - minQuantity + 1) + minQuantity , price[i-1], image);
-            productHandler.add(productName[i-1], category_id[i-1], random.nextInt(maxQuantity - minQuantity + 1) + minQuantity, price[i-1], image);
+            Product p = new Product(i, productName[i-1], productHandler.getCategoryName(category_id[i-1]), random.nextInt(maxQuantity - minQuantity + 1) + minQuantity , price[i-1], image);
+            //productHandler.add(productName[i-1],category_id[i-1],random.nextInt(maxQuantity - minQuantity + 1) + minQuantity,  price[i-1], image);
+            productList.add(p);
         }
 
-        //productRepository = new ProductRepository(productList);
-
-        productList = productHandler.getAllProducts();
+        productRepository = new ProductRepository(productList);
+        //productList = productHandler.getAllProducts();
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvProduct.setLayoutManager(layoutManager);

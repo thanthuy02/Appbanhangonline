@@ -43,7 +43,7 @@
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/imgBtnUser"
             android:background="@drawable/ic_cart"
-            android:onClick="onShowProductByOder"/>
+            android:onClick="onShowProductByOder" />
 
 
         <!-- Icon user -->
@@ -148,10 +148,10 @@
         android:id="@+id/layout_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/layout_search"
         android:layout_marginTop="20dp"
+        android:background="#FDE2B5"
         android:padding="5dp"
-        android:background="#FDE2B5">
+        app:layout_constraintTop_toBottomOf="@id/layout_search">
 
         <TextView
             android:id="@+id/txtCategory"
@@ -165,32 +165,31 @@
             android:id="@+id/imgBtnFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_filter"
-            android:background="@android:color/transparent"
-            android:layout_toStartOf="@+id/txtFilter"
             android:layout_centerVertical="true"
-            android:onClick="onShowCategoryMenu"/>
+            android:layout_toStartOf="@+id/txtFilter"
+            android:background="@android:color/transparent"
+            android:onClick="onShowCategoryMenu"
+            app:srcCompat="@drawable/ic_filter" />
 
         <TextView
             android:id="@+id/txtFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lọc"
             android:layout_alignParentEnd="true"
-            android:textSize="18dp"
             android:layout_centerVertical="true"
-            />
+            android:text="Lọc"
+            android:textSize="18dp" />
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:paddingBottom="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_filter" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProduct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:paddingBottom="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_filter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

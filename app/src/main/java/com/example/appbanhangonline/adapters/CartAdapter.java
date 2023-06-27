@@ -40,7 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Integer product_id = cart.getProductByOrder(position).getProductID();
-        Product p = cart.productRepository.getProductById(product_id);
+        Product p = cart.productHandler.getProductById(product_id);
 
         Integer amount = cart.cartList.get(product_id);
         Glide.with(context).load(p.getImage()).into(holder.productImage);
