@@ -135,8 +135,7 @@
             android:layout_height="100dp"
             android:layout_weight="5.82"
             android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:src="@drawable/product_picture" />
+            android:scaleType="fitXY" />
 
         <Button
             android:id="@+id/btnSave"
