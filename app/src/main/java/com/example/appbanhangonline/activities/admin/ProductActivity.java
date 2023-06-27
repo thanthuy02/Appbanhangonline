@@ -21,6 +21,7 @@ import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.adapters.ProductAdapter;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
+import com.example.appbanhangonline.utils.Logger;
 
 import java.util.ArrayList;
 
@@ -90,6 +91,7 @@ public class ProductActivity extends Activity {
     public void showItem() {
         productHandler = new ProductHandler(this);
         ArrayList<Product> products = productHandler.getAllProducts();
+        Logger.info(String.valueOf(products));
         productAdapter = new ProductAdapter(this, R.layout.listview_product_item, products);
         listViewProduct.setAdapter(productAdapter);
     }
