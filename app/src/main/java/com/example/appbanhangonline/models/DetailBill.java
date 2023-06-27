@@ -57,4 +57,9 @@ public class DetailBill {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "DetailBill [id=" +billDetailID + ", bill_id=" + billID + ", product_id=" + productId + ", quantity=" + quantity + ", price=" + price + "]";
+    }
 }
