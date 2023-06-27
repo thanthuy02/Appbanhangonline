@@ -15,10 +15,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_app"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Appbanhangonline"
         tools:targetApi="31">
@@ -36,15 +35,19 @@
         <activity android:name=".activities.admin.ProductCreateActivity" />
         <activity android:name=".activities.admin.MenuAdminActivity" />
         <activity android:name=".activities.admin.BillActivity" />
+        <activity android:name=".activities.admin.BillDetailsActivity" />
         <activity android:name=".activities.admin.CategoryActivity" />
+        <activity android:name=".activities.admin.CategoryCreateActivity" />
+        <activity android:name=".activities.admin.CategoryEditActivity" />
         <activity android:name=".activities.admin.CustomerActivity" />
+        <activity android:name=".activities.admin.CustomerBillActivity" />
+        <activity android:name=".activities.admin.CustomerBillDetailsActivity" />
         <activity android:name=".activities.admin.ProductEditActivity" />
         <activity android:name=".activities.admin.RevenueActivity" />
         <activity android:name=".activities.login.ForgotPasswordActivity" />
         <activity android:name=".activities.login.RegisterActivity" />
         <activity android:name=".activities.user.HomeUserActivity" />
         <activity android:name=".activities.user.CartActivity" />
-
     </application>
 
 </manifest>

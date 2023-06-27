@@ -15,6 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
+import com.example.appbanhangonline.dbhandler.CategoryHandler;
+import com.example.appbanhangonline.dbhandler.ProductHandler;
+import com.example.appbanhangonline.models.Product;
+import com.example.appbanhangonline.models.ProductRepository;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
@@ -33,6 +40,7 @@ public class HomeUserActivity extends AppCompatActivity {
 
     ProductHandler productHandler;
 
+    CategoryHandler categoryHandle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

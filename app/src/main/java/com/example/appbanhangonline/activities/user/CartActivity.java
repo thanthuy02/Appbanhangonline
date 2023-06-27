@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.adapters.CartAdapter;
+import com.example.appbanhangonline.dbhandler.BillHandler;
+import com.example.appbanhangonline.dbhandler.DetailBillHandler;
 import com.example.appbanhangonline.models.Cart;
 
 public class CartActivity extends AppCompatActivity {
@@ -25,6 +27,10 @@ public class CartActivity extends AppCompatActivity {
     ImageButton btnBack;
     Cart cart = new Cart();
     CartAdapter cartAdapter;
+
+    BillHandler billHandle;
+
+    DetailBillHandler detailBillHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +128,37 @@ public class CartActivity extends AppCompatActivity {
 
     // thông báo đặt hàng thành công
     private void showSuccessToast() {
+//        Bill bill = new Bill();
+//        bill.setBillCustomerID(MainActivity.user_id);
+//        bill.setBillTotalPrice(cart.getTotal_price());
+//        Date now = new Date();
+//        bill.setCreatedAt(now.toString());
+//
+//        if(BillHandler.gI().insertBill(bill) == 1){
+            //int bill_id = billHandle.getBillIdNew();
+            // Thành công sẽ thêm hóa đơn chi tiết
+            Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+            ((CartActivity) this).load();
+
+
+            // Lặp qua các phần tử trong cartList để lấy sản phẩm
+//            for (Integer productId : cart.cartList.keySet()) {
+//                // Sử dụng phương thức getProductByOrder để lấy sản phẩm dựa trên vị trí
+//                Product product = cart.getProductByOrder(productId);
+//                int quantity = cart.cartList.getOrDefault(productId, 0);
+//
+//                DetailBill detailBill = new DetailBill();
+//                detailBill.setBillID(bill_id);
+//                detailBill.setProductId(product.getProductID());
+//                detailBill.setQuantity(quantity);
+//                detailBill.setPrice(product.getPrice());
+//            }
+//
+//            Cart.cartList.clear();
+
+//        } else {
+//            Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
+//        }
         Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
         ((CartActivity) this).load();
     }
