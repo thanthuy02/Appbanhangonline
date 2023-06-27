@@ -46,6 +46,7 @@ public class ProductHandler extends SQLiteOpenHelper {
             products.add(product);
         }
         c.close();
+        db.close();
         return products;
     }
 
