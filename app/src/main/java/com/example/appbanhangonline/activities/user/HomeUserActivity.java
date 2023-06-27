@@ -40,14 +40,13 @@ public class HomeUserActivity extends AppCompatActivity {
 
     ProductHandler productHandler;
 
-    CategoryHandler categoryHandle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //productHandler  = new ProductHandler(this);
+        productHandler  = new ProductHandler(this);
         Anhxa();
-        productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
+        productUserAdapter = new ProductUserAdapter(this, productList);
         rvProduct.setAdapter(productUserAdapter);
     }
 
@@ -56,30 +55,9 @@ public class HomeUserActivity extends AppCompatActivity {
         txtCategory = findViewById(R.id.txtCategory);
         rvProduct = findViewById(R.id.rvProduct);
         productList = new ArrayList<>();
-//        Các mảng chứa thông tin sản phẩm
-        String[] productName = {"Bút bi","Bút 3 màu","Đèn học trắng","Vở bìa cứng","Vở 200 trang","Vở lò xo","Máy tính 570","Máy tính 580",
-                "Đèn học chân cao","Đèn học cao cấp","Bút chì 2B"};
 
-        int[] category_id = {1,1,4,2,2,2,3,3,4,4,1};
-
-        int[] price = {6000, 15000, 85000, 28000, 20000, 56000, 427000, 510000, 90000, 150000, 4000};
-
-        Random random = new Random();
-        int minQuantity = 2;
-        int maxQuantity = 30;
-
-
-        for (int i = 1; i <= 11; i++) {
-            String imagePath= "android.resource://" + getPackageName() + "/drawable/pd" + i;
-            Uri imageUri = Uri.parse(imagePath);
-            String image = imageUri.toString();
-            Product p = new Product(i, productName[i-1], productHandler.getCategoryName(category_id[i-1]), random.nextInt(maxQuantity - minQuantity + 1) + minQuantity , price[i-1], image);
-            //productHandler.add(productName[i-1],category_id[i-1],random.nextInt(maxQuantity - minQuantity + 1) + minQuantity,  price[i-1], image);
-            productList.add(p);
-        }
-
+        productList = productHandler.getAllProducts();
         productRepository = new ProductRepository(productList);
-        //productList = productHandler.getAllProducts();
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvProduct.setLayoutManager(layoutManager);
@@ -180,5 +158,4 @@ public class HomeUserActivity extends AppCompatActivity {
     }
 
 }
-
 

@@ -31,18 +31,18 @@ public class DetailBillHandler extends SQLiteOpenHelper {
         db = dbHelper.getWritableDatabase();
     }
 
-    public int insertDetailBill(DetailBill detailBill){
+    public void insertDetailBill(DetailBill detailBill){
         ContentValues values = new ContentValues();
         values.put("bill_id", detailBill.getBillID());
         values.put("product_id", detailBill.getProductId());
         values.put("quantity", detailBill.getQuantity());
         values.put("price", detailBill.getPrice());
 
-        long result = db.insert("detailed_bills", null, values);
-        if (result <= 0) {
-            return -1;
+        long insertedRowId = db.insert("detailed_bills", null, values);
+        if (insertedRowId != -1) {
+            System.out.println("Đã thêm vào bảng detail_bill thành công");
         } else {
-            return 1;
+            System.out.println("Lỗi thêm vào bảng detail_bill");
         }
     }
     public List<DetailBill> getBillDetailsByBillID(int billID) {

@@ -74,6 +74,9 @@ public class Cart {
     // và sử dụng product_id để truy xuất thông tin sản phẩm từ productRepository.
     public Product getProductByOrder(Integer position){
         keys = cartList.keySet().toArray();
-        return productRepository.getProductById(Integer.parseInt(keys[position].toString()));
+        Integer productId = Integer.parseInt(keys[position].toString());
+        return productRepository.getProductById(productId);
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.example.appbanhangonline.activities.user;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +24,7 @@ import com.example.appbanhangonline.models.Bill;
 import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.DetailBill;
 import com.example.appbanhangonline.models.Product;
+import com.example.appbanhangonline.models.ProductRepository;
 
 import java.util.Date;
 
@@ -31,12 +33,10 @@ public class CartActivity extends AppCompatActivity {
     TextView total, emptyCart;
     Button btnPay;
     ImageButton btnBack;
-    Cart cart;
+    Cart cart = new Cart();
     CartAdapter cartAdapter;
 
-    BillHandler billHandle;
-
-    DetailBillHandler detailBillHandler;
+    ProductRepository productRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,11 +92,8 @@ public class CartActivity extends AppCompatActivity {
         rvCart = findViewById(R.id.rvCart);
         btnPay = findViewById(R.id.btnPay);
         btnBack = findViewById(R.id.imgBtnBack);
-        cart = new Cart();
         emptyCart = findViewById(R.id.emptyCart);
-        billHandle = BillHandler.gI(this);
-        detailBillHandler = new DetailBillHandler(this);
-
+        productRepository = new ProductRepository();
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
         rvCart.setLayoutManager(layoutManager);
@@ -122,7 +119,7 @@ public class CartActivity extends AppCompatActivity {
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            processPayment();
+                            showSuccessToast();
                         }
                     })
                     .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -136,43 +133,45 @@ public class CartActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // Xử lý thanh toán và lưu thông tin vào bill và bill detail
-    private void processPayment() {
+    // thông báo đặt hàng thành công
+    private void showSuccessToast() {
         Bill bill = new Bill();
         bill.setBillCustomerID(MainActivity.user_id);
         bill.setBillTotalPrice(cart.getTotal_price());
         Date now = new Date();
         bill.setCreatedAt(now.toString());
 
+        BillHandler billHandle = new BillHandler(this);
+
         if (billHandle.insertBill(bill) == 1) {
             int bill_id = billHandle.getBillIdNew();
+            // Thành công sẽ thêm hóa đơn chi tiết
             Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
 
             // Lặp qua các phần tử trong cartList để lấy sản phẩm
             for (Integer productId : cart.cartList.keySet()) {
-                Product product = cart.getProductByOrder(productId);
+                Product product = productRepository.getProductById(productId);
                 int quantity = cart.cartList.getOrDefault(productId, 0);
 
                 DetailBill detailBill = new DetailBill();
                 detailBill.setBillID(bill_id);
                 detailBill.setProductId(product.getProductID());
                 detailBill.setQuantity(quantity);
-                detailBill.setPrice(product.getPrice());
+                detailBill.setPrice(cart.getLinePrice(product));
 
+                DetailBillHandler detailBillHandler = new DetailBillHandler(this);
                 detailBillHandler.insertDetailBill(detailBill);
             }
 
-            // Xóa toàn bộ sản phẩm trong giỏ hàng
             Cart.cartList.clear();
 
-            // Cập nhật giao diện giỏ hàng
             load();
         } else {
             Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Cập nhật giao diện giỏ hàng
+    //    xóa sp trong giỏ hàng và đặt lại tổng tiền = 0
     public void load() {
         cartAdapter.notifyDataSetChanged();
         cartAdapter.updateUI();
@@ -181,5 +180,4 @@ public class CartActivity extends AppCompatActivity {
         emptyCart.setVisibility(View.VISIBLE);
     }
 }
-
 
