@@ -14,6 +14,7 @@ import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.admin.MenuAdminActivity;
 import com.example.appbanhangonline.activities.user.HomeUserActivity;
 import com.example.appbanhangonline.dbhandler.LoginHandler;
+import com.example.appbanhangonline.models.User;
 
 import java.util.Objects;
 
@@ -65,14 +66,18 @@ public class LoginActivity extends Activity {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
-                if (Objects.equals(loginHandler.checkRole(email, password), "admin")) {
+                User user = loginHandler.checkLogin(email, password);
+                if (Objects.equals(user.getRole(), "admin")) {
                     Intent i = new Intent(getApplicationContext(), MenuAdminActivity.class);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),
                             "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                     finish();
-                } else if (Objects.equals(loginHandler.checkRole(email, password), "customer")){
+                } else if (Objects.equals(user.getRole(), "customer")){
                     Intent i = new Intent(getApplicationContext(), HomeUserActivity.class);
+                    i.putExtra("user_name", user.getUsername());
+                    i.putExtra("user_email", user.getEmail());
+                    i.putExtra("user_id", user.getUserID());
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),
                             "Đăng nhập thành công", Toast.LENGTH_LONG).show();

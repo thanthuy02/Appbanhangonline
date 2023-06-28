@@ -17,6 +17,7 @@ import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
 import com.example.appbanhangonline.dbhandler.CategoryHandler;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
+import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
@@ -26,10 +27,12 @@ import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
-    TextView txtCategory;
+    TextView txtCategory, txtUsername, txtEmail;
+
     RecyclerView rvProduct;
 
     ArrayList<Product> productList;
@@ -40,52 +43,51 @@ public class HomeUserActivity extends AppCompatActivity {
 
     ProductHandler productHandler;
 
-    CategoryHandler categoryHandle;
+    public static int user_id;
+
+    public String user_email, user_name;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        productHandler  = new ProductHandler(this);
-        Anhxa();
-        productUserAdapter = new ProductUserAdapter(this, productRepository.getProductList());
+        init();
+
+        productUserAdapter = new ProductUserAdapter(this, productList);
         rvProduct.setAdapter(productUserAdapter);
     }
 
-    // ánh xạ các đối tượng
-    private void Anhxa() {
+    // khởi tạo các đối tượng
+    private void init() {
         txtCategory = findViewById(R.id.txtCategory);
+        txtUsername = findViewById(R.id.txtUsername);
+        txtEmail = findViewById(R.id.txtEmail);
+
+        Intent intent = getIntent();
+        user_email = intent.getStringExtra("user_email");
+        user_name = intent.getStringExtra("user_name");
+        user_id = intent.getIntExtra("user_id", -1);
+
         rvProduct = findViewById(R.id.rvProduct);
+
+        productHandler  = new ProductHandler(this);
+
         productList = new ArrayList<>();
-//        Các mảng chứa thông tin sản phẩm
-        String[] productName = {"Bút bi","Bút 3 màu","Đèn học trắng","Vở bìa cứng","Vở 200 trang","Vở lò xo","Máy tính 570","Máy tính 580",
-                "Đèn học chân cao","Đèn học cao cấp","Bút chì 2B"};
-
-        int[] category_id = {1,1,4,2,2,2,3,3,4,4,1};
-
-        int[] price = {6000, 15000, 85000, 28000, 20000, 56000, 427000, 510000, 90000, 150000, 4000};
-
-        Random random = new Random();
-        int minQuantity = 2;
-        int maxQuantity = 30;
-
-
-        for (int i = 1; i <= 11; i++) {
-            String imagePath= "android.resource://" + getPackageName() + "/drawable/pd" + i;
-            Uri imageUri = Uri.parse(imagePath);
-            String image = imageUri.toString();
-            Product p = new Product(i, productName[i-1], productHandler.getCategoryName(category_id[i-1]), random.nextInt(maxQuantity - minQuantity + 1) + minQuantity , price[i-1], image);
-            productList.add(p);
-        }
-
+        productList = productHandler.getAllProducts();
         productRepository = new ProductRepository(productList);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvProduct.setLayoutManager(layoutManager);
+
     }
 
     // Hiển thị thông tin người dùng , gọi trong onclick
     public void toggleUserInfo(View view) {
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
+
+        txtUsername.setText(user_name);
+        txtEmail.setText(user_email);
+
         if (userInfoLayout.getVisibility() == View.VISIBLE) {
             //Nếu đang hiển thị thì ẩn đi
             userInfoLayout.setVisibility(View.GONE);
@@ -121,53 +123,58 @@ public class HomeUserActivity extends AppCompatActivity {
     // Hiển thị tên các danh mục vào popup menu, gọi trong onclick
     public void onShowCategoryMenu(View view){
         PopupMenu popupMenu = new PopupMenu(this, view);
+
+        // lấy all tên category từ DB
+        CategoryHandler categoryHandler = CategoryHandler.gI(this);
+        List<Category> categories = categoryHandler.getAll();
+
+        // thêm item "Tất cả" để hiển thị tất cả sản phẩm
+        popupMenu.getMenu().add("Tất cả");
+
+        // thêm các danh mục vào menu
+        for(Category category : categories){
+            popupMenu.getMenu().add(category.getCategoryName());
+        }
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.item1:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(1);
-                        return true;
-
-                    case R.id.item2:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(2);
-                        return true;
-
-                    case R.id.item3:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(3);
-                        return true;
-
-                    case R.id.item4:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(4);
-                        return true;
-
-                    case R.id.item5:
-                        txtCategory.setText(item.getTitle().toString());
-                        productUserAdapter.setProductList(productList);
-                        productUserAdapter.notifyDataSetChanged();
-                        return true;
+                String selectedCategoryName = item.getTitle().toString();
+                if(selectedCategoryName.equals("Tất cả")) {
+                    // hiển thị all sản phẩm
+                    txtCategory.setText("Tất cả");
+                    showAllProducts();
+                } else {
+                    // hiển thị sp theo từng danh mục
+                    int selectedCategoryId = categoryHandler.getCategoryIdByName(selectedCategoryName);
+                    txtCategory.setText(selectedCategoryName);
+                    filterProductByCategory(selectedCategoryId);
                 }
-                return false;
+                return true;
             }
         });
 
-        popupMenu.inflate(R.menu.category_menu);
         popupMenu.show();
     }
 
     // lọc sản phẩm theo category_id
     public void filterProductByCategory(int categoryId){
         ArrayList<Product> filter = new ArrayList<>();
+        CategoryHandler categoryHandler = CategoryHandler.gI(this);
         for(Product p : productList){
-            if(productHandler.getCategoryIdByName(p.getCategoryName()) == categoryId) {
+            String categoryName = p.getCategoryName();
+            int productCategoryId = categoryHandler.getCategoryIdByName(categoryName);
+            if(productCategoryId == categoryId) {
                 filter.add(p);
             }
         }
         productUserAdapter.setProductList(filter);
+        productUserAdapter.notifyDataSetChanged();
+    }
+
+    // hiển thị all sản phẩm
+    public void showAllProducts(){
+        productUserAdapter.setProductList(productList);
         productUserAdapter.notifyDataSetChanged();
     }
 
@@ -178,5 +185,4 @@ public class HomeUserActivity extends AppCompatActivity {
     }
 
 }
-
 

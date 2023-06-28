@@ -8,6 +8,8 @@ import android.net.Uri;
 
 import com.example.appbanhangonline.dbhandler.LoginHandler;
 
+import java.util.Random;
+
 public class DBHelper extends SQLiteOpenHelper {
     public Cursor getData(String sql) {
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
@@ -27,9 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
 
     // Constructor
-    public DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+    public DBHelper(Context context) { super(context, DATABASE_NAME, null, DATABASE_VERSION);}
 
     //    define tables
     public static final String USERS = "users";
@@ -143,11 +143,23 @@ public class DBHelper extends SQLiteOpenHelper {
             "('Máy tính'), " +
             "('Đèn học')";
 
-    private static final String INSERT_PRODUCTS = "INSERT INTO " + PRODUCTS + " (" + PRODUCT_NAME + ", " + PRODUCT_CATEGORY_ID + ", " + PRODUCT_QUANTITY + ", " + PRODUCT_PRICE + ", " + PRODUCT_IMAGE + ") " +
-            "VALUES ('Bút máy doraemon', 1, 10, 120000, ''), " +
-            "('Vở viết 3D', 2, 20, 11000, ''), " +
-            "('Máy tính bỏ túi', 3, 30, 80000, ''), " +
-            "('Đèn học thông minh', 4, 40, 100000, '')";
+    private static final String INSERT_PRODUCT = "INSERT INTO " + PRODUCTS + " ("
+            + PRODUCT_NAME + ", "
+            + PRODUCT_CATEGORY_ID + ", "
+            + PRODUCT_QUANTITY + ", "
+            + PRODUCT_PRICE + ", "
+            + PRODUCT_IMAGE + ") "
+            + "VALUES ('Bút bi', 1, 35, 6000, 'android.resource://com.example.appbanhangonline/drawable/pd1'),"
+            + "('Bút 3 màu', 1, 15, 15000, 'android.resource://com.example.appbanhangonline/drawable/pd2'),"
+            + "('Đèn học trắng', 4, 21, 85000, 'android.resource://com.example.appbanhangonline/drawable/pd3'),"
+            + "('Vở bìa cứng', 2, 10, 28000, 'android.resource://com.example.appbanhangonline/drawable/pd4'),"
+            + "('Vở 200 trang', 2, 4, 20000, 'android.resource://com.example.appbanhangonline/drawable/pd5'),"
+            + "('Vở lò xo', 2, 12, 56000, 'android.resource://com.example.appbanhangonline/drawable/pd6'),"
+            + "('Máy tính 570', 3, 15, 427000, 'android.resource://com.example.appbanhangonline/drawable/pd7'),"
+            + "('Máy tính 580', 3, 6, 510000, 'android.resource://com.example.appbanhangonline/drawable/pd8'),"
+            + "('Đèn học chân cao', 4, 5, 90000, 'android.resource://com.example.appbanhangonline/drawable/pd9'),"
+            + "('Đèn học chân cao', 4, 5, 90000, 'android.resource://com.example.appbanhangonline/drawable/pd10'),"
+            + "('Bút chì 2B', 1, 56, 4000, 'android.resource://com.example.appbanhangonline/drawable/pd11')";
 
 
     private static final String INSERT_BILL = "INSERT INTO " + BILLS + " (" +
@@ -172,63 +184,6 @@ public class DBHelper extends SQLiteOpenHelper {
             "3, 3, 1, 80000" +
             ")";
 
-
-
-
-//    String imagePath1 = "android.resource://" + context.getPackageName() + "/drawable/pd1";
-//    String imagePath2 = "android.resource://" + context.getPackageName() + "/drawable/pd2";
-//    String imagePath3 = "android.resource://" + context.getPackageName() + "/drawable/pd3";
-//    String imagePath4 = "android.resource://" + context.getPackageName() + "/drawable/pd4";
-//    String imagePath5 = "android.resource://" + context.getPackageName() + "/drawable/pd5";
-//    String imagePath6 = "android.resource://" + context.getPackageName() + "/drawable/pd6";
-//    String imagePath7 = "android.resource://" + context.getPackageName() + "/drawable/pd7";
-//    String imagePath8 = "android.resource://" + context.getPackageName() + "/drawable/pd8";
-//    String imagePath9 = "android.resource://" + context.getPackageName() + "/drawable/pd9";
-//    String imagePath10 = "android.resource://" + context.getPackageName() + "/drawable/pd10";
-//    String imagePath11 = "android.resource://" + context.getPackageName() + "/drawable/pd11";
-
-//    Uri imageUri1 = Uri.parse(imagePath1);
-//    Uri imageUri2 = Uri.parse(imagePath2);
-//    Uri imageUri3 = Uri.parse(imagePath3);
-//    Uri imageUri4 = Uri.parse(imagePath4);
-//    Uri imageUri5 = Uri.parse(imagePath5);
-//    Uri imageUri6 = Uri.parse(imagePath6);
-//    Uri imageUri7 = Uri.parse(imagePath7);
-//    Uri imageUri8 = Uri.parse(imagePath8);
-//    Uri imageUri9 = Uri.parse(imagePath9);
-//    Uri imageUri10 = Uri.parse(imagePath10);
-//    Uri imageUri11 = Uri.parse(imagePath11);
-//
-//    String image1 = imageUri1.toString();
-//    String image2 = imageUri2.toString();
-//    String image3 = imageUri3.toString();
-//    String image4 = imageUri4.toString();
-//    String image5 = imageUri5.toString();
-//    String image6 = imageUri6.toString();
-//    String image7 = imageUri7.toString();
-//    String image8 = imageUri8.toString();
-//    String image9 = imageUri9.toString();
-//    String image10 = imageUri10.toString();
-//    String image11 = imageUri11.toString();
-
-//    private static final String INSERT_PRODUCT = "INSERT INTO " + PRODUCTS + " ("
-//            + PRODUCT_NAME + ", "
-//            + PRODUCT_CATEGORY_ID + ", "
-//            + PRODUCT_QUANTITY + ", "
-//            + PRODUCT_PRICE + ", "
-//            + PRODUCT_IMAGE + ") "
-//            + "VALUES ('Bút bi', 1, 35, 6000, image1),"
-//            + "('Bút 3 màu', 1, 15, 15000, image2),"
-//            + "('Đèn học trắng', 4, 21, 85000, image3),"
-//            + "('Vở bìa cứng', 2, 10, 28000, image4),"
-//            + "('Vở 200 trang', 2, 4, 20000, image5),"
-//            + "('Vở lò xo', 2, 12, 56000, image6),"
-//            + "('Máy tính 570', 3, 15, 427000, image7),"
-//            + "('Máy tính 580', 3, 6, 510000, image8),"
-//            + "('Đèn học chân cao', 4, 5, 90000, image9),"
-//            + "('Đèn học chân cao', 4, 5, 90000, image10),"
-//            + "('Bút chì 2B', 1, 56, 4000, image11)";
-
     private static final String TRIGGER_QUANTITY = "CREATE TRIGGER update_quantity " +
             "AFTER INSERT ON detailed_bills " +
             "for each ROW " +
@@ -247,12 +202,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_BILLS);
         db.execSQL(CREATE_DETAILED_BILLS);
         db.execSQL(INSERT_USER);
+        db.execSQL(INSERT_PRODUCT);
         db.execSQL(TRIGGER_QUANTITY);
         db.execSQL(INSERT_CATEGORY);
-        db.execSQL(INSERT_PRODUCTS);
         db.execSQL(INSERT_BILL);
         db.execSQL(INSERT_DETAILED_BILLS);
-        //db.execSQL(INSERT_PRODUCT);
     }
 
     @Override

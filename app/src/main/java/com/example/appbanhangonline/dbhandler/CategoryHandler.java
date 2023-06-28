@@ -87,6 +87,18 @@ public class CategoryHandler extends SQLiteOpenHelper implements IManager<Catego
         return category;
     }
 
+    public int getCategoryIdByName(String category) {
+        int categoryId = 0;
+        DBHelper dbHelper = MainActivity.getDB();
+        String query = "SELECT id FROM categories WHERE categories.category = ?";
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(query, new String[] {"" + category});
+        if (cursor.moveToFirst()) {
+            categoryId = cursor.getInt(0);
+        }
+        cursor.close();
+        return categoryId;
+    }
+
     @Override
     public List<Category> getListByPage(int page, int limit) {
         return null;

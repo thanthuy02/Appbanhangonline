@@ -1,5 +1,6 @@
 package com.example.appbanhangonline.models;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
 
@@ -7,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.example.appbanhangonline.activities.user.CartActivity;
+import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
@@ -17,6 +20,7 @@ public class Cart {
 
     public ProductRepository productRepository = new ProductRepository();
 
+    public ProductHandler productHandler;
     private static int total_price;
 
     // Nếu hóa đơn trên 200k sẽ tính thuế 10%
@@ -70,6 +74,9 @@ public class Cart {
     // và sử dụng product_id để truy xuất thông tin sản phẩm từ productRepository.
     public Product getProductByOrder(Integer position){
         keys = cartList.keySet().toArray();
-        return productRepository.getProductById(Integer.parseInt(keys[position].toString()));
+        Integer productId = Integer.parseInt(keys[position].toString());
+        return productRepository.getProductById(productId);
     }
+
+
 }
