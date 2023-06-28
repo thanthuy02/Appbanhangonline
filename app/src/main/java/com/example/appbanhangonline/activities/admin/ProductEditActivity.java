@@ -30,6 +30,7 @@ public class ProductEditActivity extends Activity {
     ImageView imgProductUpload;
     int categoryId;
     Button btnSave;
+    ImageButton btnBack;
     EditText txtQuantity;
     EditText txtPrice;
     EditText txtProductName;
@@ -44,6 +45,7 @@ public class ProductEditActivity extends Activity {
         setContentView(R.layout.activity_admin_product_edit);
         imgProductUpload = (ImageView) findViewById(R.id.imgProductUpload);
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         ibnUpload = (ImageButton) findViewById(R.id.imgUpload);
         txtPrice = (EditText) findViewById(R.id.txtPrice);
@@ -69,6 +71,15 @@ public class ProductEditActivity extends Activity {
                 Toast.makeText(ProductEditActivity.this, "Sửa sản phẩm thành công!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(getApplicationContext(), ProductActivity.class);
                 startActivity(i);
+                finish();
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getApplicationContext(), ProductActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
