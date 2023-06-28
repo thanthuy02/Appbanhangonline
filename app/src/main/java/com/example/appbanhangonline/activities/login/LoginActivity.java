@@ -42,7 +42,6 @@ public class LoginActivity extends Activity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(),
                         RegisterActivity.class);
                 startActivity(i);
@@ -52,9 +51,9 @@ public class LoginActivity extends Activity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent i = new Intent(getApplicationContext(),
                         ForgotPasswordActivity.class);
+                i.putExtra("userEmail", etEmail.getText().toString().trim());
                 startActivity(i);
             }
         });
@@ -67,13 +66,13 @@ public class LoginActivity extends Activity {
                 String password = etPassword.getText().toString().trim();
 
                 User user = loginHandler.checkLogin(email, password);
-                if (Objects.equals(user.getRole(), "admin")) {
+                if (user != null && Objects.equals(user.getRole(), "admin")) {
                     Intent i = new Intent(getApplicationContext(), MenuAdminActivity.class);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),
                             "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                     finish();
-                } else if (Objects.equals(user.getRole(), "customer")){
+                } else if (user != null && Objects.equals(user.getRole(), "customer")){
                     Intent i = new Intent(getApplicationContext(), HomeUserActivity.class);
                     i.putExtra("user_name", user.getUsername());
                     i.putExtra("user_email", user.getEmail());

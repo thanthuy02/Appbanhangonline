@@ -4,6 +4,7 @@ import static com.example.appbanhangonline.database.DBHelper.DATABASE_NAME;
 import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.example.appbanhangonline.database.DBHelper;
 import com.example.appbanhangonline.models.User;
+import com.example.appbanhangonline.utils.EmailSender;
 
 public class LoginHandler extends SQLiteOpenHelper {
     SQLiteDatabase db;
@@ -62,6 +64,32 @@ public class LoginHandler extends SQLiteOpenHelper {
         long rowId = statement.executeInsert();
         db.close();
         return (rowId != -1); // Trả về true nếu rowId khác -1 (insert thành công), ngược lại trả về false
+    }
+
+    public boolean checkEmail(String email) {
+        // Kiểm tra tài khoản trong bảng users
+        String[] columns = { "email" };
+        String selection = "email" + " = ?";
+        String[] selectionArgs = { email };
+        Cursor cursor = db.query("users", columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            cursor.close();
+            return true;
+        }
+        return false;
+    }
+
+    public void sendEmail(String email, String code){
+        EmailSender emailSender = new EmailSender(email, code);
+        emailSender.sendEmail();
+    }
+
+    public boolean updatePassword(String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", password);
+        int rowsAffected = db.update("users", values, "email = ?", new String[]{email});
+        return rowsAffected > 0;
     }
 
     @Override

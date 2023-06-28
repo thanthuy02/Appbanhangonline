@@ -27,6 +27,7 @@ public class ProductCreateActivity extends Activity {
     ImageView imgProductUpload;
     int categoryId;
     Button btnSave;
+    ImageButton btnBack;
     EditText txtQuantity;
     EditText txtPrice;
     EditText txtProductName;
@@ -40,6 +41,7 @@ public class ProductCreateActivity extends Activity {
         setContentView(R.layout.activity_admin_product_create);
         imgProductUpload = (ImageView) findViewById(R.id.imgProductUpload);
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnBack = (ImageButton) findViewById(R.id.btnBack);
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         ibnUpload = (ImageButton) findViewById(R.id.imgUpload);
         txtPrice = (EditText) findViewById(R.id.txtPrice);
@@ -68,6 +70,14 @@ public class ProductCreateActivity extends Activity {
             }
         });
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getApplicationContext(), ProductActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void loadSpinner() {
