@@ -46,16 +46,13 @@ public class EmailSender {
             });
 
             try {
-                // Tạo đối tượng MimeMessage
+
                 MimeMessage message = new MimeMessage(session);
 
-                // Thiết lập thông tin người gửi
                 message.setFrom(new InternetAddress(senderEmail));
 
-                // Thiết lập thông tin người nhận
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
-                // Thiết lập tiêu đề và nội dung email
                 message.setSubject("Verification Code");
                 message.setText("Your verification code is: " + code);
 
