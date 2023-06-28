@@ -67,8 +67,7 @@
         android:padding="16dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_title"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@id/header_title">
 
         <!-- Thông tin người dùng -->
         <ImageView
@@ -127,8 +126,7 @@
         android:paddingBottom="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userInfoLayout"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toBottomOf="@id/userInfoLayout">
 
         <EditText
             android:id="@+id/editTextSearch"

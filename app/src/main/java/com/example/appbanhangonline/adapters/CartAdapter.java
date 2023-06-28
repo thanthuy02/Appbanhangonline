@@ -97,6 +97,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return cart.cartList.size();
     }
 
+    // là lớp tĩnh, giữ các tham chiếu đến các thành phần giao giện
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView productImage;
 
@@ -122,9 +123,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
     }
 
-    // xóa all sản phẩm trong giỏ và load lại trang
-    public void updateUI() {
-        notifyDataSetChanged();
+    // xóa all sản phẩm trong giỏ
+    public void delete() {
         // Xóa tất cả sản phẩm trong giỏ hàng
         cart.cartList.clear();
     }

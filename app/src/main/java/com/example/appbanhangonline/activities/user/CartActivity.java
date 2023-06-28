@@ -43,6 +43,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        // khởi tạo đối tượng
         init();
 
         // quay lại trang home
@@ -50,6 +51,10 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CartActivity.this, HomeUserActivity.class);
+                // FLAG_ACTIVITY_CLEAR_TOP : xóa hết những activity trên cùng của HomeUserActivity
+                // ra khỏi ngăn xếp chỉ để lại cái cuối cùng (activity ban đầu đc tạo)
+                // FLAG_ACTIVITY_SINGLE_TOP : đảm bảo rằng nếu HomeUserActivity đã tồn tại ở trên cùng ngăn xếp,
+                // phiên bản mới sẽ ko được tạo ra mà sẽ sd lại HomeUserActivity ban đầu
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
@@ -97,8 +102,6 @@ public class CartActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
         rvCart.setLayoutManager(layoutManager);
-
-
     }
 
     // Xử lý sự kiện khi user bấm nút thanh toán
@@ -119,7 +122,7 @@ public class CartActivity extends AppCompatActivity {
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showSuccessToast();
+                            processPayment();
                         }
                     })
                     .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -133,8 +136,8 @@ public class CartActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // thông báo đặt hàng thành công
-    private void showSuccessToast() {
+    // xử lý việc thanh toán
+    private void processPayment() {
         Bill bill = new Bill();
         bill.setBillCustomerID(HomeUserActivity.user_id);
         bill.setBillTotalPrice(cart.getTotal_price());
@@ -163,8 +166,6 @@ public class CartActivity extends AppCompatActivity {
                 detailBillHandler.insertDetailBill(detailBill);
             }
 
-            Cart.cartList.clear();
-
             load();
         } else {
             Toast.makeText(this, "Lỗi đặt hàng! Hãy thử lại sau!", Toast.LENGTH_SHORT).show();
@@ -174,7 +175,7 @@ public class CartActivity extends AppCompatActivity {
     //    xóa sp trong giỏ hàng và đặt lại tổng tiền = 0
     public void load() {
         cartAdapter.notifyDataSetChanged();
-        cartAdapter.updateUI();
+        cartAdapter.delete();
         cart.setTotal_price(0);
         total.setText("Thành tiền: " + this.cart.getTotal_price());
         emptyCart.setVisibility(View.VISIBLE);

@@ -59,7 +59,6 @@ public class Cart {
 
     // xóa hoàn toàn 1 sản phẩm ra khỏi giỏ hàng, dùng khi người dùng bấm vào nút btnDelete
     public void deleteProduct(Product p){
-        //Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
         total_price -= getLinePrice(p);
         cartList.remove(p.getProductID());
     }
@@ -72,6 +71,7 @@ public class Cart {
     // lấy thông tin sp từ giỏ hàng dựa trên vị trí (position) của sản phẩm trong giỏ hàng
     // và sử dụng product_id để truy xuất thông tin sản phẩm từ productRepository.
     public Product getProductByOrder(Integer position){
+        // lấy ds các khóa (id) từ cartList và chuyển về mảng các đối tg
         keys = cartList.keySet().toArray();
         Integer productId = Integer.parseInt(keys[position].toString());
         return productRepository.getProductById(productId);

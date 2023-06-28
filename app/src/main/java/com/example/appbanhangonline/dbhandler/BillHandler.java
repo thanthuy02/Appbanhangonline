@@ -178,6 +178,7 @@ public class BillHandler extends SQLiteOpenHelper implements IManager<Bill, Inte
         DBHelper dbHelper = MainActivity.getDB();
 
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // tạo 1 đối tượng ContentValues để chứa các giá trị cần chèn vào csdl
         ContentValues values = new ContentValues();
         values.put("user_id", bill.getBillCustomerID());
         String currentTime = date.format(new Date(System.currentTimeMillis()));
