@@ -22,7 +22,9 @@ import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
 
@@ -54,7 +56,12 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             productName.setText(product.getProductName());
             productCategory.setText(product.getCategoryName());
             productQuantity.setText(String.valueOf(product.getQuantity()));
-            productPrice.setText(String.valueOf(product.getPrice()));
+
+            // Định dạng giá tiền theo đơn vị tiền Việt
+            NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            String formattedPrice = currencyFormatPrice.format(product.getPrice());
+
+            productPrice.setText(formattedPrice);
         }
 
         return convertView;

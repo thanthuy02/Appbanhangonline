@@ -1,7 +1,9 @@
 package com.example.appbanhangonline.activities.user;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +41,7 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
 
     ProductRepository productRepository;
+    private int userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         init();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("id", 0);
 
         // quay lại trang home
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +94,7 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    // ánh xạ các đối tượng
+    // khởi tạo các đối tượng
     public void init(){
         total = findViewById(R.id.total);
         rvCart = findViewById(R.id.rvCart);
@@ -138,7 +144,8 @@ public class CartActivity extends AppCompatActivity {
     // thông báo đặt hàng thành công
     private void showSuccessToast() {
         Bill bill = new Bill();
-        bill.setBillCustomerID(MainActivity.user_id);
+        Log.d("TAG_userId", "showSuccessToast: "+userId);
+        bill.setBillCustomerID(userId);
         bill.setBillTotalPrice(cart.getTotal_price());
         Date now = new Date();
         bill.setCreatedAt(now.toString());

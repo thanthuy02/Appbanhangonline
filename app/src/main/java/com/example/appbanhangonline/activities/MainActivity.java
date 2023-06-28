@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static DBHelper dbHelper;
 
-    public static int user_id = 1;
+//    public static int user_id = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
