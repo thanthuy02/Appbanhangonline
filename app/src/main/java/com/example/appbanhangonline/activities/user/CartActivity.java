@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,8 @@ import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
-    TextView total, emptyCart;
+    TextView total;
+    LinearLayout emptyCart;
     Button btnPay;
     ImageButton btnBack;
     Cart cart = new Cart();
@@ -46,9 +48,10 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        init();
+
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("id", 0);
-        Anhxa();
 
         // quay lại trang home
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +94,8 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    // ánh xạ các đối tượng
-    public void Anhxa(){
+    // khởi tạo các đối tượng
+    public void init(){
         total = findViewById(R.id.total);
         rvCart = findViewById(R.id.rvCart);
         btnPay = findViewById(R.id.btnPay);

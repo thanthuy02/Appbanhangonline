@@ -17,6 +17,7 @@ import com.example.appbanhangonline.activities.login.LoginActivity;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
 import com.example.appbanhangonline.dbhandler.CategoryHandler;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
+import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
@@ -26,6 +27,7 @@ import com.example.appbanhangonline.dbhandler.ProductHandler;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
@@ -45,22 +47,23 @@ public class HomeUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         productHandler  = new ProductHandler(this);
-        Anhxa();
+        init();
         productUserAdapter = new ProductUserAdapter(this, productList);
         rvProduct.setAdapter(productUserAdapter);
     }
 
-    // ánh xạ các đối tượng
-    private void Anhxa() {
+    // khởi tạo các đối tượng
+    private void init() {
         txtCategory = findViewById(R.id.txtCategory);
         rvProduct = findViewById(R.id.rvProduct);
-        productList = new ArrayList<>();
 
+        productList = new ArrayList<>();
         productList = productHandler.getAllProducts();
         productRepository = new ProductRepository(productList);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvProduct.setLayoutManager(layoutManager);
+
     }
 
     // Hiển thị thông tin người dùng , gọi trong onclick
@@ -101,53 +104,58 @@ public class HomeUserActivity extends AppCompatActivity {
     // Hiển thị tên các danh mục vào popup menu, gọi trong onclick
     public void onShowCategoryMenu(View view){
         PopupMenu popupMenu = new PopupMenu(this, view);
+
+        // lấy all tên category từ DB
+        CategoryHandler categoryHandler = CategoryHandler.gI(this);
+        List<Category> categories = categoryHandler.getAll();
+
+        // thêm item "Tất cả" để hiển thị tất cả sản phẩm
+        popupMenu.getMenu().add("Tất cả");
+
+        // thêm các danh mục vào menu
+        for(Category category : categories){
+            popupMenu.getMenu().add(category.getCategoryName());
+        }
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.item1:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(1);
-                        return true;
-
-                    case R.id.item2:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(2);
-                        return true;
-
-                    case R.id.item3:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(3);
-                        return true;
-
-                    case R.id.item4:
-                        txtCategory.setText(item.getTitle().toString());
-                        filterProductByCategory(4);
-                        return true;
-
-                    case R.id.item5:
-                        txtCategory.setText(item.getTitle().toString());
-                        productUserAdapter.setProductList(productList);
-                        productUserAdapter.notifyDataSetChanged();
-                        return true;
+                String selectedCategoryName = item.getTitle().toString();
+                if(selectedCategoryName.equals("Tất cả")) {
+                    // hiển thị all sản phẩm
+                    txtCategory.setText("Tất cả");
+                    showAllProducts();
+                } else {
+                    // hiển thị sp theo từng danh mục
+                    int selectedCategoryId = categoryHandler.getCategoryIdByName(selectedCategoryName);
+                    txtCategory.setText(selectedCategoryName);
+                    filterProductByCategory(selectedCategoryId);
                 }
-                return false;
+                return true;
             }
         });
 
-        popupMenu.inflate(R.menu.category_menu);
         popupMenu.show();
     }
 
     // lọc sản phẩm theo category_id
     public void filterProductByCategory(int categoryId){
         ArrayList<Product> filter = new ArrayList<>();
+        CategoryHandler categoryHandler = CategoryHandler.gI(this);
         for(Product p : productList){
-            if(productHandler.getCategoryIdByName(p.getCategoryName()) == categoryId) {
+            String categoryName = p.getCategoryName();
+            int productCategoryId = categoryHandler.getCategoryIdByName(categoryName);
+            if(productCategoryId == categoryId) {
                 filter.add(p);
             }
         }
         productUserAdapter.setProductList(filter);
+        productUserAdapter.notifyDataSetChanged();
+    }
+
+    // hiển thị all sản phẩm
+    public void showAllProducts(){
+        productUserAdapter.setProductList(productList);
         productUserAdapter.notifyDataSetChanged();
     }
 
