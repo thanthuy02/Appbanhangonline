@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
-import com.example.appbanhangonline.adapters.CartAdapter;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
 import com.example.appbanhangonline.dbhandler.CategoryHandler;
 import com.example.appbanhangonline.dbhandler.ProductHandler;

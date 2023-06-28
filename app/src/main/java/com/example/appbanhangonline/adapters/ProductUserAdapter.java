@@ -36,6 +36,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         this.productList = productList;
     }
 
+    // được gọi khi rv cần tạo 1 viewholder mới
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -44,6 +45,7 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         return productViewHolder;
     }
 
+    // đc gọi khi rv cần hiển thị dl của 1 item trong ds
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product p = productList.get(position);

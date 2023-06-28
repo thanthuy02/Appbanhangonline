@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:id="@+id/back"
         android:layout_width="match_parent"
@@ -20,10 +19,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_margin="5dp"
             android:background="@drawable/ic_back"
             android:onClick="backHome" />
 
@@ -32,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
             android:layout_toEndOf="@+id/imgBtnBack"
             android:text="Giỏ hàng"
             android:textColor="#2AA2BF"
@@ -93,6 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_btn"
+        app:backgroundTint="@null"
         android:layout_margin="5dp"
         android:text="Thanh toán"
         android:textColor="#FFFFFF"
