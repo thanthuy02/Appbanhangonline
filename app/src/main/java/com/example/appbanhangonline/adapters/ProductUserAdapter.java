@@ -1,6 +1,7 @@
 package com.example.appbanhangonline.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,9 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(""+p.getPrice());
-        Glide.with(context).load(p.getImage()).into(holder.productImage);
+        Glide.with(context)
+                .load(Uri.parse(p.getImage()))
+                .into(holder.productImage);
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

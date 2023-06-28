@@ -1,6 +1,7 @@
 package com.example.appbanhangonline.activities.admin;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
+import com.example.appbanhangonline.activities.user.HomeUserActivity;
 import com.example.appbanhangonline.databinding.ActivityAdminCategoryBinding;
 import com.example.appbanhangonline.databinding.ActivityAdminMainBinding;
 
@@ -42,9 +46,25 @@ public class MenuAdminActivity extends Activity {
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Đăng xuất");
+                builder.setMessage("Bạn có muốn đăng xuất không?")
+                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
