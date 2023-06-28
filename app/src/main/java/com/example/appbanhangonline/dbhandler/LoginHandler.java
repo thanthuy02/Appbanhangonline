@@ -52,7 +52,6 @@ public class LoginHandler extends SQLiteOpenHelper {
     }
 
     public boolean register(String name, String phone, String address, String email, String password) {
-        SQLiteDatabase db = getWritableDatabase();
         String sql = "Insert into users (name, phone, address, email, password, role) values (?, ?, ?, ?, ?, 'customer')";
         SQLiteStatement statement = db.compileStatement(sql);
         statement.clearBindings();
@@ -68,9 +67,9 @@ public class LoginHandler extends SQLiteOpenHelper {
 
     public boolean checkEmail(String email) {
         // Kiểm tra tài khoản trong bảng users
-        String[] columns = { "email" };
-        String selection = "email" + " = ?";
-        String[] selectionArgs = { email };
+        String[] columns = { "email" };     //cot can truy van
+        String selection = "email" + " = ?";        // dieu kien can truy van
+        String[] selectionArgs = { email };     //gia tri de truyen vao bindvalue dong 71
         Cursor cursor = db.query("users", columns, selection, selectionArgs, null, null, null);
         if (cursor.moveToFirst()) {
             cursor.close();
@@ -85,9 +84,9 @@ public class LoginHandler extends SQLiteOpenHelper {
     }
 
     public boolean updatePassword(String email, String password) {
-        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("password", password);
+//        new String[]{email} la tham so cho menh de where (?)
         int rowsAffected = db.update("users", values, "email = ?", new String[]{email});
         return rowsAffected > 0;
     }

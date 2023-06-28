@@ -93,6 +93,7 @@ public class ProductActivity extends Activity {
         productHandler = new ProductHandler(this);
         ArrayList<Product> products = productHandler.getAllProducts();
         productAdapter = new ProductAdapter(this, R.layout.listview_product_item, products);
+//        truyen adapter vao list view
         listViewProduct.setAdapter(productAdapter);
     }
 }
