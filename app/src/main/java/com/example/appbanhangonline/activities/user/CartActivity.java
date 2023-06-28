@@ -1,11 +1,8 @@
 package com.example.appbanhangonline.activities.user;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
 import com.example.appbanhangonline.dbhandler.BillHandler;
 import com.example.appbanhangonline.dbhandler.DetailBillHandler;
@@ -49,9 +45,6 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         init();
-
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        userId = sharedPreferences.getInt("id", 0);
 
         // quay lại trang home
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -144,8 +137,8 @@ public class CartActivity extends AppCompatActivity {
     // thông báo đặt hàng thành công
     private void showSuccessToast() {
         Bill bill = new Bill();
-        Log.d("TAG_userId", "showSuccessToast: "+userId);
         bill.setBillCustomerID(userId);
+        bill.setBillCustomerID(HomeUserActivity.user_id);
         bill.setBillTotalPrice(cart.getTotal_price());
         Date now = new Date();
         bill.setCreatedAt(now.toString());

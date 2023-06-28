@@ -31,7 +31,8 @@ import java.util.List;
 import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
-    TextView txtCategory;
+    TextView txtCategory, txtUsername, txtEmail;
+
     RecyclerView rvProduct;
 
     ArrayList<Product> productList;
@@ -42,12 +43,16 @@ public class HomeUserActivity extends AppCompatActivity {
 
     ProductHandler productHandler;
 
+    public static int user_id;
+
+    public String user_email, user_name;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        productHandler  = new ProductHandler(this);
         init();
+
         productUserAdapter = new ProductUserAdapter(this, productList);
         rvProduct.setAdapter(productUserAdapter);
     }
@@ -55,7 +60,17 @@ public class HomeUserActivity extends AppCompatActivity {
     // khởi tạo các đối tượng
     private void init() {
         txtCategory = findViewById(R.id.txtCategory);
+        txtUsername = findViewById(R.id.txtUsername);
+        txtEmail = findViewById(R.id.txtEmail);
+
+        Intent intent = getIntent();
+        user_email = intent.getStringExtra("user_email");
+        user_name = intent.getStringExtra("user_name");
+        user_id = intent.getIntExtra("user_id", -1);
+
         rvProduct = findViewById(R.id.rvProduct);
+
+        productHandler  = new ProductHandler(this);
 
         productList = new ArrayList<>();
         productList = productHandler.getAllProducts();
@@ -69,6 +84,10 @@ public class HomeUserActivity extends AppCompatActivity {
     // Hiển thị thông tin người dùng , gọi trong onclick
     public void toggleUserInfo(View view) {
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
+
+        txtUsername.setText(user_name);
+        txtEmail.setText(user_email);
+
         if (userInfoLayout.getVisibility() == View.VISIBLE) {
             //Nếu đang hiển thị thì ẩn đi
             userInfoLayout.setVisibility(View.GONE);
