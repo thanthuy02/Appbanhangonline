@@ -4,6 +4,7 @@ import static com.example.appbanhangonline.database.DBHelper.DATABASE_NAME;
 import static com.example.appbanhangonline.database.DBHelper.DATABASE_VERSION;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -81,6 +82,14 @@ public class LoginHandler extends SQLiteOpenHelper {
     public void sendEmail(String email, String code){
         EmailSender emailSender = new EmailSender(email, code);
         emailSender.sendEmail();
+    }
+
+    public boolean updatePassword(String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", password);
+        int rowsAffected = db.update("users", values, "email = ?", new String[]{email});
+        return rowsAffected > 0;
     }
 
     @Override

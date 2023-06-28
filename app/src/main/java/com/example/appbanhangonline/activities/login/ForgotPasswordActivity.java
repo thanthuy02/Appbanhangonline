@@ -51,6 +51,7 @@ public class ForgotPasswordActivity extends Activity {
                     Toast.makeText(getApplicationContext(),
                             "Đã gửi mã xác nhận",
                             Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
         });

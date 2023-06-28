@@ -44,6 +44,7 @@ public class VerifyCodeActivity extends Activity {
                     Intent i = new Intent(getApplicationContext(), ResetPasswordActivity.class);
                     i.putExtra("email", email);
                     startActivity(i);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Mã xác nhận sai, vui lòng nhập lại",
