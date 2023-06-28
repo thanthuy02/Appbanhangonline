@@ -77,6 +77,4 @@ public class Cart {
         Integer productId = Integer.parseInt(keys[position].toString());
         return productRepository.getProductById(productId);
     }
-
-
 }
