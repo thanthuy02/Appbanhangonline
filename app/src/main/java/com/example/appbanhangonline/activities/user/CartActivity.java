@@ -37,7 +37,6 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
 
     ProductRepository productRepository;
-    private int userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,7 +136,6 @@ public class CartActivity extends AppCompatActivity {
     // thông báo đặt hàng thành công
     private void showSuccessToast() {
         Bill bill = new Bill();
-        bill.setBillCustomerID(userId);
         bill.setBillCustomerID(HomeUserActivity.user_id);
         bill.setBillTotalPrice(cart.getTotal_price());
         Date now = new Date();

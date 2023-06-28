@@ -20,6 +20,7 @@ import com.example.appbanhangonline.activities.user.CartActivity;
 import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
+
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
     Cart cart;
