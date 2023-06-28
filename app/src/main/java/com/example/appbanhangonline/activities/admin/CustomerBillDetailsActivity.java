@@ -22,7 +22,9 @@ import com.example.appbanhangonline.models.DetailBill;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.User;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomerBillDetailsActivity extends AppCompatActivity {
 
@@ -106,12 +108,17 @@ public class CustomerBillDetailsActivity extends AppCompatActivity {
             UserHandle userHandler = new UserHandle(this);
             User user = userHandler.getById(bill.getBillCustomerID());
 
+            // Định dạng giá tiền theo đơn vị tiền Việt
+            NumberFormat currencyFormatTotalPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            String formattedTotalPrice = currencyFormatTotalPrice.format(bill.getBillTotalPrice());
+
+
             // Hiển thị thông tin chi tiết hóa đơn lên giao diện:
             // Sử dụng các phương thức setText() của binding để đặt giá trị cho các thành phần giao diện
             // (tvBillID, tvCustomerName, tvTotalPrice, tvCreatedAt) với thông tin tương ứng của hóa đơn và người dùng.
             binding.tvBillID.setText("Bill ID: #" + bill.getBillID());
             binding.tvCustomerName.setText("Tên khách hàng: " + user.getUsername());
-            binding.tvTotalPrice.setText("Tổng tiền: " + bill.getBillTotalPrice());
+            binding.tvTotalPrice.setText("Tổng tiền: " + formattedTotalPrice);
             binding.tvCreatedAt.setText("Đơn ngày: " + bill.getCreatedAt());
 
             // Sử dụng DetailBillHandler để lấy thông tin chi tiết hóa đơn từ CSDL:
@@ -131,9 +138,13 @@ public class CustomerBillDetailsActivity extends AppCompatActivity {
                 int quantity = detailBill.getQuantity();
                 int price = detailBill.getPrice();
 
+                // Định dạng giá tiền theo đơn vị tiền Việt
+                NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                String formattedPrice = currencyFormatPrice.format(price);
+
                 String detail = "Sản phẩm: " + productName + "\n"
                         + "Số lượng: " + quantity + "\n"
-                        + "Giá: " + price + "\n\n";
+                        + "Giá: " + formattedPrice + "\n\n";
 
                 details.append(detail);
             }

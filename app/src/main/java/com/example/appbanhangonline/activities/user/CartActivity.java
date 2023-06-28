@@ -3,7 +3,6 @@ package com.example.appbanhangonline.activities.user;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.R;
-import com.example.appbanhangonline.activities.MainActivity;
 import com.example.appbanhangonline.adapters.CartAdapter;
 import com.example.appbanhangonline.dbhandler.BillHandler;
 import com.example.appbanhangonline.dbhandler.DetailBillHandler;
@@ -39,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
 
     ProductRepository productRepository;
+    private int userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,7 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    // ánh xạ các đối tượng
+    // khởi tạo các đối tượng
     public void init(){
         total = findViewById(R.id.total);
         rvCart = findViewById(R.id.rvCart);
@@ -138,6 +137,7 @@ public class CartActivity extends AppCompatActivity {
     // thông báo đặt hàng thành công
     private void showSuccessToast() {
         Bill bill = new Bill();
+        bill.setBillCustomerID(userId);
         bill.setBillCustomerID(HomeUserActivity.user_id);
         bill.setBillTotalPrice(cart.getTotal_price());
         Date now = new Date();
