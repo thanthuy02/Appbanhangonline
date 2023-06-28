@@ -65,13 +65,13 @@ public class LoginActivity extends Activity {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
-                if (Objects.equals(loginHandler.checkLogin(email, password), "admin")) {
+                if (Objects.equals(loginHandler.checkRole(email, password), "admin")) {
                     Intent i = new Intent(getApplicationContext(), MenuAdminActivity.class);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),
                             "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                     finish();
-                } else if (Objects.equals(loginHandler.checkLogin(email, password), "customer")){
+                } else if (Objects.equals(loginHandler.checkRole(email, password), "customer")){
                     Intent i = new Intent(getApplicationContext(), HomeUserActivity.class);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),

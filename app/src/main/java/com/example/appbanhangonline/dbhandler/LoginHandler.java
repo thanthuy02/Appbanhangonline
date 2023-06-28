@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import com.example.appbanhangonline.database.DBHelper;
 
@@ -26,7 +27,7 @@ public class LoginHandler extends SQLiteOpenHelper {
     }
 
 
-    public String checkLogin(String email, String password) {
+    public String checkRole(String email, String password) {
         // Thực hiện truy vấn và kiểm tra email và mật khẩu
         Cursor cursor = db.rawQuery("SELECT role FROM users WHERE email = ? AND password = ?", new String[]{email, password});
 
@@ -41,6 +42,21 @@ public class LoginHandler extends SQLiteOpenHelper {
             cursor.close();
             return null;
         }
+    }
+
+    public boolean register(String name, String phone, String address, String email, String password) {
+        SQLiteDatabase db = getWritableDatabase();
+        String sql = "Insert into users (name, phone, address, email, password, role) values (?, ?, ?, ?, ?, 'customer')";
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.clearBindings();
+        statement.bindString(1, name);
+        statement.bindString(2, phone);
+        statement.bindString(3, address);
+        statement.bindString(4, email);
+        statement.bindString(5, password);
+        long rowId = statement.executeInsert();
+        db.close();
+        return (rowId != -1); // Trả về true nếu rowId khác -1 (insert thành công), ngược lại trả về false
     }
 
     @Override
