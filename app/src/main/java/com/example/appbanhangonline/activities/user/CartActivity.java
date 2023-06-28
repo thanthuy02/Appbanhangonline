@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,8 @@ import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
-    TextView total, emptyCart;
+    TextView total;
+    LinearLayout emptyCart;
     Button btnPay;
     ImageButton btnBack;
     Cart cart = new Cart();
@@ -43,7 +45,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        Anhxa();
+        init();
 
         // quay lại trang home
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +89,7 @@ public class CartActivity extends AppCompatActivity {
     }
 
     // ánh xạ các đối tượng
-    public void Anhxa(){
+    public void init(){
         total = findViewById(R.id.total);
         rvCart = findViewById(R.id.rvCart);
         btnPay = findViewById(R.id.btnPay);
