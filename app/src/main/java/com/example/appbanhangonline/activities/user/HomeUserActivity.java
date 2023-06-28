@@ -1,10 +1,11 @@
 package com.example.appbanhangonline.activities.user;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.activities.login.LoginActivity;
+import com.example.appbanhangonline.adapters.CartAdapter;
 import com.example.appbanhangonline.adapters.ProductUserAdapter;
 import com.example.appbanhangonline.dbhandler.CategoryHandler;
 import com.example.appbanhangonline.dbhandler.ProductHandler;
@@ -21,17 +23,15 @@ import com.example.appbanhangonline.models.Category;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import com.example.appbanhangonline.dbhandler.ProductHandler;
-import com.example.appbanhangonline.models.Product;
-import com.example.appbanhangonline.models.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class HomeUserActivity extends AppCompatActivity {
     TextView txtCategory, txtUsername, txtEmail;
+
+    EditText editTextSearch;
+
+    ImageButton btnSearch;
 
     RecyclerView rvProduct;
 
@@ -53,12 +53,23 @@ public class HomeUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         init();
 
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = editTextSearch.getText().toString().trim();
+                filterProductByName(search);
+            }
+        });
+
         productUserAdapter = new ProductUserAdapter(this, productList);
         rvProduct.setAdapter(productUserAdapter);
     }
 
     // khởi tạo các đối tượng
     private void init() {
+        editTextSearch = findViewById(R.id.editTextSearch);
+        btnSearch = findViewById(R.id.btnSearch);
+
         txtCategory = findViewById(R.id.txtCategory);
         txtUsername = findViewById(R.id.txtUsername);
         txtEmail = findViewById(R.id.txtEmail);
@@ -159,16 +170,27 @@ public class HomeUserActivity extends AppCompatActivity {
 
     // lọc sản phẩm theo category_id
     public void filterProductByCategory(int categoryId){
-        ArrayList<Product> filter = new ArrayList<>();
+        ArrayList<Product> filter_id = new ArrayList<>();
         CategoryHandler categoryHandler = CategoryHandler.gI(this);
         for(Product p : productList){
             String categoryName = p.getCategoryName();
             int productCategoryId = categoryHandler.getCategoryIdByName(categoryName);
             if(productCategoryId == categoryId) {
-                filter.add(p);
+                filter_id.add(p);
             }
         }
-        productUserAdapter.setProductList(filter);
+        productUserAdapter.setProductList(filter_id);
+        productUserAdapter.notifyDataSetChanged();
+    }
+
+    public void filterProductByName(String productName){
+        ArrayList<Product> filter_name = new ArrayList<>();
+        for(Product p : productList){
+            if(p.getProductName().toLowerCase().contains(productName.toLowerCase())) {
+                filter_name.add(p);
+            }
+        }
+        productUserAdapter.setProductList(filter_name);
         productUserAdapter.notifyDataSetChanged();
     }
 

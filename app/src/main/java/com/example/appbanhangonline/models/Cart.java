@@ -20,7 +20,6 @@ public class Cart {
 
     public ProductRepository productRepository = new ProductRepository();
 
-    public ProductHandler productHandler;
     private static int total_price;
 
     // Nếu hóa đơn trên 200k sẽ tính thuế 10%
@@ -60,12 +59,12 @@ public class Cart {
 
     // xóa hoàn toàn 1 sản phẩm ra khỏi giỏ hàng, dùng khi người dùng bấm vào nút btnDelete
     public void deleteProduct(Product p){
-        Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
-        total_price -= p.getPrice() * quantity;
+        //Integer quantity = cartList.getOrDefault(p.getProductID(), 0);
+        total_price -= getLinePrice(p);
         cartList.remove(p.getProductID());
     }
 
-    // lấy ra giá tiền từng sản phẩm  * số lượng nó đang có trong giỏ
+    // lấy ra giá tiền của sản phẩm  * số lượng nó đang có trong giỏ
     public int getLinePrice(Product p){
         return p.getPrice() * cartList.getOrDefault(p.getProductID(), 0);
     }
@@ -77,6 +76,4 @@ public class Cart {
         Integer productId = Integer.parseInt(keys[position].toString());
         return productRepository.getProductById(productId);
     }
-
-
 }
