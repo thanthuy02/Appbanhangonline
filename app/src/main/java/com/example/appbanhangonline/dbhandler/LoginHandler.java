@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.appbanhangonline.database.DBHelper;
+import com.example.appbanhangonline.models.User;
 
 public class LoginHandler extends SQLiteOpenHelper {
     SQLiteDatabase db;
@@ -26,17 +27,21 @@ public class LoginHandler extends SQLiteOpenHelper {
     }
 
 
-    public String checkLogin(String email, String password) {
+    public User checkLogin(String email, String password) {
         // Thực hiện truy vấn và kiểm tra email và mật khẩu
-        Cursor cursor = db.rawQuery("SELECT role FROM users WHERE email = ? AND password = ?", new String[]{email, password});
+        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE email = ? AND password = ?", new String[]{email, password});
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             @SuppressLint("Range")
-            String role = cursor.getString(cursor.getColumnIndex("role"));
             int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String phone = cursor.getString(2);
+            String address = cursor.getString(3);
+            String role = cursor.getString(6);
+
             cursor.close();
-            return role;
+            return new User(id, name, phone, address, email, password, role);
         } else {
             cursor.close();
             return null;

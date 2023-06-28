@@ -138,7 +138,7 @@ public class CartActivity extends AppCompatActivity {
     // thông báo đặt hàng thành công
     private void showSuccessToast() {
         Bill bill = new Bill();
-        bill.setBillCustomerID(MainActivity.user_id);
+        bill.setBillCustomerID(HomeUserActivity.user_id);
         bill.setBillTotalPrice(cart.getTotal_price());
         Date now = new Date();
         bill.setCreatedAt(now.toString());
