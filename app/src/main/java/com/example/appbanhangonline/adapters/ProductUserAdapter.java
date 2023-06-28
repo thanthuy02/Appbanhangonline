@@ -67,8 +67,12 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         if(r == true) {
             Toast.makeText(view.getContext(),"Đã thêm vào giỏ hàng", Toast.LENGTH_LONG).show();
         } else {
-            // Số lượng vượt quá giới hạn cho phép
-            Toast.makeText(view.getContext(), "Số lượng sản phẩm vượt quá giới hạn cho phép!", Toast.LENGTH_SHORT).show();
+            if(p.getQuantity() == 0) {
+                Toast.makeText(view.getContext(), "Tạm thời hết hàng!Bạn hãy xem các sản phẩm khác nhé!", Toast.LENGTH_SHORT).show();
+            } else {
+                // Số lượng vượt quá giới hạn cho phép
+                Toast.makeText(view.getContext(), "Số lượng sản phẩm vượt quá giới hạn cho phép!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     @Override
