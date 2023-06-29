@@ -25,7 +25,9 @@ import com.example.appbanhangonline.models.DetailBill;
 import com.example.appbanhangonline.models.Product;
 import com.example.appbanhangonline.models.ProductRepository;
 
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView rvCart;
@@ -81,7 +83,9 @@ public class CartActivity extends AppCompatActivity {
 
     // cập nhật lại tổng tiền của giỏ hàng
     public void updateData() {
-        total.setText("Thành tiền: " + this.cart.getTotal_price());
+        NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formattedPrice = currencyFormatPrice.format(this.cart.getTotal_price());
+        total.setText("Thành tiền: " + formattedPrice);
     }
 
     // nếu ko có sp nào trong giỏ hàng thì hiển thị giỏ trống
@@ -177,7 +181,9 @@ public class CartActivity extends AppCompatActivity {
         cartAdapter.notifyDataSetChanged();
         cartAdapter.delete();
         cart.setTotal_price(0);
-        total.setText("Thành tiền: " + this.cart.getTotal_price());
+        NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formattedPrice = currencyFormatPrice.format(this.cart.getTotal_price());
+        total.setText("Thành tiền: " + formattedPrice);
         emptyCart.setVisibility(View.VISIBLE);
     }
 }
