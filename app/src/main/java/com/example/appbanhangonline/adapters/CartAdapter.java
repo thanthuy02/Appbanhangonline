@@ -20,6 +20,9 @@ import com.example.appbanhangonline.activities.user.CartActivity;
 import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
@@ -48,7 +51,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText("Giá: " + p.getPrice());
         holder.productQuantity.setText("" + amount);
-        holder.lineTotalPrice.setText("" + cart.getLinePrice(p));
+
+        NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formattedPrice = currencyFormatPrice.format(cart.getLinePrice(p));
+        holder.lineTotalPrice.setText(formattedPrice);
 
         // tăng số lượng
         holder.btnPlus.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +66,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     Toast.makeText(v.getContext(), "Số lượng sản phẩm vượt quá giới hạn cho phép!", Toast.LENGTH_SHORT).show();
                 }
                 holder.productQuantity.setText("" + amount);
-                holder.lineTotalPrice.setText("" + cart.getLinePrice(p));
+
+                NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                String formattedPrice = currencyFormatPrice.format(cart.getLinePrice(p));
+                holder.lineTotalPrice.setText(formattedPrice);
+
                 ((CartActivity)context).updateData();
             }
         });
@@ -72,7 +82,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 cart.removeCart(p);
                 Integer amount = cart.cartList.get(p.getProductID());
                 holder.productQuantity.setText("" + amount);
-                holder.lineTotalPrice.setText("" + cart.getLinePrice(p));
+
+                NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+                String formattedPrice = currencyFormatPrice.format(cart.getLinePrice(p));
+                holder.lineTotalPrice.setText(formattedPrice);
+
                 ((CartActivity) context).updateData();
             }
         });

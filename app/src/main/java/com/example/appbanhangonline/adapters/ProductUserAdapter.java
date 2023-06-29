@@ -20,7 +20,9 @@ import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.ProductViewHolder> {
     private Context context;
@@ -52,7 +54,10 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
-        holder.productPrice.setText(""+p.getPrice());
+
+        NumberFormat currencyFormatPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formattedPrice = currencyFormatPrice.format(p.getPrice());
+        holder.productPrice.setText(formattedPrice);
 
         Glide.with(context)
                 .load(p.getImage())
