@@ -108,6 +108,7 @@ public class ProductEditActivity extends Activity {
     }
 
     public void getData() {
+//        lay doi tuong product tu ben kia sang de hien thi len man hinh
         if (getIntent().getExtras() != null) {
             product = (Product) getIntent().getSerializableExtra("ProductEdit");
             id = product.getProductID();
