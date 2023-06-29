@@ -24,7 +24,7 @@
             android:layout_height="30dp"
             android:scaleType="centerCrop"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/pd1"/>
+            android:src="@drawable/table_lamp_logo"/>
 
         <LinearLayout
             android:layout_width="0dp"
