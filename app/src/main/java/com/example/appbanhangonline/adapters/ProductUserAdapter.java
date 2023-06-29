@@ -19,6 +19,7 @@ import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.models.Cart;
 import com.example.appbanhangonline.models.Product;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.ProductViewHolder> {
@@ -52,8 +53,9 @@ public class ProductUserAdapter extends RecyclerView.Adapter<ProductUserAdapter.
         Product p = productList.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(""+p.getPrice());
+
         Glide.with(context)
-                .load(Uri.parse(p.getImage()))
+                .load(p.getImage())
                 .into(holder.productImage);
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

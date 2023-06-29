@@ -149,17 +149,17 @@ public class DBHelper extends SQLiteOpenHelper {
             + PRODUCT_QUANTITY + ", "
             + PRODUCT_PRICE + ", "
             + PRODUCT_IMAGE + ") "
-            + "VALUES ('Bút bi', 1, 35, 6000, 'android.resource://com.example.appbanhangonline/drawable/pd1'),"
-            + "('Bút 3 màu', 1, 15, 15000, 'android.resource://com.example.appbanhangonline/drawable/pd2'),"
-            + "('Đèn học trắng', 4, 21, 85000, 'android.resource://com.example.appbanhangonline/drawable/pd3'),"
-            + "('Vở bìa cứng', 2, 10, 28000, 'android.resource://com.example.appbanhangonline/drawable/pd4'),"
-            + "('Vở 200 trang', 2, 4, 20000, 'android.resource://com.example.appbanhangonline/drawable/pd5'),"
-            + "('Vở lò xo', 2, 12, 56000, 'android.resource://com.example.appbanhangonline/drawable/pd6'),"
-            + "('Máy tính 570', 3, 15, 427000, 'android.resource://com.example.appbanhangonline/drawable/pd7'),"
-            + "('Máy tính 580', 3, 6, 510000, 'android.resource://com.example.appbanhangonline/drawable/pd8'),"
-            + "('Đèn học chân cao', 4, 5, 90000, 'android.resource://com.example.appbanhangonline/drawable/pd9'),"
-            + "('Đèn học chân cao', 4, 5, 90000, 'android.resource://com.example.appbanhangonline/drawable/pd10'),"
-            + "('Bút chì 2B', 1, 56, 4000, 'android.resource://com.example.appbanhangonline/drawable/pd11')";
+            + "VALUES ('Bút bi', 1, 35, 6000, 'https://product.hstatic.net/1000362139/product/hong_ha_sg-2600_ee3bef39ce824d038903b8c9d1812378.jpg'),"
+            + "('Bút sắc màu', 1, 15, 15000, 'https://cf.shopee.vn/file/4f10cd43e304e7a8e0d952bd96bf3f70'),"
+            + "('Đèn học rạng đông', 4, 21, 85000, 'https://th.bing.com/th/id/OIP.AiAXDtjm9y3Bp-03mhF3WAHaHa?pid=ImgDet&rs=1'),"
+            + "('Vở bìa cứng', 2, 56, 28000, 'https://vanphongphamhoangphat.com/wp-content/uploads/2021/06/so-a4-bia-cung-thua-dau-240trang.jpg'),"
+            + "('Vở 200 trang', 2, 0, 20000, 'https://th.bing.com/th/id/R.498d46900fc1b62e7675f29e6c32f958?rik=5BKoyRTNmA4eig&riu=http%3a%2f%2fklong.com.vn%2fimage%2fcache%2fcatalog%2fVo+ke+ngang%2fms+290-600x600.jpg&ehk=eJie6Jr38w2ti3KyMDnYWjAe0sojNPTxMysGAyepSmI%3d&risl=&pid=ImgRaw&r=0'),"
+            + "('Vở lò xo', 2, 12, 56000, 'https://klong.com.vn/image/cache/catalog/Vo%20ke%20ngang/ms%20582-800x800.jpg'),"
+            + "('Máy tính 570', 3, 15, 427000, 'https://tikicdn.com/media/catalog/product/2/2/2269814834104-000.u4083.d20161229.t153941.959911.jpg'),"
+            + "('Máy tính 580', 3, 6, 510000, 'https://nhasachphuongnam.com/images/detailed/127/image_195509_1_8906.jpg'),"
+            + "('Đèn học gấp gọn', 4, 5, 90000, 'https://chuteu.com/wp-content/uploads/2021/12/den-hoc-rang-dong-chat-luong.jpg'),"
+            + "('Đèn học chống cận', 4, 5, 90000, 'https://th.bing.com/th/id/R.aef68b42c490471d945fa1eec86ae4b8?rik=rpJwd6XRDEf7PA&pid=ImgRaw&r=0'),"
+            + "('Bút chì 2B', 1, 26, 4000, 'https://th.bing.com/th/id/R.cdc72aedf907b963ff62a536db000180?rik=fjE1kSmbZx5VCg&riu=http%3a%2f%2fvppdean.vn%2fuploadwb%2fhinhsp%2fbut_chi_go_2b_219420184015_b_.png&ehk=2Btopr6ns4gh9pgdA6p5tncoD1021HjcWU3G%2bfwZp00%3d&risl=&pid=ImgRaw&r=0')";
 
 
     private static final String INSERT_BILL = "INSERT INTO " + BILLS + " (" +
